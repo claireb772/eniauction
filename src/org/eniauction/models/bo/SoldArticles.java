@@ -14,8 +14,8 @@ public class SoldArticles {
     private int users_nb;
     private int category_nb;
 
-    public SoldArticles(int article_nb, String article_name, String description, Date auction_start_date, Date auction_end_date, int initial_price, int sell_price, int users_nb, int category_nb) {
-        this.article_nb = article_nb;
+    public SoldArticles(int article_nb, String article_name, String description, Date auction_start_date, Date auction_end_date, int initial_price, int sell_price, int users_nb, int category_nb) {      
+    	this.article_nb = article_nb;
         this.article_name = article_name;
         this.description = description;
         this.auction_start_date = auction_start_date;
@@ -24,6 +24,7 @@ public class SoldArticles {
         this.sell_price = sell_price;
         this.users_nb = users_nb;
         this.category_nb = category_nb;
+        
     }
 
     public int getArticle_nb() {
