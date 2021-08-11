@@ -1,6 +1,5 @@
-package org.eniauction.bll;
+package org.eniauction.models.bll;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
