@@ -6,12 +6,12 @@
 		type="javax.sql.DataSource"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		
-		url="jdbc:sqlserver://localhost:1433;databasename=PJ_AUCTION"
-		username="sa"
-		password="Pa$$w0rd"
+		url="jdbc:sqlserver://188.165.4.35:3306;databasename=hugoanaysjbdd"
+		username="hugoanaysjbdd"
+		password="Jmltlma7h"
 		
-		maxIdle="3"
-		maxTotal="10"
+		maxIdle="8"
+		maxTotal="20"
 		maxWaitMillis="10000"
 		
 		removeAbandoned="true"
