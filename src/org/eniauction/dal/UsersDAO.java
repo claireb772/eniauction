@@ -10,7 +10,7 @@ public interface UsersDAO {
 	void delete(int user_nb);
 	List<Users> selectAll();
 	Users selectByid(int user_nb);
-	
+	void update(Users user);
 	
 	
 }
