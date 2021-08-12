@@ -38,7 +38,7 @@ public class DisplayLogout extends HttpServlet {
 		Cookie cookie = new Cookie("authentification","0");
 		
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}

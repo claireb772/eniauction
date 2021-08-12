@@ -3,7 +3,7 @@ package org.eniauction.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import org.eniauction.models.bll.ManagerConnect;
+import org.eniauction.models.bll.UserManager;
 import org.eniauction.models.bo.Users;
 
 import javax.servlet.RequestDispatcher;
@@ -51,24 +51,20 @@ public class DisplayConnect extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ManagerConnect manager = ManagerConnect.getInstance();
-		List<Users> UsersList = manager.GetUsers();
+		UserManager manager = UserManager.getInstance();
 		
 		String userInput = request.getParameter("user");
 		String passwordInput = request.getParameter("password");
 		
+		//if(users.getPseudo().equals(userInput) && users.getPassword().equals(passwordInput)){
+		if(userInput.equals("test") && passwordInput.equals("123")){
 		
-		for (Users users : UsersList){
-			
-			//if(users.getPseudo().equals(userInput) && users.getPassword().equals(passwordInput)){
-			if(userInput.equals("test") && passwordInput.equals("123")){
-				
-				//Création cookie permettant la connexion
-				Cookie cookie = new Cookie("authentification", "1");
+			//Création cookie permettant la connexion
+			Cookie cookie = new Cookie("authentification", "1");
 
-				response.addCookie(cookie);
-			}
+			response.addCookie(cookie);
 		}
+	
 		
 		doGet(request, response);
 	}

@@ -76,7 +76,7 @@ public class UsersImpl implements UsersDAO {
 
 // Fonction permetant de rechercher dans la base de données, si un utilisateur existe grace à la saisie de ce dernier
 // Les saisie de l'utilisateur viennent du login
-	public Users ConnectUser(String userInput, String userPassword) {
+	public Users ConnectUser(String emailInput, String passwordInput) {
 		
 		Users users = new Users();
 		users = null;
@@ -84,8 +84,8 @@ public class UsersImpl implements UsersDAO {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL_PASSWORD);
-			pstmt.setString(1, userInput);
-			pstmt.setString(2, userPassword);
+			pstmt.setString(1,emailInput);
+			pstmt.setString(2, passwordInput);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
