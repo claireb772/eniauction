@@ -27,9 +27,9 @@ public class UsersImpl implements UsersDAO {
 			+ "where user_nb=?";
 	
 	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT "
-			+ " email, password"
-			+ "from USERS"
-			+ "where email = ? and password = ?";
+			+ " * "
+			+ " from USERS "
+			+ " where email = ? and password = ? ";
 	
 	public Users selectByid(int user_nb){
 		
@@ -78,19 +78,31 @@ public class UsersImpl implements UsersDAO {
 // Les saisie de l'utilisateur viennent du login
 	public Users ConnectUser(String emailInput, String passwordInput) {
 		
-		Users users = new Users();
-		users = null;
+		Users users = null;
 		
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL_PASSWORD);
-			pstmt.setString(1,emailInput);
+			pstmt.setString(1, emailInput);
 			pstmt.setString(2, passwordInput);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				
-				users = new Users(rs.getInt("user_nb"), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), rs.getBoolean("administrator"));
+				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
+				System.out.println(users.getUser_nb());
+				System.out.println(users.getPseudo());
+				System.out.println(users.getName());
+				System.out.println(users.getSurname());
+				System.out.println(users.getEmail());
+				System.out.println(users.getPhone_nb());
+				System.out.println(users.getStreet());
+				System.out.println(users.getPostal_code());
+				System.out.println(users.getCity());
+				System.out.println(users.getPassword());
+				System.out.println(users.getCredit());
+				System.out.println(users.isAdministrator());
+				
 			}
 
 		}

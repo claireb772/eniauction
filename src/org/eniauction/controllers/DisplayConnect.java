@@ -56,8 +56,9 @@ public class DisplayConnect extends HttpServlet {
 		String userInput = request.getParameter("user");
 		String passwordInput = request.getParameter("password");
 		
+		
 		//if(users.getPseudo().equals(userInput) && users.getPassword().equals(passwordInput)){
-		if(userInput.equals("test") && passwordInput.equals("123")){
+		if(manager.ConnectUser(userInput, passwordInput)){
 		
 			//Création cookie permettant la connexion
 			Cookie cookie = new Cookie("authentification", "1");
