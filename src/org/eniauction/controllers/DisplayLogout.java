@@ -1,10 +1,6 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
-import java.util.List;
-
-import org.eniauction.models.bll.ManagerConnect;
-import org.eniauction.models.bo.Users;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,17 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  * Servlet implementation class DisplayUser
  */
-@WebServlet("/login")
-public class DisplayConnect extends HttpServlet {
+@WebServlet("/logout")
+public class DisplayLogout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Default constructor.
 	 */
-	public DisplayConnect() {
+	public DisplayLogout() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -36,8 +33,12 @@ public class DisplayConnect extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
+		//TODO Auto-generated constructor stub
+		
+		Cookie cookie = new Cookie("authentification","0");
+		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}
@@ -51,25 +52,6 @@ public class DisplayConnect extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ManagerConnect manager = ManagerConnect.getInstance();
-		List<Users> UsersList = manager.GetUsers();
-		
-		String userInput = request.getParameter("user");
-		String passwordInput = request.getParameter("password");
-		
-		
-		for (Users users : UsersList){
-			
-			//if(users.getPseudo().equals(userInput) && users.getPassword().equals(passwordInput)){
-			if(userInput.equals("test") && passwordInput.equals("123")){
-				
-				//Création cookie permettant la connexion
-				Cookie cookie = new Cookie("authentification", "1");
-
-				response.addCookie(cookie);
-			}
-		}
-		
 		doGet(request, response);
 	}
 

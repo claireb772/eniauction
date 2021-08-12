@@ -38,6 +38,11 @@ public class DisplayAuction extends HttpServlet {
 		List<SoldArticles> listAuction = manager.GetAuction();
 		request.setAttribute("listAuction", listAuction.toArray());
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
+		
+		//Cookie cookie = new Cookie("authentification", "0");
+
+		//response.addCookie(cookie);
+		
 		if (rd != null) {
 			rd.forward(request, response);
 		}
@@ -45,12 +50,7 @@ public class DisplayAuction extends HttpServlet {
 		//Création cookie permettant la connexion
 		// 1 = Utilisateur connecté
 		// 0 = L'utilisateur n'est pas connecté
-		// terminer condition de création
-		
-		Cookie cookie = new Cookie("authentification", "0");
-
-		response.addCookie(cookie);
-		
+		// terminer condition de créatio
 	}
 
 	/**
