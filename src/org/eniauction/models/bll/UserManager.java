@@ -24,5 +24,20 @@ public class UserManager {
 		return ui.selectByid(user_nb);	
 	}
 
+	public Users newUser(Users user) {
+		UsersImpl ui = UsersImpl.getInstance();
+		
+		if (ui.insert(user)) {
+			System.out.println("réussi");
+		
+		}
+		else {
+			System.out.println("raté");
+		}
+		return user;
+		
+		
+	}
+	
 
 }
