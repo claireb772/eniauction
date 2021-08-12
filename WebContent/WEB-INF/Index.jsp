@@ -35,7 +35,7 @@
 		<p class="text-secondary m-0"><small>Vendu par Patate</small></p>
 		<div class="position-relative image-container">
 			<img src="https://place-hold.it/300x300" />
-			<div class="position-absolute date-container text-primary bg-light">Fini dans 8h</div>
+			<div class="position-absolute date-container text-primary bg-light">Fini dans ${item.auction_end_date}</div>
 			<div class="position-absolute points-container bg-light text-danger">${item.sell_price } points</div>
 		</div>
 	</div>

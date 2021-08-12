@@ -6,9 +6,9 @@
 		type="javax.sql.DataSource"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		
-		url="jdbc:sqlserver://hugoanaysjbdd.mysql.db:3306;databasename=hugoanaysjbdd"
-		username="hugoanaysjbdd"
-		password="Jmltlma7h"
+		url="jdbc:sqlserver://localhost:1433;databasename=PJ_AUCTION"
+		username="sa"
+		password="Pa$$w0rd"
 		
 		maxIdle="8"
 		maxTotal="20"
