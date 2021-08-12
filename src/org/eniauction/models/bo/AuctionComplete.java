@@ -15,11 +15,10 @@ public class AuctionComplete {
     	this.article = article;
     	
     	UserManager um = new UserManager();
-        //this.user = um.displayUser(article.getUsers_nb());
+        this.user = um.getUser(article.getUsers_nb());
         ManagerCategories cm =  ManagerCategories.getInstance();
-        //this.category = cm.GetCategoryById(article.getCategory_nb());
+        this.category = cm.GetCategoryById(article.getCategory_nb());
         var o = article.getAuction_end_date().getTime() - new Date().getTime();
-        System.out.println(o + "days");
         
     }
 

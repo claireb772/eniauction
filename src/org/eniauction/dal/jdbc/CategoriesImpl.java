@@ -54,7 +54,7 @@ public class CategoriesImpl {
 			 
 			 while(rs.next())
 				{
-				 category = new Categories(rs.getInt(1), rs.getString(2));
+				 	category = new Categories(rs.getInt(1), rs.getString(2));
 				}
 			 
 		} catch (SQLException e) {

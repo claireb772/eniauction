@@ -6,7 +6,7 @@
 <head>
 	<title>Encheres Project</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="./style.css">
+	<style><%@include file="/WEB-INF/style.css"%></style>
 </head>
 <body>
 
@@ -32,9 +32,9 @@
 	<c:forEach var="item" items="${listAuction}" >
 		<div class="bg-light p-3 col-12 col-md-4 enchere_container">
 		<p class="text-primary m-0">${item.article.article_name }</p>
-		<p class="text-secondary m-0"><small>Vendu par Patate</small></p>
+		<p class="text-secondary m-0"><small>Vendu par ${item.user.surname} dans ${item.category.wording} </small></p>
 		<div class="position-relative image-container">
-			<img src="https://place-hold.it/300x300" />
+			<img src="https://place-hold.it/300x300" class="w-100"/>
 			<div class="position-absolute date-container text-primary bg-light">Fini dans ${item.article.auction_end_date}</div>
 			<div class="position-absolute points-container bg-light text-danger">${item.article.sell_price } points</div>
 		</div>
