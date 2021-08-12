@@ -13,6 +13,11 @@ public class UsersImpl {
 			+ "from USERS"
 			+ "where user_nb = ?";
 	
+	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT "
+			+ " email, password"
+			+ "from USERS"
+			+ "where email = ? and password = ?";
+	
 // PAS FINI
 	public Users selectByid(int user_nb){
 		
@@ -32,6 +37,30 @@ public class UsersImpl {
 		}
 		
 		return null;
+	}
+
+// Fonction permetant de rechercher dans la base de données, si un utilisateur existe
+	public boolean ConnectUser(String userInput, String userPassword) {
+		
+		boolean authentification = false;
+		
+		Users users = new Users();
+		
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL_PASSWORD);
+			pstmt.setString(1, userInput);
+			pstmt.setString(2, userPassword);
+			ResultSet rs = pstmt.executeQuery();
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+		return authentification;
 	}
 
 }

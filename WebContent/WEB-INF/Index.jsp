@@ -17,8 +17,8 @@
 	<div class="links justify-self-end">
 		<a href="#" class="text-white text-decoration-none mx-2">Nouvelle Vente</a>
 		<a href="#" class="text-white text-decoration-none mx-2">Admin</a>
-		<a href="#" class="text-white text-decoration-none mx-2">Profil</a>
-		<a href="#" class="text-white text-decoration-none mx-2">Se Connecter</a>/
+		<a href="profil" class="text-white text-decoration-none mx-2">Profil</a>
+		<a href="login" class="text-white text-decoration-none mx-2">Se Connecter</a>/
 		<a href="#" class="text-white text-decoration-none mx-2">S'inscrire</a>
 	</div>
 </nav>
