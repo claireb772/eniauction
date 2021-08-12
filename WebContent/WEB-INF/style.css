@@ -1,0 +1,30 @@
+*{
+	box-sizing: border-box;
+}
+.enchere_container
+{
+	margin:0px;
+}
+.flex-1{
+	flex:1;
+}
+
+.mentionInput{
+	width:145px;
+}
+.image-container img{
+	width:100%;
+}
+.date-container{
+	top:0px;
+	right:0px;
+	margin-left: 0px;
+	padding: 10px;
+	border-bottom-left-radius: 10px;
+}
+.points-container{
+	bottom:0px;
+	margin-left: 0px;
+	padding: 10px;
+	border-top-right-radius: 10px;
+}

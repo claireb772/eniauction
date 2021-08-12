@@ -1,31 +1,25 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eniauction.models.bll.ManagerAuction;
-import org.eniauction.models.bo.*;
-
 /**
- * Servlet implementation class DisplayAuction
+ * Servlet implementation class DisplayNewAuction
  */
-@WebServlet("/")
-public class DisplayAuction extends HttpServlet {
+@WebServlet("/NewAuction")
+public class DisplayNewAuction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAuction() {
+    public DisplayNewAuction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,23 +28,12 @@ public class DisplayAuction extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ManagerAuction manager = ManagerAuction.getInstance();
-		List<AuctionComplete> listAuction = manager.GetAuction();
-		request.setAttribute("listAuction", listAuction.toArray());
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
-		
-		//Cookie cookie = new Cookie("authentification", "0");
-
-		//response.addCookie(cookie);
-		
+		// TODO Auto-generated method stub
+		System.out.println("toNewAuction");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/NewAuction.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}
-		
-		//Création cookie permettant la connexion
-		// 1 = Utilisateur connecté
-		// 0 = L'utilisateur n'est pas connecté
-		// terminer condition de créatio
 	}
 
 	/**
@@ -58,7 +41,6 @@ public class DisplayAuction extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		doGet(request, response);
 	}
 

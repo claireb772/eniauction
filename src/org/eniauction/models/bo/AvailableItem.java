@@ -2,14 +2,14 @@ package org.eniauction.models.bo;
 
 import java.time.LocalDateTime;
 
-public class Auction {
+public class AvailableItem {
 
     private int user_nb;
     private int article_nb;
     private LocalDateTime auction_date;
     private int auction_amount;
 
-    public Auction(int user_nb, int article_nb, LocalDateTime auction_date, int auction_amount) {
+    public AvailableItem(int user_nb, int article_nb, LocalDateTime auction_date, int auction_amount) {
         this.user_nb = user_nb;
         this.article_nb = article_nb;
         this.auction_date = auction_date;
