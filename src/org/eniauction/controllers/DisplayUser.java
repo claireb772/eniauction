@@ -34,12 +34,12 @@ public class DisplayUser extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserManager um = new UserManager();
+		UserManager um = UserManager.getInstance();
 		
 		//TODO
 		int user_nb = 1;
 		
-		Users userProfile = um.displayUser(user_nb);		
+		Users userProfile = um.getUser(user_nb);		
 		request.setAttribute("userProfile", userProfile);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profile.jsp");
