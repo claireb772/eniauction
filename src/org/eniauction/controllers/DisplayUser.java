@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eniauction.models.bll.UserManager;
+import org.eniauction.models.bo.Users;
+
 /**
  * Servlet implementation class DisplayUser
  */
@@ -31,8 +34,12 @@ public class DisplayUser extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/welcome.jsp");
+		UserManager um = new UserManager();
+		
+		Users userProfile = um.displayUser();		
+		request.setAttribute("userProfile", userProfile);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profile.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}
