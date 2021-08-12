@@ -31,12 +31,12 @@
 	
 	<c:forEach var="item" items="${listAuction}" >
 		<div class="bg-light p-3 col-12 col-md-4 enchere_container">
-		<p class="text-primary m-0">${item.article_name }</p>
+		<p class="text-primary m-0">${item.article.article_name }</p>
 		<p class="text-secondary m-0"><small>Vendu par Patate</small></p>
 		<div class="position-relative image-container">
 			<img src="https://place-hold.it/300x300" />
-			<div class="position-absolute date-container text-primary bg-light">Fini dans ${item.auction_end_date}</div>
-			<div class="position-absolute points-container bg-light text-danger">${item.sell_price } points</div>
+			<div class="position-absolute date-container text-primary bg-light">Fini dans ${item.article.auction_end_date}</div>
+			<div class="position-absolute points-container bg-light text-danger">${item.article.sell_price } points</div>
 		</div>
 	</div>
 	</c:forEach>
