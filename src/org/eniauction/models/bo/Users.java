@@ -14,6 +14,8 @@ public class Users {
     private String password;
     private int credit;
     private boolean administrator;
+    
+    public Users() {}
 
     public Users(int user_nb, String pseudo, String name, String surname, String email, String phone_nb, String street, String postal_code, String city, String password, int credit, boolean administrator) {
         this.user_nb = user_nb;
