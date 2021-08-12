@@ -81,4 +81,3 @@ nb-configuration.xml
 ## OS X
 ##############################
 .DS_Store
-WebContent/WEB-INF/lib/mssql-jdbc-8.4.1.jre11.jar
