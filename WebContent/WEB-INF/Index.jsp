@@ -32,7 +32,7 @@
 	<c:forEach var="item" items="${listAuction}" >
 		<div class="bg-light p-3 col-12 col-md-4 enchere_container">
 		<p class="text-primary m-0">${item.article_name }</p>
-		<p class="text-secondary m-0"><small>Vendu par Billy</small></p>
+		<p class="text-secondary m-0"><small>Vendu par Patate</small></p>
 		<div class="position-relative image-container">
 			<img src="https://place-hold.it/300x300" />
 			<div class="position-absolute date-container text-primary bg-light">Fini dans 8h</div>

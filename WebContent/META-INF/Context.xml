@@ -6,7 +6,7 @@
 		type="javax.sql.DataSource"
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		
-		url="jdbc:sqlserver://188.165.4.35:3306;databasename=hugoanaysjbdd"
+		url="jdbc:sqlserver://hugoanaysjbdd.mysql.db:3306;databasename=hugoanaysjbdd"
 		username="hugoanaysjbdd"
 		password="Jmltlma7h"
 		
