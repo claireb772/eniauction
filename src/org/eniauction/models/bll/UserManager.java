@@ -4,17 +4,25 @@ import org.eniauction.dal.jdbc.UsersImpl;
 import org.eniauction.models.bo.Users;
 
 public class UserManager {
+	private UsersImpl userDAOimpl; 
 	
-	private UsersImpl userImpl;
+	private static UserManager instance;
 	
-	public Users displayUser(int user_nb) {
-					
-			
-		return this.userImpl.selectByid(user_nb);
+	public static UserManager getInstance() {
 		
+		 if (instance == null) {
+			 instance = new UserManager();
+		 }
+		 return instance;
 		
 	}
+
 	
-	
+	public Users getUser(int user_nb) {	
+		UsersImpl ui = UsersImpl.getInstance();
+		
+		return ui.selectByid(user_nb);	
+	}
+
 
 }
