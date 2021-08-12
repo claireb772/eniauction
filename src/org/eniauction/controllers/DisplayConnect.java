@@ -1,12 +1,9 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.eniauction.models.bll.ManagerAuction;
 import org.eniauction.models.bll.ManagerConnect;
-import org.eniauction.models.bo.SoldArticles;
 import org.eniauction.models.bo.Users;
 
 import javax.servlet.RequestDispatcher;
@@ -55,20 +52,20 @@ public class DisplayConnect extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		ManagerConnect manager = ManagerConnect.getInstance();
-		List<Users> Users = manager.GetUsers();
+		List<Users> UsersList = manager.GetUsers();
 		
-		String user = request.getParameter("user");
-		String password = request.getParameter("password");
+		String userInput = request.getParameter("user");
+		String passwordInput = request.getParameter("password");
 		
 		
-		for (Users users : Users)s {
+		for (Users users : UsersList){
 			
-			if(users.getPseudo.equals("123") && password.equals("123")){
+			if(users.getPseudo().equals(userInput) && users.getPassword().equals(passwordInput)){
 				
 				//Création cookie permettant la connexion
-				//Cookie cookie = new Cookie("Connect", "true");
+				Cookie cookie = new Cookie("authentification", "1");
 
-				//response.addCookie(cookie);
+				response.addCookie(cookie);
 			}
 		}
 		
