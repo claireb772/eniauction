@@ -35,7 +35,6 @@ public class DisplayAuction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ManagerAuction manager = ManagerAuction.getInstance();
 		List<SoldArticles> listAuction = manager.GetAuction();
-		
 		request.setAttribute("listAuction", listAuction.toArray());
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
 		if (rd != null) {
