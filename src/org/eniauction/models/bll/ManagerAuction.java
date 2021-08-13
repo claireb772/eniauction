@@ -19,7 +19,7 @@ public class ManagerAuction {
         }
         return instance;
 	 }
-
+	 
 	 public List<AuctionComplete> GetAuction() {
 		 AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		 List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
@@ -29,4 +29,16 @@ public class ManagerAuction {
 		 }
 		 return listArticles;
 	 }
+
+	public void SetNewAuction(SoldArticles sa) {
+		AuctionImpl ai = AuctionImpl.getInstance();
+		ai.insertArticle(sa);
+	}
+
+	public List<Categories> GetCategories() {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		 List<Categories> listCategories = auctionImpl.getCategories();
+		 
+		 return listCategories;
+	}
 }

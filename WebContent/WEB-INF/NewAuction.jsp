@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,31 +9,23 @@
 </head>
 <body>
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
-	<a href="./index.html" class="text-white text-decoration-none">Enchere</a>
-	<div class="links justify-self-end">
-		<a href="new_Auction" class="text-white text-decoration-none mx-2">Nouvelle Vente</a>
-		<a href="#" class="text-white text-decoration-none mx-2">Admin</a>
-		<a href="#" class="text-white text-decoration-none mx-2">Profil</a>
-		<a href="./login.html" class="text-white text-decoration-none mx-2">Se Connecter</a>/
-		<a href="./sign.html" class="text-white text-decoration-none mx-2">S'inscrire</a>
-	</div>
+	<%@ include file="/WEB-INF/navBar.jsp" %>
 </nav>
 <main class="p-3 d-flex justify-content-center">
 
 
-	<form method="post" class="col-12 col-md-8  d-flex bg-light p-3 flex-column"  >
+	<form method="post" class="col-12 col-md-8  d-flex bg-light p-3 flex-column"  enctype="multipart/form-data">
 	<p class="text-primary">Nouvelle Vente</p>
 	<div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <input type="text" class="form-control" id="formGroupExampleInput" name="product_name" placeholder="Nom de l'article">
 	    <textarea class="form-control mt-2" name="product_desc">Description</textarea>
 	    <select class="form-control mt-2" name="product_category">
-	    	<option>Categorie 1</option>
-	    	<option>Categorie 2</option>
-	    	<option>Categorie 3</option>
-	    	<option>Categorie 4</option>
+	    <c:forEach var="item" items="${listCategories}" >
+	    	<option value="${item.category}">${item.wording}</option>
+	    </c:forEach>
 	    </select>
-	    <input type="file"  class="form-control mt-2" name="product_image"/>
+	    <input type="file"  class="form-control mt-2" name="product_image" enctype="multipart/form-data"/>
 	    <div class="input-group  mt-2">
 	        <div class="input-group-prepend">
 	          <div class="input-group-text mentionInput">Debut</div>
