@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.eniauction.models.bll.UserManager;
+
 
 /**
  * Servlet implementation class DisplayUser
@@ -38,18 +40,11 @@ public class DisplayLogout extends HttpServlet {
 		
 		
 		// Quand l'utilisateur clique sur "se deconnecter" la variable de session authentification passe de 0 à 1
-		if(session.getAttribute("authentification").toString() == "1") {
-			session.setAttribute("authentification", "0");
-			System.out.println(session.getAttribute("authentification"));
-		}
+		session.setAttribute("authentification", "0");
+		UserManager um = UserManager.getInstance();
+		um.setActualUser(null);
+		response.sendRedirect("./");
 		
-		
-		//response.sendRedirect("./sign")
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/logout.jsp");
-		if (rd != null) {
-			rd.forward(request, response);
-		}
 	}
 
 	/**

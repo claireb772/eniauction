@@ -34,18 +34,17 @@ public class DisplayConnect extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+
 		UserManager um = UserManager.getInstance();
 		if(um.getActualUser() != null) {
-			System.out.println(request.getContextPath().toString());
 			response.sendRedirect("./");
 			
 		}else {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
 			if (rd != null) {
-				
 				rd.forward(request, response);
-			}			
+			}
 		}
 		
 
@@ -71,7 +70,6 @@ public class DisplayConnect extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("authentification", "1");
-			System.out.println(session.getAttribute("authentification"));
 			
 		}
 		
