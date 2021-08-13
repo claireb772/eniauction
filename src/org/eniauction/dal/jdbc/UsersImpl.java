@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import org.eniauction.dal.UsersDAO;
-import org.eniauction.models.bll.UserManager;
 import org.eniauction.models.bo.Users;
 
 public class UsersImpl implements UsersDAO {
@@ -47,6 +46,7 @@ public class UsersImpl implements UsersDAO {
 				
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
 			}
+			cnx.close();
 		}
 		catch (Exception e)
 		{
@@ -92,7 +92,7 @@ public class UsersImpl implements UsersDAO {
 				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
 				
 			}
-
+			cnx.close();
 		}
 		catch (Exception e)
 		{
