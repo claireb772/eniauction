@@ -7,7 +7,20 @@ public class UserManager {
 	private UsersImpl userDAOimpl; 
 	
 	private static UserManager instance;
+	private Users actualUser = null;
 	
+	
+	
+	public Users getActualUser() {
+		return actualUser;
+	}
+
+
+	public void setActualUser(Users actualUser) {
+		this.actualUser = actualUser;
+	}
+
+
 	public static UserManager getInstance() {
 		
 		 if (instance == null) {
@@ -24,5 +37,17 @@ public class UserManager {
 		return ui.selectByid(user_nb);	
 	}
 
+	public boolean ConnectUser(String email, String password) {
+		
+		UsersImpl ui = UsersImpl.getInstance();
+		Users user = ui.ConnectUser(email, password);
+		
+		if(user != null){
+			actualUser = user;
+			return true;
+		}
+		
+		return false;
+	}
 
 }

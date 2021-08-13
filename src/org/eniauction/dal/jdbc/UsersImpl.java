@@ -26,6 +26,11 @@ public class UsersImpl implements UsersDAO {
 			+ "from USERS "
 			+ "where user_nb=?";
 	
+	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT "
+			+ " * "
+			+ " from USERS "
+			+ " where email = ? and password = ? ";
+	
 	public Users selectByid(int user_nb){
 		
 		Users users = null;
@@ -67,6 +72,35 @@ public class UsersImpl implements UsersDAO {
 	public List<Users> selectAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+// Fonction permetant de rechercher dans la base de données, si un utilisateur existe grace à la saisie de ce dernier
+// Les saisie de l'utilisateur viennent du login
+	public Users ConnectUser(String emailInput, String passwordInput) {
+		
+		Users users = null;
+		
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL_PASSWORD);
+			pstmt.setString(1, emailInput);
+			pstmt.setString(2, passwordInput);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
+				
+			}
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+		return users;
 	}
 
 }
