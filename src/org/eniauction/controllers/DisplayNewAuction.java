@@ -82,7 +82,7 @@ public class DisplayNewAuction extends HttpServlet {
 		try {
 			SoldArticles sa = new SoldArticles(0, product_name, product_desc, dateFormatter(product_start), dateFormatter(product_end), product_price, product_price, 1/*user.getUser_nb()*/, product_category);
 			ManagerAuction ma = ManagerAuction.getInstance();
-			//ma.SetNewAuction(sa);
+			ma.SetNewAuction(sa);
 		} catch (ParseException e) {
 			System.out.println("creation sa servlet");
 			e.printStackTrace();
