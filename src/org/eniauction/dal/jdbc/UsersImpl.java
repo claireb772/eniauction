@@ -90,18 +90,6 @@ public class UsersImpl implements UsersDAO {
 			while (rs.next()) {
 				
 				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
-				System.out.println(users.getUser_nb());
-				System.out.println(users.getPseudo());
-				System.out.println(users.getName());
-				System.out.println(users.getSurname());
-				System.out.println(users.getEmail());
-				System.out.println(users.getPhone_nb());
-				System.out.println(users.getStreet());
-				System.out.println(users.getPostal_code());
-				System.out.println(users.getCity());
-				System.out.println(users.getPassword());
-				System.out.println(users.getCredit());
-				System.out.println(users.isAdministrator());
 				
 			}
 
