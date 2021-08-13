@@ -6,7 +6,7 @@ import org.eniauction.models.bo.Users;
 
 public interface UsersDAO {
 
-	void insert(Users user);
+	boolean insert(Users user);
 
 	void delete(int user_nb);
 

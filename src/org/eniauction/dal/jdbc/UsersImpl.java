@@ -17,6 +17,7 @@ public class UsersImpl implements UsersDAO {
 		if (instance == null) {
 			instance = new UsersImpl();
 		}
+
 		return instance;
 	}
 
@@ -27,13 +28,23 @@ public class UsersImpl implements UsersDAO {
 	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT " + " * " + " from USERS "
 			+ " where email = ? and password = ? ";
 
+	<<<<<<<HEAD
 	/*
 	 * Fonction qui permet de récupérer un user avec son id
 	 */
 
 	public Users selectByid(int user_nb) {
+=======
+
+	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator) values(?,?,?,?,?,?,?,?,?,?,?)";
+
+	public Users selectByid(int user_nb){
+
+>>>>>>> cc2ff07d405a7e21a92394faa708c0152201ae25
 		Users users = null;
-		try (Connection cnx = ConnectionProvider.getConnection())
+
+		try(Connection cnx = ConnectionProvider.getConnection())
+
 
 		{
 
@@ -43,24 +54,50 @@ public class UsersImpl implements UsersDAO {
 
 			while (rs.next()) {
 
+
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
 						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
 						rs.getInt("credit"), false);
+
+				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
+
 			}
 			cnx.close();
 		} catch (Exception e) {
-            e.printStackTrace();
+			e.printStackTrace();
 		}
 
 
 		return users;
 	}
 
-	@Override
-	public void insert(Users user) {
-		// TODO Auto-generated method stub
+	public boolean insert(Users user) {
 
+		try (Connection conn = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(INSERT_USER)) {
+			pstmt.setString(1, user.getPseudo());
+			pstmt.setString(2, user.getName());
+			pstmt.setString(3, user.getSurname());
+			pstmt.setString(4, user.getEmail());
+			pstmt.setString(5, user.getPhone_nb());
+			pstmt.setString(6, user.getStreet());
+			pstmt.setString(7, user.getPostal_code());
+			pstmt.setString(8, user.getCity());
+			pstmt.setString(9, user.getPassword());
+			pstmt.setInt(10, user.getCredit());
+			pstmt.setBoolean(11, false);
+
+			int row = pstmt.executeUpdate();
+			// rows affected System.out.println(row);
+			// 1 } catch (SQLException e) { System.err.format("SQL State: %s\n%s",
+			// e.getSQLState(), e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -104,8 +141,10 @@ public class UsersImpl implements UsersDAO {
 
 	}
 
-// Fonction permetant de rechercher dans la base de données, si un utilisateur existe grace à la saisie de ce dernier
-// Les saisies de l'utilisateur viennent du login
+	// Fonction permetant de rechercher dans la base de données, si un utilisateur
+	// existe grace à la saisie de ce dernier
+	// Les saisies de l'utilisateur viennent du login
+
 	public Users ConnectUser(String emailInput, String passwordInput) {
 
 		Users users = null;
@@ -126,9 +165,7 @@ public class UsersImpl implements UsersDAO {
 			}
 
 			cnx.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

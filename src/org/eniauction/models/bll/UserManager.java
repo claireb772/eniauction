@@ -35,6 +35,7 @@ public class UserManager {
 
 	}
 
+
 	public boolean ConnectUser(String email, String password) {
 		UsersImpl ui = UsersImpl.getInstance();
 		Users user = ui.ConnectUser(email, password);
@@ -46,5 +47,22 @@ public class UserManager {
 
 		return false;
 	}
+
+	public Users newUser(Users user) {
+		UsersImpl ui = UsersImpl.getInstance();
+		
+		if (ui.insert(user)) {
+			System.out.println("réussi");
+		
+		}
+		else {
+			System.out.println("raté");
+		}
+		return user;
+		
+		
+	}
+	
+
 
 }

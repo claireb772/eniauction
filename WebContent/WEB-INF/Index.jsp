@@ -21,6 +21,9 @@
 		<a href="profil" class="text-white text-decoration-none mx-2">Profil</a>
 		<a href="login" class="text-white text-decoration-none mx-2">Se Connecter</a>/
 		<a href="#" class="text-white text-decoration-none mx-2">S'inscrire</a>
+		<a href="#" class="text-white text-decoration-none mx-2">Profil</a>
+		<a href="./login.html" class="text-white text-decoration-none mx-2">Se Connecter</a>/
+		<a href="./sign" class="text-white text-decoration-none mx-2">S'inscrire</a>
 	</div>
 </nav>
 <main class="p-3 col-12 row ">
