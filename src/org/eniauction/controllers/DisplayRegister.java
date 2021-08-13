@@ -1,6 +1,7 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
+import java.net.URL;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.regex.*;
 
 import org.eniauction.models.bll.UserManager;
 import org.eniauction.models.bo.Users;
@@ -42,23 +44,35 @@ public class DisplayRegister extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String Pseudo = request.getParameter("Pseudo");
-		String Name = request.getParameter("Name");
-		String Password = request.getParameter("Password");
-		String Confirmation = request.getParameter("Confirmation");
-		String Surname = request.getParameter("Surname");
-		String Phone = request.getParameter("Phone");
-		String Email = request.getParameter("Email");
-		String Street = request.getParameter("Street");
-		String City = request.getParameter("City");
-		String PostalCode = request.getParameter("PostalCode");
-		Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, false);
-		UserManager um= UserManager.getInstance();
-		var o = um.newUser(user);
-		doGet(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
+		String Pseudo = request.getParameter("Pseudo").trim();
+		String Name = request.getParameter("Name").trim();
+		String Password = request.getParameter("Password").trim();
+		Pattern p = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$") ;    // Min 1maj 1min 1 chiffre 1 char special
+		Matcher m = p.matcher(Password) ;    
+		boolean b = m.matches() ;
+		String Confirmation = request.getParameter("Confirmation").trim();
+		String Surname = request.getParameter("Surname").trim();
+		String Phone = request.getParameter("Phone").trim();
+		String Email = request.getParameter("Email").trim();
+		String Street = request.getParameter("Street").trim();
+		String City = request.getParameter("City").trim();
+		String PostalCode = request.getParameter("PostalCode").trim();
+		
+ 
+		if(b == false || !Password.equals(Confirmation)){  // Password doit être égal a Confirmation, et B= respecte les critères
+			response.sendRedirect("./sign");
+			
+		}else{
+			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, false);
+			UserManager um= UserManager.getInstance();
+			var o = um.newUser(user);
+			response.sendRedirect("./");
+
+		}
 
 
 	}
+
 
 }

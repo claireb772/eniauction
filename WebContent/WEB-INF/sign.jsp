@@ -26,52 +26,52 @@
 	<div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput">Pseudo</label>
-	    <input name="Pseudo" type="text" class="form-control" id="formGroupExampleInput" placeholder="Pseudo">
+	    <input required="required"  name="Pseudo" type="text" class="form-control" id="formGroupExampleInput" placeholder="Pseudo" pattern="[a-z,A-Z]{4,20}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Prenom</label>
-	    <input name="Name" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Prenom">
+	    <input required="required" name="Name" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Prenom">
 	  </div>
 	</div>
 
 	<div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Mot de passe</label>
-	    <input name="Password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password">
+	    <input required="required"  name="Password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" autocomplete="current-password" minlength="8" maxlength="30">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Confirmation</label>
-	    <input name="Confirmation" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Confirmation">
+	    <input required="required"  name="Confirmation" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Confirmation">
 	  </div>
 	</div>
 	  <div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Nom</label>
-	    <input name="Surname" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Nom">
+	    <input required="required"  name="Surname" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Nom" pattern="[a-z,A-Z ]{4,20}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Tel</label>
-	    <input name="Phone" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Tel">
+	    <input required="required"  name="Phone" type="tel" class="form-control" id="formGroupExampleInput2" placeholder="Tel" pattern="[0-0]{1}[0-9]{9}">
 	  </div>
 	  </div>
 	  <div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Email</label>
-	    <input name="Email" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Email">
+	    <input required="required"  name="Email" type="email" class="form-control" id="formGroupExampleInput2" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Rue</label>
-	    <input name="Street" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Rue">
+	    <input required="required"  name="Street" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Rue">
 	  </div>
 	</div>
 	  <div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Ville</label>
-	    <input name="City" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ville">
+	    <input required="required"  name="City" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Ville">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Code Postal</label>
-	    <input name="PostalCode" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Code Postal">
+	    <input required="required"  name="PostalCode" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Code Postal"  pattern="[0-9]{5}">
 	  </div>
 	</div>
 	<div class="d-flex flex-row">
