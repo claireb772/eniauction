@@ -46,9 +46,11 @@ public class UsersImpl implements UsersDAO {
 						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
 						rs.getInt("credit"), false);
 			}
+			cnx.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+            e.printStackTrace();
 		}
+
 
 		return users;
 	}
@@ -115,7 +117,10 @@ public class UsersImpl implements UsersDAO {
 
 			}
 
-		} catch (Exception e) {
+			cnx.close();
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 
