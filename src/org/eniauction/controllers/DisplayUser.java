@@ -36,7 +36,7 @@ public class DisplayUser extends HttpServlet {
 			throws ServletException, IOException {
 		UserManager um = UserManager.getInstance();
 
-		int user_nb = 2;
+		int user_nb = um.getActualUser().getUser_nb();
 
 		Users userProfile = um.getUser(user_nb);
 		request.setAttribute("userProfile", userProfile);

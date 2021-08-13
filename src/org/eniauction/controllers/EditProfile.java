@@ -35,11 +35,8 @@ public class EditProfile extends HttpServlet {
 			throws ServletException, IOException {
 
 		UserManager um = UserManager.getInstance();
-		// String param = request.getParameter("param");
-		// int user_nb = Integer.valueOf(param);
-
-		int user_nb = 2;
-
+		String param = request.getParameter("param");
+		int user_nb = Integer.valueOf(param);
 		Users userProfile = um.getUser(user_nb);
 		request.setAttribute("userProfile", userProfile);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
@@ -53,9 +50,8 @@ public class EditProfile extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// String param = request.getParameter("param");
-		// int user_nb = Integer.valueOf(param);
-		int user_nb = 0;
+		UserManager um = UserManager.getInstance();
+		int user_nb = um.getActualUser().getUser_nb();
 
 		String pseudo = request.getParameter("pseudo");
 		String name = request.getParameter("name");
@@ -70,9 +66,7 @@ public class EditProfile extends HttpServlet {
 		// Faire la verif de la confirmation du mot de passe avant
 		// String confirmation = request.getParameter("confirmation");
 
-		Users users = new Users(0, pseudo, name, surname, email, phone_nb, street, postal_code, city, password);
-
-		UserManager um = UserManager.getInstance();
+		Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city, password);
 
 		String message = null;
 		try {
