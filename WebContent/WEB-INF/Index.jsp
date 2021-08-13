@@ -14,7 +14,6 @@
 
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
 	<%@ include file="/WEB-INF/navBar.jsp" %> 
-</nav>
 <main class="p-3 col-12 row ">
 
 	<div class="input-group">
