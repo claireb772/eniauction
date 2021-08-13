@@ -56,39 +56,6 @@ public class UsersImpl implements UsersDAO {
 	@Override
 	public boolean insert(Users user) {
 
-		//		try
-		//		{
-		//			Connection cnx = ConnectionProvider.getConnection();
-		//			cnx.setAutoCommit(false);
-		//			PreparedStatement pstmt;
-		//			ResultSet rs;
-		//			
-		//			if (true)
-		//			{
-		//				pstmt = cnx.prepareStatement(INSERT_USER);
-		//				pstmt.setString(1, user.getPseudo());
-		//				pstmt.setString(2, user.getName());
-		//				pstmt.setString(3, user.getSurname());
-		//				pstmt.setString(4, user.getEmail());
-		//				pstmt.setString(5, user.getPhone_nb());
-		//				pstmt.setString(6, user.getStreet());
-		//				pstmt.setString(7, user.getPostal_code());
-		//				pstmt.setString(8, user.getCity());
-		//				pstmt.setString(9, user.getPassword());
-		//				pstmt.setInt(10, user.getCredit());
-		//				pstmt.setBoolean(11, false);
-		//
-		//				pstmt.execute();
-		//				System.out.println("Envoyé");
-		//				rs = pstmt.getGeneratedKeys();
-		//				if(rs.next())
-		//				{
-		//					user.setUser_nb(rs.getInt(1));
-		//				}
-		//				pstmt.close();
-		//				rs.close();
-		//			}
-		//		}
 
 		try (Connection conn = ConnectionProvider.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(INSERT_USER)) {
