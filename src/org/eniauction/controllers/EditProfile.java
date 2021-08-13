@@ -15,7 +15,7 @@ import org.eniauction.models.bo.Users;
 /**
  * Servlet implementation class EditProfile
  */
-@WebServlet(urlPatterns = "/editProfile/*")
+@WebServlet(urlPatterns = "/editProfile")
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,12 +35,11 @@ public class EditProfile extends HttpServlet {
 			throws ServletException, IOException {
 
 		UserManager um = UserManager.getInstance();
-		int user_nb = 1;
+		// String param = request.getParameter("param");
+		// int user_nb = Integer.valueOf(param);
 
-		// String userParam = request.getParameter("user_nb");
+		int user_nb = 2;
 
-		// TODO
-		// recupération du nb_user
 		Users userProfile = um.getUser(user_nb);
 		request.setAttribute("userProfile", userProfile);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
@@ -54,7 +53,9 @@ public class EditProfile extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int user_nb = 1;
+		// String param = request.getParameter("param");
+		// int user_nb = Integer.valueOf(param);
+		int user_nb = 0;
 
 		String pseudo = request.getParameter("pseudo");
 		String name = request.getParameter("name");
@@ -69,15 +70,22 @@ public class EditProfile extends HttpServlet {
 		// Faire la verif de la confirmation du mot de passe avant
 		// String confirmation = request.getParameter("confirmation");
 
-		Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city, password);
+		Users users = new Users(0, pseudo, name, surname, email, phone_nb, street, postal_code, city, password);
 
 		UserManager um = UserManager.getInstance();
 
-		um.editProfile(users);
+		String message = null;
+		try {
+			um.editProfile(users);
+			response.sendRedirect("./profil");
+		} catch (Exception e) {
 
-		// rajouter un message si l'ajout a bien été fait
+			e.printStackTrace();
+			message = "problème lors de la mise à jour du profil";
+			request.setAttribute("message", message);
 
-		doGet(request, response);
+		}
+
 	}
 
 }

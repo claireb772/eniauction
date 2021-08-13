@@ -26,17 +26,16 @@ public class UserManager {
 
 	public Users getUser(int user_nb) {
 		UsersImpl ui = UsersImpl.getInstance();
-
 		return ui.selectByid(user_nb);
 	}
 
-	public void editProfile(Users users) {
+	public void editProfile(Users users) throws Exception {
 		UsersImpl ui = UsersImpl.getInstance();
 		ui.update(users);
+
 	}
 
 	public boolean ConnectUser(String email, String password) {
-
 		UsersImpl ui = UsersImpl.getInstance();
 		Users user = ui.ConnectUser(email, password);
 

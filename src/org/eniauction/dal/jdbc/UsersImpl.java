@@ -20,14 +20,16 @@ public class UsersImpl implements UsersDAO {
 		return instance;
 	}
 
-	private static final String UPDATE_BY_ID = "UPDATE users set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=? where user_nb=?";
+	private static final String UPDATE_BY_ID = "UPDATE USERS set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=? where user_nb=?";
 
-	private static final String SELECT_BY_ID = "SELECT "
-			+ "pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator "
-			+ "from USERS " + "where user_nb=?";
+	private static final String SELECT_BY_ID = "SELECT " + " * " + " from USERS where user_nb=?";
 
 	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT " + " * " + " from USERS "
 			+ " where email = ? and password = ? ";
+
+	/*
+	 * Fonction qui permet de récupérer un user avec son id
+	 */
 
 	public Users selectByid(int user_nb) {
 		Users users = null;
@@ -71,8 +73,12 @@ public class UsersImpl implements UsersDAO {
 		return null;
 	}
 
+	/*
+	 * Fonction qui permet de faire un update de l'utilisateur
+	 */
+
 	@Override
-	public void update(Users user) {
+	public void update(Users user) throws Exception {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_BY_ID);
@@ -85,17 +91,19 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setString(7, user.getPostal_code());
 			pstmt.setString(8, user.getCity());
 			pstmt.setString(9, user.getPassword());
+			pstmt.setInt(10, user.getUser_nb());
 			pstmt.executeUpdate();
 			pstmt.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 	}
 
 // Fonction permetant de rechercher dans la base de données, si un utilisateur existe grace à la saisie de ce dernier
-// Les saisie de l'utilisateur viennent du login
+// Les saisies de l'utilisateur viennent du login
 	public Users ConnectUser(String emailInput, String passwordInput) {
 
 		Users users = null;

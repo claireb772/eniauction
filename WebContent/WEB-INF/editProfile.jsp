@@ -44,7 +44,7 @@
 	  <div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Nom</label>
-	    <input type="text" name="nom" class="form-control" id="formGroupExampleInput2" placeholder="Nom" value="${userProfile.name}">
+	    <input type="text" name="name" class="form-control" id="formGroupExampleInput2" placeholder="Nom" value="${userProfile.name}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Tel</label>
@@ -72,11 +72,15 @@
 	  </div>
 	</div>
 	<div class="d-flex flex-row">
-		<a href="<%=request.getContextPath()%>" role="button" class="btn btn-outline-secondary m-3 w-50">Enregistrer</a>
-		<button type="button" class="btn btn-primary m-3 w-50">Supprimer mon compte</button>
+		<button type="submit" role="button" class="btn btn-primary m-3 w-50">Enregistrer</a>
+		<button type="button" class="btn btn-danger m-3 w-50">Supprimer mon compte</button>
 	</div>
+	<c:if test="${!empty message}">
+			<div>${message}</div>
+			
+		</c:if>
 </form>
-
+		
 	
 	
 </main>
