@@ -26,18 +26,18 @@
 	<div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput">Pseudo</label>
-	    <input required="required"  name="Pseudo" type="text" class="form-control" id="formGroupExampleInput" placeholder="Pseudo" pattern="[a-z,A-Z]{4,20}">
+	    <input required="required"  name="Pseudo" type="text" class="form-control" id="formGroupExampleInput" placeholder="Pseudo" pattern="^[a-zA-Z0-9_]*$" maxlength="15">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Prenom</label>
-	    <input required="required" name="Name" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Prenom">
+	    <input required="required" name="Name" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Prenom" maxlength="25">
 	  </div>
 	</div>
 
 	<div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Mot de passe</label>
-	    <input required="required"  name="Password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" autocomplete="current-password" minlength="8" maxlength="30">
+	    <input required="required"  name="Password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" autocomplete="current-password" maxlength="30">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Confirmation</label>
