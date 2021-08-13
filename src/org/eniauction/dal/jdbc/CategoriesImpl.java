@@ -34,7 +34,7 @@ public class CategoriesImpl {
 				 Categories category = new Categories(rs.getInt(1), rs.getString(2));
 				 listCategories.add(category);
 				}
-			 
+			 cs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,6 +56,7 @@ public class CategoriesImpl {
 				{
 				 	category = new Categories(rs.getInt(1), rs.getString(2));
 				}
+			 cs.close();
 			 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

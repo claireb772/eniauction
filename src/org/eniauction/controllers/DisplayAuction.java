@@ -44,15 +44,6 @@ public class DisplayAuction extends HttpServlet {
 		if (rd != null) {
 			rd.forward(request, response);
 		}
-		
-		//Création cookie permettant la connexion
-		// 1 = Utilisateur connecté
-		// 0 = L'utilisateur n'est pas connecté
-		// terminer condition de créatio
-		
-		//Cookie cookie = new Cookie("authentification", "0");
-
-		//response.addCookie(cookie);
 	}
 
 	/**

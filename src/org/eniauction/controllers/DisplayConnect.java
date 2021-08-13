@@ -1,18 +1,16 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.eniauction.models.bll.UserManager;
-import org.eniauction.models.bo.Users;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class DisplayUser
@@ -37,10 +35,20 @@ public class DisplayConnect extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
-		if (rd != null) {
-			rd.forward(request, response);
+		UserManager um = UserManager.getInstance();
+		if(um.getActualUser() != null) {
+			System.out.println(request.getContextPath().toString());
+			response.sendRedirect("./");
+			
+		}else {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
+			if (rd != null) {
+				
+				rd.forward(request, response);
+			}			
 		}
+		
+
 	}
 
 	/**
@@ -57,15 +65,16 @@ public class DisplayConnect extends HttpServlet {
 		String passwordInput = request.getParameter("password");
 		
 		
-		//if(users.getPseudo().equals(userInput) && users.getPassword().equals(passwordInput)){
 		if(manager.ConnectUser(userInput, passwordInput)){
 		
-			//Création cookie permettant la connexion
-			Cookie cookie = new Cookie("authentification", "1");
-
-			response.addCookie(cookie);
+			//Création session permettant la connexion
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("authentification", "1");
+			System.out.println(session.getAttribute("authentification"));
+			
 		}
-	
+		
 		
 		doGet(request, response);
 	}
