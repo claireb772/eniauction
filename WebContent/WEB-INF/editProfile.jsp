@@ -23,18 +23,18 @@
 	<div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput">Pseudo</label>
-	    <input type="text" name="pseudo" class="form-control" id="formGroupExampleInput" placeholder="Pseudo">
+	    <input type="text" name="pseudo" class="form-control" id="formGroupExampleInput" placeholder="Pseudo" value="${userProfile.pseudo}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Prenom</label>
-	    <input type="text" name="surname" class="form-control" id="formGroupExampleInput2" placeholder="Prenom">
+	    <input type="text" name="surname" class="form-control" id="formGroupExampleInput2" placeholder="Prenom" value="${userProfile.surname}">
 	  </div>
 	</div>
 
 	<div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Mot de passe</label>
-	    <input type="password" name="password" class="form-control" id="formGroupExampleInput2" placeholder="Password">
+	    <input type="password" name="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" value="${userProfile.password}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Confirmation</label>
@@ -44,35 +44,35 @@
 	  <div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Nom</label>
-	    <input type="text" name="nom" class="form-control" id="formGroupExampleInput2" placeholder="Nom">
+	    <input type="text" name="nom" class="form-control" id="formGroupExampleInput2" placeholder="Nom" value="${userProfile.name}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Tel</label>
-	    <input type="text" name="phoneNb" class="form-control" id="formGroupExampleInput2" placeholder="Tel">
+	    <input type="text" name="phoneNb" class="form-control" id="formGroupExampleInput2" placeholder="Tel" value="${userProfile.phone_nb}">
 	  </div>
 	  </div>
 	  <div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Email</label>
-	    <input type="text" name="email" class="form-control" id="formGroupExampleInput2" placeholder="Email">
+	    <input type="text" name="email" class="form-control" id="formGroupExampleInput2" placeholder="Email" value="${userProfile.email}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Rue</label>
-	    <input type="text" name="street" class="form-control" id="formGroupExampleInput2" placeholder="Rue">
+	    <input type="text" name="street" class="form-control" id="formGroupExampleInput2" placeholder="Rue" value="${userProfile.street}">
 	  </div>
 	</div>
 	  <div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Ville</label>
-	    <input type="text" name="city" class="form-control" id="formGroupExampleInput2" placeholder="Ville">
+	    <input type="text" name="city" class="form-control" id="formGroupExampleInput2" placeholder="Ville" value="${userProfile.city}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Code Postal</label>
-	    <input type="text" name="postalCode" class="form-control" id="formGroupExampleInput2" placeholder="Code Postal">
+	    <input type="text" name="postalCode" class="form-control" id="formGroupExampleInput2" placeholder="Code Postal" value="${userProfile.postal_code}">
 	  </div>
 	</div>
 	<div class="d-flex flex-row">
-		<a href="<%=request.getContextPath()%>"><button type="button" class="btn btn-outline-secondary m-3 w-50">Enregistrer</button></a>
+		<a href="<%=request.getContextPath()%>" role="button" class="btn btn-outline-secondary m-3 w-50">Enregistrer</a>
 		<button type="button" class="btn btn-primary m-3 w-50">Supprimer mon compte</button>
 	</div>
 </form>

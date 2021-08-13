@@ -34,9 +34,15 @@ public class EditProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		UserManager um = UserManager.getInstance();
+		int user_nb = 1;
+
+		// String userParam = request.getParameter("user_nb");
+
 		// TODO
 		// recupération du nb_user
-
+		Users userProfile = um.getUser(user_nb);
+		request.setAttribute("userProfile", userProfile);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
 		rd.forward(request, response);
 	}
