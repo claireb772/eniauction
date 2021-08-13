@@ -28,23 +28,17 @@ public class UsersImpl implements UsersDAO {
 	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT " + " * " + " from USERS "
 			+ " where email = ? and password = ? ";
 
-	<<<<<<<HEAD
+	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator) values(?,?,?,?,?,?,?,?,?,?,?)";
+
 	/*
 	 * Fonction qui permet de récupérer un user avec son id
 	 */
 
 	public Users selectByid(int user_nb) {
-=======
 
-	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator) values(?,?,?,?,?,?,?,?,?,?,?)";
-
-	public Users selectByid(int user_nb){
-
->>>>>>> cc2ff07d405a7e21a92394faa708c0152201ae25
 		Users users = null;
 
-		try(Connection cnx = ConnectionProvider.getConnection())
-
+		try (Connection cnx = ConnectionProvider.getConnection())
 
 		{
 
@@ -54,20 +48,21 @@ public class UsersImpl implements UsersDAO {
 
 			while (rs.next()) {
 
+				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
+						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getInt("credit"), false);
 
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
 						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
 						rs.getInt("credit"), false);
 
-				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
-
 			}
 			cnx.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 
 		return users;
 	}
