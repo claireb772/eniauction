@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eniauction.models.bll.ManagerAuction;
+import org.eniauction.models.bo.Categories;
 import org.eniauction.models.bo.SoldArticles;
 
 public class AuctionImpl {
@@ -21,8 +24,9 @@ public class AuctionImpl {
        return instance;
 	 }
 	 
+	 private static final String INSERT_USER = "insert into SOLD_ARTICLES(article_name, description, auction_start_date, auction_end_date, initial_price, sell_price, user_nb, category_nb) values(?,?,?,?,?,?,?,?)";
 	
-	public List<SoldArticles> selectAll(){
+	 public List<SoldArticles> selectAll(){
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
 			 Connection cs = ConnectionProvider.getConnection();
@@ -30,7 +34,6 @@ public class AuctionImpl {
 			 ResultSet rs = pstmt.executeQuery();
 			 while(rs.next())
 				{
-				 //System.out.println(rs.getString(2));
 				 SoldArticles sa = new SoldArticles(
 						 rs.getInt(1),
 						 rs.getString(2), 
@@ -46,7 +49,56 @@ public class AuctionImpl {
 				}
 			 cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listArticles;
+	}
+	 
+	public void insertArticle(SoldArticles sold) 
+	{
+		
+		
+
+		
+	    try {
+    		Connection conn = ConnectionProvider.getConnection(); 
+            PreparedStatement pstmt = conn.prepareStatement(INSERT_USER);
+            pstmt.setString(1, sold.getArticle_name());
+            pstmt.setString(2, sold.getDescription());
+            pstmt.setDate(3, convertDateToSqlData(sold.getAuction_start_date()));
+            pstmt.setDate(4, convertDateToSqlData(sold.getAuction_end_date()));
+            pstmt.setInt(5, sold.getSell_price());
+            pstmt.setInt(6, sold.getSell_price());
+            pstmt.setInt(7, sold.getUsers_nb());
+            pstmt.setInt(8, sold.getCategory_nb());
+ 
+            int row = pstmt.executeUpdate();
+	        } 
+	    catch (Exception e) 
+	    { 
+	    	e.printStackTrace(); 
+	    }
+	 }
+	
+	private java.sql.Date convertDateToSqlData(java.util.Date date) {
+		long timeInMilliSeconds1 = date.getTime();
+        java.sql.Date date1 = new java.sql.Date(timeInMilliSeconds1);
+        return date1;
+	}
+	public List<Categories> getCategories() {
+		
+		List<Categories> listArticles = new ArrayList<Categories>();
+		try {
+			 Connection cs = ConnectionProvider.getConnection();
+			 PreparedStatement pstmt = cs.prepareStatement("Select * From CATEGORIES");
+			 ResultSet rs = pstmt.executeQuery();
+			 while(rs.next())
+				{
+				 Categories sa = new Categories(rs.getInt(1), rs.getString(2));
+				 listArticles.add(sa);
+				}
+			 
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return listArticles;
