@@ -31,8 +31,25 @@ public class Users {
         this.credit = credit;
         this.administrator = administrator;
     }
+    
+    
 
-    public int getUser_nb() {
+    public Users(int user_nb, String pseudo, String name, String surname, String email, String phone_nb, String street,
+			String postal_code, String city, String password) {
+		super();
+		this.user_nb = user_nb;
+		this.pseudo = pseudo;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.phone_nb = phone_nb;
+		this.street = street;
+		this.postal_code = postal_code;
+		this.city = city;
+		this.password = password;
+	}
+
+	public int getUser_nb() {
         return user_nb;
     }
 

@@ -40,8 +40,7 @@ public class DisplayUser extends HttpServlet {
 		int user_nb = 1;
 		
 		Users userProfile = um.getUser(user_nb);		
-		request.setAttribute("userProfile", userProfile);
-		
+		request.setAttribute("userProfile", userProfile);		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profile.jsp");
 		if (rd != null) {
 			rd.forward(request, response);

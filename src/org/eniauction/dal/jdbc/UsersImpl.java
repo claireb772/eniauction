@@ -6,66 +6,63 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import org.eniauction.dal.UsersDAO;
-import org.eniauction.models.bll.UserManager;
 import org.eniauction.models.bo.Users;
 
 public class UsersImpl implements UsersDAO {
-	
+
 	private static UsersImpl instance;
-	
+
 	public static UsersImpl getInstance() {
-		
-		 if (instance == null) {
-			 instance = new UsersImpl();
-		 }
-		 return instance;	
+
+		if (instance == null) {
+			instance = new UsersImpl();
+		}
+		return instance;
 	}
-	
+
+	private static final String UPDATE_BY_ID = "UPDATE users set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=? where user_nb=?";
+
 	private static final String SELECT_BY_ID = "SELECT "
 			+ "pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator "
-			+ "from USERS "
-			+ "where user_nb=?";
-	
-	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT "
-			+ " * "
-			+ " from USERS "
+			+ "from USERS " + "where user_nb=?";
+
+	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT " + " * " + " from USERS "
 			+ " where email = ? and password = ? ";
-	
-	public Users selectByid(int user_nb){
-		
+
+	public Users selectByid(int user_nb) {
 		Users users = null;
-		
-		try(Connection cnx = ConnectionProvider.getConnection())
-		
+		try (Connection cnx = ConnectionProvider.getConnection())
+
 		{
-			
+
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, user_nb);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
-				
-				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
+
+				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
+						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getInt("credit"), false);
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return users;
 	}
 
 	@Override
 	public void insert(Users user) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(int user_nb) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -74,32 +71,54 @@ public class UsersImpl implements UsersDAO {
 		return null;
 	}
 
+	@Override
+	public void update(Users user) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_BY_ID);
+			pstmt.setString(1, user.getPseudo());
+			pstmt.setString(2, user.getName());
+			pstmt.setString(3, user.getSurname());
+			pstmt.setString(4, user.getEmail());
+			pstmt.setString(5, user.getPhone_nb());
+			pstmt.setString(6, user.getStreet());
+			pstmt.setString(7, user.getPostal_code());
+			pstmt.setString(8, user.getCity());
+			pstmt.setString(9, user.getPassword());
+			pstmt.executeUpdate();
+			pstmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 // Fonction permetant de rechercher dans la base de données, si un utilisateur existe grace à la saisie de ce dernier
 // Les saisie de l'utilisateur viennent du login
 	public Users ConnectUser(String emailInput, String passwordInput) {
-		
+
 		Users users = null;
-		
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL_PASSWORD);
 			pstmt.setString(1, emailInput);
 			pstmt.setString(2, passwordInput);
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
-				
-				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
-				
+
+				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
+						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getInt("credit"), false);
+
 			}
 
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return users;
 	}
 
