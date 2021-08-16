@@ -15,10 +15,11 @@
 <main class="p-3 col-12 row ">
 	<form  method="post">
 		<div class="input-group">
-			<input name="search" placeholder="Recherche" class="form-control col-3"/>
-			<button name="validSearch" value="1" type="submit" class="btn btn-primary">Rechercher</button>
+			<input name="search" value="${searchInput}" placeholder="Recherche" class="form-control col-3"/>
+			<button name="validSearch" type="submit" class="btn btn-primary">Rechercher</button>
+			<a href="./" type="button" class="btn btn-outline-primary">Annuler</a>
 		</div>
-	</form> 
+	</form>
 	<c:forEach var="item" items="${listAuction}" >
 		<div class="bg-light p-3 col-12 col-md-4 enchere_container">
 		<p class="text-primary m-0">${item.article.article_name }</p>

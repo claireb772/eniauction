@@ -34,15 +34,18 @@ public class DisplayAuction extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ManagerAuction manager = ManagerAuction.getInstance();
-		List<AuctionComplete> listAuction = manager.GetAuction();
-		request.setAttribute("listAuction", listAuction.toArray());
+		
+		if(request.getParameter("validSearch") == null) {
+			
+			ManagerAuction manager = ManagerAuction.getInstance();
+			List<AuctionComplete> listAuction = manager.GetAuction();
+			request.setAttribute("listAuction", listAuction.toArray());
+		
+		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
-		
-		
-		
 		if (rd != null) {
-			rd.forward(request, response);
+				rd.forward(request, response);
 		}
 	}
 
@@ -50,12 +53,13 @@ public class DisplayAuction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		String searchInput = request.getParameter("search");
 		
 		ManagerAuction manager = ManagerAuction.getInstance();
 		List<AuctionComplete> listAuction = manager.GetSearch(searchInput);
 		request.setAttribute("listAuction", listAuction.toArray());
+		request.setAttribute("searchInput", searchInput);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
 		
 		doGet(request, response);
