@@ -1,7 +1,6 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eniauction.models.bll.ManagerAuction;
-import org.eniauction.models.bo.AuctionComplete;
-
 /**
- * Servlet implementation class DisplayAuctionDetails
+ * Servlet implementation class Admin
  */
-@WebServlet( urlPatterns = "/AuctionDetails/*")
-public class DisplayAuctionDetails extends HttpServlet {
+@WebServlet("/Admin")
+public class DisplayAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayAuctionDetails() {
+    public DisplayAdmin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,13 +28,7 @@ public class DisplayAuctionDetails extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-
-		ManagerAuction ma = ManagerAuction.getInstance();
-		int articleId = Integer.parseInt(request.getParameter("id")); 
-		AuctionComplete auction = ma.getOneAuctionComplete(articleId);
-		request.setAttribute("auction", auction);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/AuctionDetail.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Admin.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}

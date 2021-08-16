@@ -29,7 +29,15 @@ public class ManagerAuction {
 		 }
 		 return listArticles;
 	 }
+	 
+	 public List<SoldArticles> GetSoldArticles() {
+		 AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		 List<SoldArticles> listArticles = auctionImpl.selectAll();
 
+		 return listArticles;
+	 }
+
+	 //Ajoute un soldArticle
 	public void SetNewAuction(SoldArticles sa) {
 		AuctionImpl ai = AuctionImpl.getInstance();
 		ai.insertArticle(sa);
@@ -46,5 +54,18 @@ public class ManagerAuction {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		AuctionComplete ac = new AuctionComplete(auctionImpl.getOneArticle(id));
 		return ac;
+	}
+
+	public List<Auction> getAllAuctionById(int article_nb) {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		List<Auction> listAuction = auctionImpl.getAllAuctionById(article_nb); 
+		return listAuction;
+	}
+	
+	//Ajoute une enchere
+	public void SetAuction(Auction auction) {
+		AuctionImpl ai = AuctionImpl.getInstance();
+		ai.insertAuction(auction);
+		
 	}
 }

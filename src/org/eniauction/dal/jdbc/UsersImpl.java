@@ -3,6 +3,7 @@ package org.eniauction.dal.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eniauction.dal.UsersDAO;
@@ -32,6 +33,7 @@ public class UsersImpl implements UsersDAO {
 
 	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator) values(?,?,?,?,?,?,?,?,?,?,?)";
 
+	private static final String SELECT_ALL_USERS = "select * from USERS";
 	public Users selectByid(int user_nb){
 
 		Users users = null;
@@ -104,8 +106,29 @@ public class UsersImpl implements UsersDAO {
 
 	@Override
 	public List<Users> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Users> ListUsers = new ArrayList<Users>();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_USERS);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				Users users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
+						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getInt("credit"), false);
+				ListUsers.add(users);
+			}
+
+			cnx.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return ListUsers;
+		
 	}
 
 	@Override
