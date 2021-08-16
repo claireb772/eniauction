@@ -24,7 +24,7 @@ public class UserManager {
 		this.actualUser = actualUser;
 	}
 
-	public Users getUser(int user_nb) {
+	public Users getUser(int user_nb) throws Exception {
 		UsersImpl ui = UsersImpl.getInstance();
 		return ui.selectByid(user_nb);
 	}
@@ -35,6 +35,10 @@ public class UserManager {
 
 	}
 
+	public void deleteProfile(int user_nb) throws Exception {
+		UsersImpl ui = UsersImpl.getInstance();
+		ui.delete(user_nb);
+	}
 
 	public boolean ConnectUser(String email, String password) {
 		UsersImpl ui = UsersImpl.getInstance();
@@ -50,19 +54,15 @@ public class UserManager {
 
 	public Users newUser(Users user) {
 		UsersImpl ui = UsersImpl.getInstance();
-		
+
 		if (ui.insert(user)) {
-			System.out.println("réussi");
-		
-		}
-		else {
-			System.out.println("raté");
+			System.out.println("rï¿½ussi");
+
+		} else {
+			System.out.println("ratï¿½");
 		}
 		return user;
-		
-		
-	}
-	
 
+	}
 
 }

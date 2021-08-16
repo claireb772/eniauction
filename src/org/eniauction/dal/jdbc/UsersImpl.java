@@ -30,11 +30,13 @@ public class UsersImpl implements UsersDAO {
 
 	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator) values(?,?,?,?,?,?,?,?,?,?,?)";
 
+	private static final String DELETE_USER_BY_ID = "DELETE FROM USERS WHERE user_nb=?";
+
 	/*
 	 * Fonction qui permet de récupérer un user avec son id
 	 */
 
-	public Users selectByid(int user_nb) {
+	public Users selectByid(int user_nb) throws Exception {
 
 		Users users = null;
 
@@ -62,6 +64,7 @@ public class UsersImpl implements UsersDAO {
 			cnx.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 		return users;
@@ -96,8 +99,17 @@ public class UsersImpl implements UsersDAO {
 	}
 
 	@Override
-	public void delete(int user_nb) {
-		// TODO Auto-generated method stub
+	public void delete(int user_nb) throws Exception {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE_USER_BY_ID);
+			pstmt.setInt(1, user_nb);
+			pstmt.executeUpdate();
+			pstmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 
 	}
 

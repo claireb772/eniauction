@@ -1,6 +1,10 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,9 +39,19 @@ public class EditProfile extends HttpServlet {
 			throws ServletException, IOException {
 
 		UserManager um = UserManager.getInstance();
-		String param = request.getParameter("param");
-		int user_nb = Integer.valueOf(param);
-		Users userProfile = um.getUser(user_nb);
+
+		int user_nb = um.getActualUser().getUser_nb();
+
+		Users userProfile = null;
+		try {
+			userProfile = um.getUser(user_nb);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			String message = "problème lors de la récupération du profil";
+			request.setAttribute("message", message);
+
+		}
 		request.setAttribute("userProfile", userProfile);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
 		rd.forward(request, response);
@@ -52,32 +66,48 @@ public class EditProfile extends HttpServlet {
 
 		UserManager um = UserManager.getInstance();
 		int user_nb = um.getActualUser().getUser_nb();
+		List<String> messagesErreur = new ArrayList<>();
 
-		String pseudo = request.getParameter("pseudo");
-		String name = request.getParameter("name");
-		String surname = request.getParameter("surname");
-		String email = request.getParameter("email");
-		String phone_nb = request.getParameter("phoneNb");
-		String street = request.getParameter("street");
-		String postal_code = request.getParameter("postalCode");
-		String city = request.getParameter("city");
+		String pseudo = request.getParameter("pseudo").trim();
+		String name = request.getParameter("name").trim();
+		String surname = request.getParameter("surname").trim();
+		String email = request.getParameter("email").trim();
+		String phone_nb = request.getParameter("phoneNb").trim();
+		String street = request.getParameter("street").trim();
+		String postal_code = request.getParameter("postalCode").trim();
+		String city = request.getParameter("city").trim();
 
 		String password = request.getParameter("password");
-		// Faire la verif de la confirmation du mot de passe avant
-		// String confirmation = request.getParameter("confirmation");
 
-		Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city, password);
+		Pattern passwordPattern = Pattern
+				.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"); // Min 1maj 1min 1
+																									// chiffre 1 char
+																									// special
+		Matcher matchingPassword = passwordPattern.matcher(password);
+		// boolean isMatches = matchingPassword.matches();
+		boolean isMatches = false;
 
-		String message = null;
-		try {
-			um.editProfile(users);
-			response.sendRedirect("./profil");
-		} catch (Exception e) {
+		if (isMatches == false) {
+			messagesErreur.add(
+					"Les mots de passe ne concordent pas. Il faut au moins une majuscule, 1 chiffre et 1 caractère spécial");
 
-			e.printStackTrace();
-			message = "problème lors de la mise à jour du profil";
-			request.setAttribute("message", message);
+		} else {
 
+			Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city,
+					password);
+
+			try {
+				um.editProfile(users);
+				response.sendRedirect("./profil");
+			} catch (Exception e) {
+
+				e.printStackTrace();
+				messagesErreur.add("problème lors de la mise à jour du profil");
+			}
+		}
+
+		if (messagesErreur.size() > 0) {
+			request.setAttribute("message", messagesErreur);
 		}
 
 	}

@@ -2,7 +2,6 @@ package org.eniauction.controllers;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eniauction.models.bll.UserManager;
-import org.eniauction.models.bo.Users;
 
 /**
- * Servlet implementation class DisplayUser
+ * Servlet implementation class DeleteProfil
  */
-@WebServlet("/profil")
-public class DisplayUser extends HttpServlet {
+@WebServlet("/deleteProfil")
+public class DeleteProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor.
+	 * @see HttpServlet#HttpServlet()
 	 */
-	public DisplayUser() {
+	public DeleteProfil() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -31,28 +29,21 @@ public class DisplayUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		UserManager um = UserManager.getInstance();
 
 		int user_nb = um.getActualUser().getUser_nb();
 
-		// boolean isActualUser = false;
-		Users userProfile = null;
 		try {
-			userProfile = um.getUser(user_nb);
+			um.deleteProfile(user_nb);
+			response.sendRedirect("./logout");
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			String message = "problème lors de la récupération du profil";
+			String message = "problème lors de la suppression du profil";
 			request.setAttribute("message", message);
-		}
-
-		request.setAttribute("userProfile", userProfile);
-		// request.setAttribute("isActualUser", isActualUser);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profile.jsp");
-		if (rd != null) {
-			rd.forward(request, response);
 		}
 	}
 
@@ -60,7 +51,6 @@ public class DisplayUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
