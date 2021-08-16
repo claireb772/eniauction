@@ -4,9 +4,7 @@
 	<div class="links justify-self-end">
 		<c:if test="${sessionScope.authentification == 1}"  >
 			<a href="./NewAuction" class="text-white text-decoration-none mx-2">Nouvelle Vente</a>
-			<a href="<%=request.getContextPath() %>/profil?id="${sessionScope.id}" class="text-white text-decoration-none mx-2">Profil</a>
-			<a href="./profil" class="text-white text-decoration-none mx-2">Profil</a>
->>>>>>> d8a930f79987447b526b6f9eb014712e5f15acec
+			<a href="<%=request.getContextPath() %>/profil?id=${sessionScope.id}" class="text-white text-decoration-none mx-2">Profil</a>
 			<a href="./logout" class="text-white text-decoration-none mx-2">Deconnecter</a>
 		</c:if>
 		<c:if test="${sessionScope.authentification != 1}"  >

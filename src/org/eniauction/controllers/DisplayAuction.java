@@ -58,17 +58,20 @@ public class DisplayAuction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
 
-=======
 		String searchInput = request.getParameter("search");
-		
+
 		ManagerAuction manager = ManagerAuction.getInstance();
-		List<AuctionComplete> listAuction = manager.GetSearch(searchInput);
+		List<AuctionComplete> listAuction = null;
+		try {
+			listAuction = manager.GetSearch(searchInput);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.setAttribute("listAuction", listAuction.toArray());
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
-		
->>>>>>> d8a930f79987447b526b6f9eb014712e5f15acec
+
 		doGet(request, response);
 	}
 
