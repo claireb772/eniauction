@@ -1,17 +1,19 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eniauction.models.bll.ManagerAuction;
-import org.eniauction.models.bo.AuctionComplete;
+import org.eniauction.models.bo.*;
 
 /**
  * Servlet implementation class DisplayAuction
@@ -19,59 +21,51 @@ import org.eniauction.models.bo.AuctionComplete;
 @WebServlet("/")
 public class DisplayAuction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DisplayAuction() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public DisplayAuction() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		ManagerAuction manager = ManagerAuction.getInstance();
-		List<AuctionComplete> listAuction = null;
-
-		try {
-			listAuction = manager.GetAuction();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(request.getParameter("validSearch") == null) {
+			try {
+				ManagerAuction manager = ManagerAuction.getInstance();
+				List<AuctionComplete> listAuction = manager.GetAuction();
+				request.setAttribute("listAuction", listAuction.toArray());
+				}catch(Exception e){
+					e.getStackTrace();
+			}
 		}
-		request.setAttribute("listAuction", listAuction.toArray());
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
-
 		if (rd != null) {
-			rd.forward(request, response);
+				rd.forward(request, response);
 		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String searchInput = request.getParameter("search");
-
-		ManagerAuction manager = ManagerAuction.getInstance();
-		List<AuctionComplete> listAuction = null;
 		try {
-			listAuction = manager.GetSearch(searchInput);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		request.setAttribute("listAuction", listAuction.toArray());
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
-
+			ManagerAuction manager = ManagerAuction.getInstance();
+			List<AuctionComplete> listAuction = manager.GetSearch(searchInput);
+			request.setAttribute("listAuction", listAuction.toArray());
+			request.setAttribute("searchInput", searchInput);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
+		}catch(Exception e){
+			e.getStackTrace();
+	}
 		doGet(request, response);
 	}
 
