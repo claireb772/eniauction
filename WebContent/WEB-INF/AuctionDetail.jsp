@@ -41,7 +41,7 @@
 			<p>Liste des enchérisseurs</p>
 			<hr>
 			<c:if test="${auction.getSize() ==  0}">
-				<p>Aucun encherisseur pour cette offre</p>
+				<p class="text-secondary">Aucun encherisseur pour cette offre</p>
 			</c:if>
 			<c:if test="${auction.getSize() >  0}">
 				<table class="table table-sm">
@@ -49,7 +49,7 @@
 					<c:forEach var="item" items="${auction.getListAuction()}" >
 				    <tr>
 				    	<td>
-				    		<a href="#" class="text-decoration-none text-black flex-1 d-flex"><span class="flex-1 d-flex">${item.getUserById().getPseudo() }</span>${item.getAmount() } pts</a>
+				    		<a href="./profil?id=${item.getUserById().getUser_nb() }" class="text-decoration-none text-black flex-1 d-flex"><span class="flex-1 d-flex">${item.getUserById().getPseudo() }</span>${item.getAmount() } pts</a>
 				    	</td>
 				    	
 				    </tr>
