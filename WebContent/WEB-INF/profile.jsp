@@ -51,7 +51,9 @@
 		
 	
 	</div>
+	<c:if test="${isActualUser eq true}">
 	<a href="<%=request.getContextPath()%>/editProfile"><button type="button" class="btn btn-primary mt-5">Modifier mon profil</button></a>
+	</c:if>
 </div>
 		<c:if test="${!empty message}">
 			<div>${message}</div>			

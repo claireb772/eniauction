@@ -36,10 +36,18 @@ public class DisplayUser extends HttpServlet {
 			throws ServletException, IOException {
 		UserManager um = UserManager.getInstance();
 
-		int user_nb = um.getActualUser().getUser_nb();
+		int user_nb = Integer.parseInt(request.getParameter("id"));
 
-		// boolean isActualUser = false;
+		int actualUser = um.getActualUser().getUser_nb();
+
+		boolean isActualUser = false;
+
 		Users userProfile = null;
+
+		if (user_nb == actualUser) {
+			isActualUser = true;
+		}
+
 		try {
 			userProfile = um.getUser(user_nb);
 		} catch (Exception e) {
@@ -49,7 +57,8 @@ public class DisplayUser extends HttpServlet {
 		}
 
 		request.setAttribute("userProfile", userProfile);
-		// request.setAttribute("isActualUser", isActualUser);
+		request.setAttribute("isActualUser", isActualUser);
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profile.jsp");
 		if (rd != null) {
 			rd.forward(request, response);

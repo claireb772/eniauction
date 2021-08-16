@@ -61,6 +61,7 @@ public class UsersImpl implements UsersDAO {
 						rs.getInt("credit"), false);
 
 			}
+			rs.close();
 			cnx.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,6 +106,7 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setInt(1, user_nb);
 			pstmt.executeUpdate();
 			pstmt.close();
+			cnx.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,6 +142,7 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setInt(10, user.getUser_nb());
 			pstmt.executeUpdate();
 			pstmt.close();
+			cnx.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -170,7 +173,7 @@ public class UsersImpl implements UsersDAO {
 						rs.getInt("credit"), false);
 
 			}
-
+			pstmt.close();
 			cnx.close();
 		} catch (Exception e) {
 			e.printStackTrace();
