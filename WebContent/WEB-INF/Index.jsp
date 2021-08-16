@@ -9,19 +9,16 @@
 	<style><%@include file="/WEB-INF/style.css"%></style>
 </head>
 <body>
-
-	
-
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
 	<%@ include file="/WEB-INF/navBar.jsp" %> 
 </nav>
 <main class="p-3 col-12 row ">
-
-	<div class="input-group">
-		<input placeholder="Recherche" class="form-control col-3"/>
-		<button type="button" class="btn btn-primary">Rechercher</button>
-	</div>
-	
+	<form  method="post">
+		<div class="input-group">
+			<input placeholder="Recherche" class="form-control col-3"/>
+			<button name="search" value="1" type="submit" class="btn btn-primary">Rechercher</button>
+		</div>
+	</form> 
 	<c:forEach var="item" items="${listAuction}" >
 		<div class="bg-light p-3 col-12 col-md-4 enchere_container">
 		<p class="text-primary m-0">${item.article.article_name }</p>
@@ -34,9 +31,6 @@
 		</div>
 	</div>
 	</c:forEach>
-	
-
-	
 	
 </main>
 </body>
