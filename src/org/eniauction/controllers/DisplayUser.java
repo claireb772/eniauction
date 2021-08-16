@@ -35,12 +35,33 @@ public class DisplayUser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UserManager um = UserManager.getInstance();
-		
-		//TODO
-		int user_nb = 1;
-		
-		Users userProfile = um.getUser(user_nb);		
-		request.setAttribute("userProfile", userProfile);		
+
+		int user_nb = Integer.parseInt(request.getParameter("id"));
+		int actualUser = 0;
+
+		if (um.getActualUser() != null) {
+			actualUser = um.getActualUser().getUser_nb();
+		}
+
+		boolean isActualUser = false;
+
+		Users userProfile = null;
+
+		if (user_nb == actualUser) {
+			isActualUser = true;
+		}
+
+		try {
+			userProfile = um.getUser(user_nb);
+		} catch (Exception e) {
+			e.printStackTrace();
+			String message = "problème lors de la récupération du profil";
+			request.setAttribute("message", message);
+		}
+
+		request.setAttribute("userProfile", userProfile);
+		request.setAttribute("isActualUser", isActualUser);
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profile.jsp");
 		if (rd != null) {
 			rd.forward(request, response);

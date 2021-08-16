@@ -48,10 +48,16 @@
 	<div class="row mt-2">
 		<div class="col-6">Ville : </div>
 		<div class="col-6">${userProfile.city}</div>
-	</div>
-	<a href="<%=request.getContextPath()%>/editProfile/${userProfile.user_nb}"><button type="button" class="btn btn-primary mt-5">Modifier mon profil</button></a>
-</div>
+		
 	
+	</div>
+	<c:if test="${isActualUser eq true}">
+	<a href="<%=request.getContextPath()%>/editProfile"><button type="button" class="btn btn-primary mt-5">Modifier mon profil</button></a>
+	</c:if>
+</div>
+		<c:if test="${!empty message}">
+			<div>${message}</div>			
+		</c:if>
 	
 </main>
 </body>

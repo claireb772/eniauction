@@ -13,7 +13,6 @@
 	<%@ include file="/WEB-INF/navBar.jsp" %> 
 </nav>
 <main class="p-3 d-flex justify-content-center">
-
 <form method="post" class="col-12 col-md-8  d-flex bg-light p-3 flex-column"  >
 	<p class="text-primary">Inscription</p>
 	<div class="d-md-flex flex-row">
@@ -68,9 +67,16 @@
 	  </div>
 	</div>
 	<div class="d-flex flex-row">
-		<button type="button" class="btn btn-outline-secondary m-3 w-50">Annuler</button>
+		<a href="./"  class="btn btn-outline-secondary m-3 w-50">Annuler</a>
 		<button type="submit" class="btn btn-primary m-3 w-50">S'inscrire</button>
 	</div>
+	<c:if test="${!empty ListeErreur}">
+	<div class="alert alert-danger" role="alert">
+  	<c:forEach var="item" items="${ListeErreur}" >
+		<p> -${item}</p>
+	</c:forEach>
+</div>
+</c:if>
 </form>
 
 	

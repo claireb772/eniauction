@@ -1,28 +1,28 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eniauction.models.bll.ManagerAuction;
-import org.eniauction.models.bo.AuctionComplete;
+import org.eniauction.models.bll.UserManager;
 
 /**
- * Servlet implementation class DisplayAuctionDetails
+ * Servlet implementation class DeleteProfil
  */
-@WebServlet(urlPatterns = "/AuctionDetails/*")
-public class DisplayAuctionDetails extends HttpServlet {
+@WebServlet("/deleteProfil")
+public class DeleteProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DisplayAuctionDetails() {
+	public DeleteProfil() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,21 +34,21 @@ public class DisplayAuctionDetails extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		ManagerAuction ma = ManagerAuction.getInstance();
-		int articleId = Integer.parseInt(request.getParameter("id"));
-		AuctionComplete auction = null;
+		List<String> messagesErreur = new ArrayList<>();
+
+		UserManager um = UserManager.getInstance();
+
+		int user_nb = um.getActualUser().getUser_nb();
+
 		try {
-			auction = ma.getOneAuctionComplete(articleId);
+			um.deleteProfile(user_nb);
+			response.sendRedirect("./logout");
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			messagesErreur.add("problème lors de la suppression du profil");
+			request.setAttribute("message", messagesErreur);
 		}
-		request.setAttribute("auction", auction);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/AuctionDetail.jsp");
-		if (rd != null) {
-			rd.forward(request, response);
-		}
-
 	}
 
 	/**
