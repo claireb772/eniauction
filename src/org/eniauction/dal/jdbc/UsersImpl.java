@@ -3,6 +3,7 @@ package org.eniauction.dal.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eniauction.dal.UsersDAO;
@@ -21,23 +22,28 @@ public class UsersImpl implements UsersDAO {
 		return instance;
 	}
 
-	private static final String UPDATE_BY_ID = "UPDATE users set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=? where user_nb=?";
+	private static final String UPDATE_BY_ID = "UPDATE USERS set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=? where user_nb=?";
 
-	private static final String SELECT_BY_ID = "SELECT "
-			+ "pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator "
-			+ "from USERS " + "where user_nb=?";
+	private static final String SELECT_BY_ID = "SELECT " + " * " + " from USERS where user_nb=?";
 
 	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT " + " * " + " from USERS "
 			+ " where email = ? and password = ? ";
 
 	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator) values(?,?,?,?,?,?,?,?,?,?,?)";
 
-	public Users selectByid(int user_nb){
+	private static final String DELETE_USER_BY_ID = "DELETE FROM USERS WHERE user_nb=?";
+
+	private static final String SELECT_ALL_USERS = "select * from USERS";
+
+	/*
+	 * Fonction qui permet de récupérer un user avec son id
+	 */
+
+	public Users selectByid(int user_nb) throws Exception {
 
 		Users users = null;
 
-		try(Connection cnx = ConnectionProvider.getConnection())
-
+		try (Connection cnx = ConnectionProvider.getConnection())
 
 		{
 
@@ -47,30 +53,30 @@ public class UsersImpl implements UsersDAO {
 
 			while (rs.next()) {
 
+				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
+						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getInt("credit"), false);
 
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
 						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
 						rs.getInt("credit"), false);
 
-				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getInt("credit"), false);
-
 			}
+			rs.close();
 			cnx.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
-
 
 		return users;
 	}
 
-
 	public boolean insert(Users user) {
 
-
-
-		try (Connection conn = ConnectionProvider.getConnection(); 
+		try (Connection conn = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(INSERT_USER)) {
 			pstmt.setString(1, user.getPseudo());
 			pstmt.setString(2, user.getName());
@@ -85,31 +91,64 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setBoolean(11, false);
 
 			int row = pstmt.executeUpdate();
-			// rows affected System.out.println(row); 
-			//1 } catch (SQLException e) { System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-		} catch (Exception e) { e.printStackTrace(); 
-		return false;
+			// rows affected System.out.println(row);
+			// 1 } catch (SQLException e) { System.err.format("SQL State: %s\n%s",
+			// e.getSQLState(), e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
-
-
 
 		return true;
 	}
 
 	@Override
-	public void delete(int user_nb) {
-		// TODO Auto-generated method stub
+	public void delete(int user_nb) throws Exception {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE_USER_BY_ID);
+			pstmt.setInt(1, user_nb);
+			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 
 	}
 
 	@Override
 	public List<Users> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Users> ListUsers = new ArrayList<Users>();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL_USERS);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				Users users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"),
+						rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"),
+						rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),
+						rs.getString("password"), rs.getInt("credit"), false);
+				ListUsers.add(users);
+			}
+
+			cnx.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ListUsers;
+
 	}
 
+	/*
+	 * Fonction qui permet de faire un update de l'utilisateur
+	 */
+
 	@Override
-	public void update(Users user) {
+	public void update(Users user) throws Exception {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_BY_ID);
@@ -122,17 +161,22 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setString(7, user.getPostal_code());
 			pstmt.setString(8, user.getCity());
 			pstmt.setString(9, user.getPassword());
+			pstmt.setInt(10, user.getUser_nb());
 			pstmt.executeUpdate();
 			pstmt.close();
+			cnx.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 	}
 
-	// Fonction permetant de rechercher dans la base de données, si un utilisateur existe grace à la saisie de ce dernier
-	// Les saisie de l'utilisateur viennent du login
+	// Fonction permetant de rechercher dans la base de données, si un utilisateur
+	// existe grace à la saisie de ce dernier
+	// Les saisies de l'utilisateur viennent du login
+
 	public Users ConnectUser(String emailInput, String passwordInput) {
 
 		Users users = null;
@@ -151,11 +195,9 @@ public class UsersImpl implements UsersDAO {
 						rs.getInt("credit"), false);
 
 			}
-
+			pstmt.close();
 			cnx.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

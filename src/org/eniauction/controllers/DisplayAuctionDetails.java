@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eniauction.models.bll.UserManager;
-import org.eniauction.models.bo.Users;
+import org.eniauction.models.bll.ManagerAuction;
+import org.eniauction.models.bo.AuctionComplete;
 
 /**
- * Servlet implementation class DisplayUser
+ * Servlet implementation class DisplayAuctionDetails
  */
-@WebServlet("/profil")
-public class DisplayUser extends HttpServlet {
+@WebServlet(urlPatterns = "/AuctionDetails/*")
+public class DisplayAuctionDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor.
+	 * @see HttpServlet#HttpServlet()
 	 */
-	public DisplayUser() {
+	public DisplayAuctionDetails() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -31,48 +31,30 @@ public class DisplayUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserManager um = UserManager.getInstance();
 
-		int user_nb = Integer.parseInt(request.getParameter("id"));
-		int actualUser = 0;
-
-		if (um.getActualUser() != null) {
-			actualUser = um.getActualUser().getUser_nb();
-		}
-
-		boolean isActualUser = false;
-
-		Users userProfile = null;
-
-		if (user_nb == actualUser) {
-			isActualUser = true;
-		}
-
+		ManagerAuction ma = ManagerAuction.getInstance();
+		int articleId = Integer.parseInt(request.getParameter("id"));
+		AuctionComplete auction = null;
 		try {
-			userProfile = um.getUser(user_nb);
+			auction = ma.getOneAuctionComplete(articleId);
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			String message = "problème lors de la récupération du profil";
-			request.setAttribute("message", message);
 		}
-
-		request.setAttribute("userProfile", userProfile);
-		request.setAttribute("isActualUser", isActualUser);
-
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profile.jsp");
+		request.setAttribute("auction", auction);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/AuctionDetail.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
 		}
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub

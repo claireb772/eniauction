@@ -18,7 +18,7 @@ public class ConnectionProvider {
 			datasource = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx_eniAuction");
 		} catch (NamingException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Impossible de charger la ressource demand� !");
+			throw new RuntimeException("Impossible de charger la ressource demandée !");
 		}
 
 	}

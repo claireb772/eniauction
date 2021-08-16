@@ -36,11 +36,13 @@ public class DisplayAuction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(request.getParameter("validSearch") == null) {
-			
-			ManagerAuction manager = ManagerAuction.getInstance();
-			List<AuctionComplete> listAuction = manager.GetAuction();
-			request.setAttribute("listAuction", listAuction.toArray());
-		
+			try {
+				ManagerAuction manager = ManagerAuction.getInstance();
+				List<AuctionComplete> listAuction = manager.GetAuction();
+				request.setAttribute("listAuction", listAuction.toArray());
+				}catch(Exception e){
+					e.getStackTrace();
+			}
 		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
@@ -55,13 +57,15 @@ public class DisplayAuction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String searchInput = request.getParameter("search");
-		
-		ManagerAuction manager = ManagerAuction.getInstance();
-		List<AuctionComplete> listAuction = manager.GetSearch(searchInput);
-		request.setAttribute("listAuction", listAuction.toArray());
-		request.setAttribute("searchInput", searchInput);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
-		
+		try {
+			ManagerAuction manager = ManagerAuction.getInstance();
+			List<AuctionComplete> listAuction = manager.GetSearch(searchInput);
+			request.setAttribute("listAuction", listAuction.toArray());
+			request.setAttribute("searchInput", searchInput);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
+		}catch(Exception e){
+			e.getStackTrace();
+	}
 		doGet(request, response);
 	}
 

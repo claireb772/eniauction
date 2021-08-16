@@ -1,6 +1,10 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +19,7 @@ import org.eniauction.models.bo.Users;
 /**
  * Servlet implementation class EditProfile
  */
-@WebServlet(urlPatterns = "/editProfile/*")
+@WebServlet(urlPatterns = "/editProfile")
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,13 +39,20 @@ public class EditProfile extends HttpServlet {
 			throws ServletException, IOException {
 
 		UserManager um = UserManager.getInstance();
-		int user_nb = 1;
 
-		// String userParam = request.getParameter("user_nb");
+		int user_nb = um.getActualUser().getUser_nb();
 
-		// TODO
-		// recupération du nb_user
-		Users userProfile = um.getUser(user_nb);
+		List<String> messagesErreur = new ArrayList<>();
+
+		Users userProfile = null;
+		try {
+			userProfile = um.getUser(user_nb);
+		} catch (Exception e) {
+			e.printStackTrace();
+			messagesErreur.add("problème lors de la récupération du profil");
+			request.setAttribute("messagesErreur", messagesErreur);
+
+		}
 		request.setAttribute("userProfile", userProfile);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
 		rd.forward(request, response);
@@ -54,30 +65,52 @@ public class EditProfile extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int user_nb = 1;
+		UserManager um = UserManager.getInstance();
+		int user_nb = um.getActualUser().getUser_nb();
+		List<String> messagesErreur = new ArrayList<>();
 
-		String pseudo = request.getParameter("pseudo");
-		String name = request.getParameter("name");
-		String surname = request.getParameter("surname");
-		String email = request.getParameter("email");
-		String phone_nb = request.getParameter("phoneNb");
-		String street = request.getParameter("street");
-		String postal_code = request.getParameter("postalCode");
-		String city = request.getParameter("city");
+		String pseudo = request.getParameter("pseudo").trim();
+		String name = request.getParameter("name").trim();
+		String surname = request.getParameter("surname").trim();
+		String email = request.getParameter("email").trim();
+		String phone_nb = request.getParameter("phoneNb").trim();
+		String street = request.getParameter("street").trim();
+		String postal_code = request.getParameter("postalCode").trim();
+		String city = request.getParameter("city").trim();
 
 		String password = request.getParameter("password");
-		// Faire la verif de la confirmation du mot de passe avant
-		// String confirmation = request.getParameter("confirmation");
 
-		Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city, password);
+		Pattern passwordPattern = Pattern
+				.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"); // Min 1maj 1min 1
+																									// chiffre 1 char
+																									// special
+		Matcher matchingPassword = passwordPattern.matcher(password);
+		// boolean isMatches = matchingPassword.matches();
+		boolean isMatches = false;
 
-		UserManager um = UserManager.getInstance();
+		if (isMatches == false) {
+			messagesErreur.add(
+					"Les mots de passe ne concordent pas. Il faut au moins une majuscule, 1 chiffre et 1 caractère spécial");
 
-		um.editProfile(users);
+		} else {
 
-		// rajouter un message si l'ajout a bien été fait
+			Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city,
+					password);
 
-		doGet(request, response);
+			try {
+				um.editProfile(users);
+				response.sendRedirect("./profil");
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+				messagesErreur.add("problème lors de la mise à jour du profil");
+				request.setAttribute("messagesErreur", messagesErreur);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
+				rd.forward(request, response);
+			}
+		}
+
 	}
 
 }

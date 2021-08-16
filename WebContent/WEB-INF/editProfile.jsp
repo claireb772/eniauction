@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +47,7 @@
 	  <div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Nom</label>
-	    <input type="text" name="nom" class="form-control" id="formGroupExampleInput2" placeholder="Nom" value="${userProfile.name}">
+	    <input type="text" name="name" class="form-control" id="formGroupExampleInput2" placeholder="Nom" value="${userProfile.name}">
 	  </div>
 	  <div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2">Tel</label>
@@ -72,11 +75,17 @@
 	  </div>
 	</div>
 	<div class="d-flex flex-row">
-		<a href="<%=request.getContextPath()%>" role="button" class="btn btn-outline-secondary m-3 w-50">Enregistrer</a>
-		<button type="button" class="btn btn-primary m-3 w-50">Supprimer mon compte</button>
+		<button type="submit" role="button" class="btn btn-primary m-3 w-50">Enregistrer</button>
+		<a href="<%=request.getContextPath()%>/deleteProfil" onclick= "return confirm('Vous êtes sûr.e de vouloir supprimer votre profil ?')" ><button type="button" class="btn btn-danger m-3 w-50">Supprimer mon compte</button></a>
 	</div>
+	
+	<c:if test="${!empty messagesErreur}">
+		<c:forEach var="messagesErreur" items="${messagesErreur}">
+			<li>${messagesErreur}</li>
+			</c:forEach>			
+		</c:if>
 </form>
-
+		
 	
 	
 </main>
