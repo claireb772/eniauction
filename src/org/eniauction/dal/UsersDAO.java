@@ -6,7 +6,7 @@ import org.eniauction.models.bo.Users;
 
 public interface UsersDAO {
 	
-	boolean insert(Users user);
+	void insert(Users user) throws Exception;
 	void delete(int user_nb);
 	List<Users> selectAll();
 	Users selectByid(int user_nb);

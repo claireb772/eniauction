@@ -66,7 +66,7 @@ public class UsersImpl implements UsersDAO {
 	}
 
 
-	public boolean insert(Users user) {
+	public void insert(Users user) throws Exception {
 
 
 
@@ -87,13 +87,13 @@ public class UsersImpl implements UsersDAO {
 			int row = pstmt.executeUpdate();
 			// rows affected System.out.println(row); 
 			//1 } catch (SQLException e) { System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-		} catch (Exception e) { e.printStackTrace(); 
-		return false;
+		} catch (Exception e) { e.printStackTrace(); throw e;
+		
 		}
 
 
 
-		return true;
+		
 	}
 
 	@Override

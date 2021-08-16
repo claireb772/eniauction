@@ -49,16 +49,9 @@ public class UserManager {
 		return false;
 	}
 
-	public Users newUser(Users user) {
+	public Users newUser(Users user) throws Exception {
 		UsersImpl ui = UsersImpl.getInstance();
-		
-		if (ui.insert(user)) {
-			System.out.println("réussi");
-		
-		}
-		else {
-			System.out.println("raté");
-		}
+		ui.insert(user);
 		return user;
 		
 		
