@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
-		<%@ include file="/WEB-INF/navBar.jsp" %> 
+	<%@ include file="/WEB-INF/navBar.jsp" %> 
 </nav>
 <main class="p-3 d-flex justify-content-center">
 <form method="post" class="col-12 col-md-8  d-flex bg-light p-3 flex-column"  >
