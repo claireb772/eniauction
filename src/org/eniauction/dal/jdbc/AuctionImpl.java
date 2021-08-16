@@ -25,7 +25,7 @@ public class AuctionImpl {
 	 }
 	 
 	 private static final String INSERT_USER = "insert into SOLD_ARTICLES(article_name, description, auction_start_date, auction_end_date, initial_price, sell_price, user_nb, category_nb) values(?,?,?,?,?,?,?,?)";
-	
+	 private static final String GET_ONE_ARTICLE = "select article_name, description, auction_start_date, auction_end_date, initial_price, sell_price, user_nb, category_nb from SOLD_ARTICLES where id = ?";
 	 public List<SoldArticles> selectAll(){
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
@@ -85,6 +85,39 @@ public class AuctionImpl {
         java.sql.Date date1 = new java.sql.Date(timeInMilliSeconds1);
         return date1;
 	}
+	
+	public SoldArticles getOneArticle(int id) {
+		Connection cs;
+		SoldArticles sa = null;
+		try {
+			cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs.prepareStatement(GET_ONE_ARTICLE);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				sa = new SoldArticles
+					 (
+							 rs.getInt(1),
+							 rs.getString(2), 
+							 rs.getString(3), 
+							 rs.getDate(4), 
+							 rs.getDate(5), 
+							 rs.getInt(6), 
+							 rs.getInt(7), 
+							 rs.getInt(8), 
+							 rs.getInt(9)
+					
+					);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return sa;
+	}
+	
 	public List<Categories> getCategories() {
 		
 		List<Categories> listArticles = new ArrayList<Categories>();

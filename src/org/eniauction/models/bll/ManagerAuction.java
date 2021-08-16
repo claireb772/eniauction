@@ -41,4 +41,10 @@ public class ManagerAuction {
 		 
 		 return listCategories;
 	}
+	
+	public AuctionComplete getOneAuctionComplete(int id) {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		AuctionComplete ac = new AuctionComplete(auctionImpl.getOneArticle(id));
+		return ac;
+	}
 }
