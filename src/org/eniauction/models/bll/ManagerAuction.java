@@ -13,7 +13,6 @@ import org.eniauction.models.bo.SoldArticles;
 public class ManagerAuction {
 
 	private static ManagerAuction instance;
-<<<<<<< HEAD
 
 	public static ManagerAuction getInstance() {
 		if (instance == null) {
@@ -37,45 +36,16 @@ public class ManagerAuction {
 		List<SoldArticles> listArticles = auctionImpl.selectAll();
 		return listArticles;
 	}
-=======
-	
-	 public static ManagerAuction getInstance() 
-	 {
-        if (instance == null) {
-            instance = new ManagerAuction();
-        }
-        return instance;
-	 }
-	 
-	 public List<AuctionComplete> GetAuction() {
-		 AuctionImpl auctionImpl = AuctionImpl.getInstance();
-		 List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
-		 for(SoldArticles item : auctionImpl.selectAll()){
-			 AuctionComplete ac = new AuctionComplete(item);
-			 listArticles.add(ac);
-		 }
-		 return listArticles;
-	 }
-	 
 
-	 public List<SoldArticles> GetSoldArticles() {
-		 AuctionImpl auctionImpl = AuctionImpl.getInstance();
-		 List<SoldArticles> listArticles = auctionImpl.selectAll();
-		 return listArticles;
-	 }
-	 
-	 public List<AuctionComplete> GetSearch(String searchInput) {
-		 AuctionImpl auctionImpl = AuctionImpl.getInstance();
-		 List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
-		 for(SoldArticles item : auctionImpl.selectSearch(searchInput)){
-			 AuctionComplete ac = new AuctionComplete(item);
-			 listArticles.add(ac);
-		 }
-		 return listArticles;
-	 }
-
-		 
->>>>>>> d8a930f79987447b526b6f9eb014712e5f15acec
+	public List<AuctionComplete> GetSearch(String searchInput) throws Exception {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
+		for (SoldArticles item : auctionImpl.selectSearch(searchInput)) {
+			AuctionComplete ac = new AuctionComplete(item);
+			listArticles.add(ac);
+		}
+		return listArticles;
+	}
 
 	// Ajoute un soldArticle
 	public void SetNewAuction(SoldArticles sa) {
