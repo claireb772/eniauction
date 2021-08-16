@@ -72,6 +72,7 @@ public class DisplayConnect extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("authentification", "1");
+			session.setAttribute("id", manager.getActualUser().getUser_nb());
 			session.setMaxInactiveInterval(300);
 			
 			// Feature "Se souvenir de moi" stocker dans des cookies 

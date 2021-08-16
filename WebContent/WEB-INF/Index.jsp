@@ -15,8 +15,8 @@
 <main class="p-3 col-12 row ">
 	<form  method="post">
 		<div class="input-group">
-			<input placeholder="Recherche" class="form-control col-3"/>
-			<button name="search" value="1" type="submit" class="btn btn-primary">Rechercher</button>
+			<input name="search" placeholder="Recherche" class="form-control col-3"/>
+			<button name="validSearch" value="1" type="submit" class="btn btn-primary">Rechercher</button>
 		</div>
 	</form> 
 	<c:forEach var="item" items="${listAuction}" >

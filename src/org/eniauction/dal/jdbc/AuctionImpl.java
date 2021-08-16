@@ -53,6 +53,33 @@ public class AuctionImpl {
 		}
 		return listArticles;
 	}
+	public List<SoldArticles> selectSearch(String searchInput){
+			List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
+			try {
+				 Connection cs = ConnectionProvider.getConnection();
+				 PreparedStatement pstmt = cs.prepareStatement("Select * From SOLD_ARTICLES where article_name like '%"+searchInput+"%' ");
+				 ResultSet rs = pstmt.executeQuery();
+				 while(rs.next())
+					{
+					 SoldArticles sa = new SoldArticles(
+							 rs.getInt(1),
+							 rs.getString(2), 
+							 rs.getString(3), 
+							 rs.getDate(4), 
+							 rs.getDate(5), 
+							 rs.getInt(6), 
+							 rs.getInt(7), 
+							 rs.getInt(8), 
+							 rs.getInt(9)
+					);
+					 listArticles.add(sa);
+					}
+				 cs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return listArticles;
+		}
 	 
 	public void insertArticle(SoldArticles sold) 
 	{
