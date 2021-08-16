@@ -42,14 +42,15 @@ public class EditProfile extends HttpServlet {
 
 		int user_nb = um.getActualUser().getUser_nb();
 
+		List<String> messagesErreur = new ArrayList<>();
+
 		Users userProfile = null;
 		try {
 			userProfile = um.getUser(user_nb);
 		} catch (Exception e) {
 			e.printStackTrace();
-
-			String message = "problème lors de la récupération du profil";
-			request.setAttribute("message", message);
+			messagesErreur.add("problème lors de la récupération du profil");
+			request.setAttribute("messagesErreur", messagesErreur);
 
 		}
 		request.setAttribute("userProfile", userProfile);
@@ -99,15 +100,15 @@ public class EditProfile extends HttpServlet {
 			try {
 				um.editProfile(users);
 				response.sendRedirect("./profil");
+
 			} catch (Exception e) {
 
 				e.printStackTrace();
 				messagesErreur.add("problème lors de la mise à jour du profil");
+				request.setAttribute("messagesErreur", messagesErreur);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
+				rd.forward(request, response);
 			}
-		}
-
-		if (messagesErreur.size() > 0) {
-			request.setAttribute("message", messagesErreur);
 		}
 
 	}

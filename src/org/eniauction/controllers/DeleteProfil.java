@@ -1,6 +1,8 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +34,8 @@ public class DeleteProfil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		List<String> messagesErreur = new ArrayList<>();
+
 		UserManager um = UserManager.getInstance();
 
 		int user_nb = um.getActualUser().getUser_nb();
@@ -42,8 +46,8 @@ public class DeleteProfil extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			String message = "problème lors de la suppression du profil";
-			request.setAttribute("message", message);
+			messagesErreur.add("problème lors de la suppression du profil");
+			request.setAttribute("message", messagesErreur);
 		}
 	}
 

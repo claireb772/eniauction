@@ -76,11 +76,12 @@
 	</div>
 	<div class="d-flex flex-row">
 		<button type="submit" role="button" class="btn btn-primary m-3 w-50">Enregistrer</button>
-		<a href="<%=request.getContextPath()%>/deleteProfil" ><button type="button" class="btn btn-danger m-3 w-50">Supprimer mon compte</button></a>
+		<a href="<%=request.getContextPath()%>/deleteProfil" onclick= "return confirm('Vous êtes sûr.e de vouloir supprimer votre profil ?')" ><button type="button" class="btn btn-danger m-3 w-50">Supprimer mon compte</button></a>
 	</div>
-	<c:if test="${!empty message}">
-		<c:forEach var="message" items="${messagesErreur}">
-			<li>${message}</li>
+	
+	<c:if test="${!empty messagesErreur}">
+		<c:forEach var="messagesErreur" items="${messagesErreur}">
+			<li>${messagesErreur}</li>
 			</c:forEach>			
 		</c:if>
 </form>
