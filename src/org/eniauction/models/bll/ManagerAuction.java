@@ -30,12 +30,24 @@ public class ManagerAuction {
 		 return listArticles;
 	 }
 	 
+
 	 public List<SoldArticles> GetSoldArticles() {
 		 AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		 List<SoldArticles> listArticles = auctionImpl.selectAll();
-
 		 return listArticles;
 	 }
+	 
+	 public List<AuctionComplete> GetSearch(String searchInput) {
+		 AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		 List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
+		 for(SoldArticles item : auctionImpl.selectSearch(searchInput)){
+			 AuctionComplete ac = new AuctionComplete(item);
+			 listArticles.add(ac);
+		 }
+		 return listArticles;
+	 }
+
+		 
 
 	 //Ajoute un soldArticle
 	public void SetNewAuction(SoldArticles sa) {
