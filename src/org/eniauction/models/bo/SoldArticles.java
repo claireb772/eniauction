@@ -1,6 +1,9 @@
 package org.eniauction.models.bo;
 
 import java.util.Date;
+import java.util.List;
+
+import org.eniauction.models.bll.ManagerAuction;
 
 public class SoldArticles {
 
@@ -21,9 +24,16 @@ public class SoldArticles {
         this.auction_start_date = auction_start_date;
         this.auction_end_date = auction_end_date;
         this.initial_price = initial_price;
-        this.sell_price = sell_price;
         this.users_nb = users_nb;
         this.category_nb = category_nb;
+        
+        ManagerAuction ma = ManagerAuction.getInstance();
+        List<Auction> listAuction = ma.getAllAuctionById(article_nb);
+        if(listAuction.size() > 0) {
+        	this.sell_price = listAuction.get(0).getAmount();
+        }else {
+        	this.sell_price = this.initial_price;
+        }
         
     }
 

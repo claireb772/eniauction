@@ -11,5 +11,7 @@
 			<a href="./login" class="text-white text-decoration-none mx-2">Se Connecter</a>/
 			<a href="./sign" class="text-white text-decoration-none mx-2">S'inscrire</a>
 		</c:if>
-	
+
+		<a href="./Admin" class="text-white text-decoration-none mx-2">Admin</a>
+		
 	</div>

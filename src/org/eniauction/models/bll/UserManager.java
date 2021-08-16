@@ -1,5 +1,7 @@
 package org.eniauction.models.bll;
 
+import java.util.List;
+
 import org.eniauction.dal.jdbc.UsersImpl;
 import org.eniauction.models.bo.Users;
 
@@ -56,13 +58,18 @@ public class UserManager {
 		UsersImpl ui = UsersImpl.getInstance();
 
 		if (ui.insert(user)) {
+
 			System.out.println("r�ussi");
 
 		} else {
 			System.out.println("rat�");
 		}
 		return user;
+	}
 
+	public List<Users> getAllUsers() {
+		UsersImpl ui = UsersImpl.getInstance();
+		return ui.selectAll();
 	}
 
 }
