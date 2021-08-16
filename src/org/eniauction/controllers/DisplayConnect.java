@@ -7,6 +7,7 @@ import org.eniauction.models.bll.UserManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,6 +63,7 @@ public class DisplayConnect extends HttpServlet {
 		
 		String userInput = request.getParameter("user");
 		String passwordInput = request.getParameter("password");
+		String remind = request.getParameter("remind");
 		
 		
 		if(manager.ConnectUser(userInput, passwordInput)){
@@ -70,6 +72,15 @@ public class DisplayConnect extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("authentification", "1");
+			session.setMaxInactiveInterval(300);
+			
+			// Feature "Se souvenir de moi" stocker dans des cookies 
+			if(remind != null){
+				Cookie userCookie = new Cookie("userCookie", userInput);
+				Cookie passwordCookie = new Cookie("passwordCookie", passwordInput);
+				response.addCookie(userCookie);
+				response.addCookie(passwordCookie);
+			}
 			
 		}
 		
