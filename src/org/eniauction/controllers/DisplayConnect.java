@@ -41,6 +41,22 @@ public class DisplayConnect extends HttpServlet {
 			response.sendRedirect("./");
 
 		} else {
+			
+			Cookie cookies [] = request.getCookies();
+		    if (cookies != null){
+		        for (int i = 0; i < cookies.length; i++) {
+		            if (cookies [i].getName().equals("userCookie")){
+		            	String remindUser = cookies [i].getValue();
+		            	request.setAttribute("remindUser", remindUser);
+		            	System.out.println(remindUser);
+		            }
+		            if (cookies [i].getName().equals("passwordCookie")){
+		            	String remindPassword = cookies [i].getValue();
+		            	request.setAttribute("remindPassword", remindPassword);
+		            	System.out.println(remindPassword);
+		            }
+		        }
+		    }
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
 			if (rd != null) {
 				rd.forward(request, response);

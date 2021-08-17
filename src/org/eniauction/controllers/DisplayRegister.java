@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,71 +65,87 @@ public class DisplayRegister extends HttpServlet {
 		String PostalCode = request.getParameter("PostalCode").trim();
 
 
-		
-			if(b== false) {
-				ListeErreur.add("Le mot de passe ne respecte pas les critËres de sÈcuritÈ: doit contenir 1 majuscule,1 minuscule, 1 chiffre ainsi qu'un charactËre spÈcial (*$)");
-			}
-			if (!Password.equals(Confirmation)) {
-				ListeErreur.add("Les mots de passe ne correspondent pas");	// Password doit Ítre Ègal a Confirmation, et B= respecte les critËres
+
+		if(b== false) {
+			ListeErreur.add("Le mot de passe ne respecte pas les critËres de sÈcuritÈ: doit contenir 1 majuscule,1 minuscule, 1 chiffre ainsi qu'un charactËre spÈcial (*$)");
+		}
+		if (!Password.equals(Confirmation)) {
+			ListeErreur.add("Les mots de passe ne correspondent pas");	// Password doit Ítre Ègal a Confirmation, et B= respecte les critËres
+
+		}
+		if (Pseudo.isBlank()) {
+			ListeErreur.add ("Merci d'entrer un pseudo");
+		}
+		if (Name.isBlank()) {
+			ListeErreur.add ("Merci d'entrer un prÈnom");
+		}
+		if (Surname.isBlank()) {
+			ListeErreur.add ("Merci d'entrer un nom");
+		}
+		if (Phone.isBlank()) {
+			ListeErreur.add ("Merci d'entrer un numÈro de tÈlÈphone");
+		}
+		if (Email.isBlank()) {
+			ListeErreur.add ("Merci d'entrer une adresse mail");
+		}
+		if (Street.isBlank()) {
+			ListeErreur.add ("Merci d'entrer une rue");
+		}
+		if (City.isBlank()) {
+			ListeErreur.add ("Merci d'entrer une ville");
+		}
+		if (PostalCode.isBlank()) {
+			ListeErreur.add ("Merci d'entrer un code postal");
+		}
+
+
+
+		request.setAttribute("ListeErreur", ListeErreur.toArray());
+
+		if (ListeErreur.size()>0) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/sign.jsp");
+			if (rd != null) {
+				rd.forward(request, response);
 
 			}
-			if (Pseudo.isBlank()) {
-				ListeErreur.add ("Merci d'entrer un pseudo");
-			}
-			if (Name.isBlank()) {
-				ListeErreur.add ("Merci d'entrer un prÈnom");
-			}
-			if (Surname.isBlank()) {
-				ListeErreur.add ("Merci d'entrer un nom");
-			}
-			if (Phone.isBlank()) {
-				ListeErreur.add ("Merci d'entrer un numÈro de tÈlÈphone");
-			}
-			if (Email.isBlank()) {
-				ListeErreur.add ("Merci d'entrer une adresse mail");
-			}
-			if (Street.isBlank()) {
-				ListeErreur.add ("Merci d'entrer une rue");
-			}
-			if (City.isBlank()) {
-				ListeErreur.add ("Merci d'entrer une ville");
-			}
-			if (PostalCode.isBlank()) {
-				ListeErreur.add ("Merci d'entrer un code postal");
-			}
+		}
+		else {
+			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, false);
+			UserManager um= UserManager.getInstance();
+			String message=null;
+			try {
+				var o = um.newUser(user);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 
 
 
-			request.setAttribute("ListeErreur", ListeErreur.toArray());
-
-			if (ListeErreur.size()>0) {
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/sign.jsp");
-				if (rd != null) {
-					rd.forward(request, response);
-
-				}
 			}
-			else {
-				Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, false);
-				UserManager um= UserManager.getInstance();
-				String message=null;
-				try {
-					var o = um.newUser(user);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 
-				}
+			if (um.ConnectUser(Email, Password)) {
+
+				// Cr√©ation session permettant la connexion
+				HttpSession session = request.getSession();
+
+				session.setAttribute("authentification", "1");
+				session.setAttribute("id", um.getActualUser().getUser_nb());
+				session.setMaxInactiveInterval(300);
+
 				response.sendRedirect("./");
 
 			}
 
 
 
-		
 
 
-	}
 
 
+
+
+		}
+
+
+}
 }
