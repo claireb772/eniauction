@@ -16,40 +16,11 @@
 				<div class="d-md-flex flex-row">
 				  <div class="form-group mx-2 flex-1">
 				    <label for="formGroupExampleInput">Email</label>
-				    <input name="user" type="text" class="form-control" id="formGroupExampleInput" placeholder="Email">
-					
-					
-					<%-- Script récuperation de login inseré dans les cookies "Se souvenir de moi"  
-					<% 
-					Cookie cookies [] = request.getCookies();
-				    String remindUser = null;
-				   	String remindPassword = null;
-				    if (cookies != null){
-				        for (int i = 0; i < cookies.length; i++) {
-				            if (cookies [i].getName() == "userCookie"){
-				            	remindUser = cookies [i].getValue();
-				            }
-				            if (cookies [i].getName() == "passwordCookie"){
-				            	remindPassword = cookies [i].getValue();
-				            }
-				        }
-				    }
-				    %> 
-				    --%>
-				    
-				  	<c:if test="${!empty remindUser}">
-				  		value"remindUser"
-					</c:if>
-				    
+				    <input name="user" type="text" class="form-control" id="formGroupExampleInput" placeholder="Email" value="${remindUser}">
 				  </div>
 				  <div class="form-group mx-2 flex-1">
 				    <label for="formGroupExampleInput2">Password</label>
-				    <input name="password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password"
-				    
-				  	<c:if test="${!empty remindPassword}">
-				  		value"remindPassword"
-					</c:if>
-					>
+				    <input name="password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" value="${remindPassword}" >
 				  </div>
 				</div>
 				<div class="form-group m-2">
