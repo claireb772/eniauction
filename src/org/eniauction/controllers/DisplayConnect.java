@@ -84,14 +84,37 @@ public class DisplayConnect extends HttpServlet {
 
 			session.setAttribute("authentification", "1");
 			session.setAttribute("id", manager.getActualUser().getUser_nb());
+			//utilisateur déconnecté au bout de 300 secondes d'inactivité (5 min)
 			session.setMaxInactiveInterval(300);
 
 			// Feature "Se souvenir de moi" stocker dans des cookies
+			// Les cookies se réactualisent si vous recochez "se souvenir de moi"
 			if (remind != null) {
-				Cookie userCookie = new Cookie("userCookie", userInput);
-				Cookie passwordCookie = new Cookie("passwordCookie", passwordInput);
-				response.addCookie(userCookie);
-				response.addCookie(passwordCookie);
+				Cookie cookies [] = request.getCookies();
+			    for (int i = 0; i < cookies.length; i++) {
+			        if (cookies [i].getName().equals("userCookie")){
+			        	
+			        	cookies [i].setValue(userInput);
+			        	
+			        }else{
+			        	
+			            Cookie userCookie = new Cookie("userCookie", userInput);
+			            response.addCookie(userCookie);
+			            
+			        }
+			        if (cookies [i].getName().equals("passwordCookie")){
+			        	
+			            cookies [i].setValue(passwordInput);
+			            
+			        }else{
+			        	
+			        	Cookie passwordCookie = new Cookie("passwordCookie", passwordInput);
+			        	response.addCookie(passwordCookie);		
+			        	
+			        }
+			    }
+			    
+	
 			}
 
 		}
