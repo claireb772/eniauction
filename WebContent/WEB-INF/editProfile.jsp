@@ -79,10 +79,12 @@
 		<a href="<%=request.getContextPath()%>/deleteProfil" onclick= "return confirm('Vous êtes sûr.e de vouloir supprimer votre profil ?')" ><button type="button" class="btn btn-danger m-3 w-50">Supprimer mon compte</button></a>
 	</div>
 	
-	<c:if test="${!empty messagesErreur}">
-		<c:forEach var="messagesErreur" items="${messagesErreur}">
-			<li>${messagesErreur}</li>
-			</c:forEach>			
+	<c:if test="${!empty listeErreurs}">
+	<div class="alert alert-danger" role="alert">
+		<c:forEach var="messageErreur" items="${listeErreurs}">
+			<p> - ${messageErreur}</p>
+			</c:forEach>	
+			</div>		
 		</c:if>
 </form>
 		

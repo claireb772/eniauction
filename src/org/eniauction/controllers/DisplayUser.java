@@ -37,6 +37,7 @@ public class DisplayUser extends HttpServlet {
 		UserManager um = UserManager.getInstance();
 
 		int user_nb = Integer.parseInt(request.getParameter("id"));
+
 		int actualUser = 0;
 
 		if (um.getActualUser() != null) {

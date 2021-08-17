@@ -23,12 +23,15 @@ import org.eniauction.models.bo.Users;
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	UserManager um = UserManager.getInstance();;
+	int user_nb;
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public EditProfile() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	/**
@@ -38,22 +41,19 @@ public class EditProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		UserManager um = UserManager.getInstance();
-
-		int user_nb = um.getActualUser().getUser_nb();
-
-		List<String> messagesErreur = new ArrayList<>();
-
+		user_nb = um.getActualUser().getUser_nb();
+		List<String> listeErreurs = new ArrayList<>();
 		Users userProfile = null;
+
 		try {
 			userProfile = um.getUser(user_nb);
 		} catch (Exception e) {
 			e.printStackTrace();
-			messagesErreur.add("problème lors de la récupération du profil");
-			request.setAttribute("messagesErreur", messagesErreur);
-
+			listeErreurs.add("problème lors de la récupération du profil");
+			request.setAttribute("listeErreurs", listeErreurs.toArray());
 		}
 		request.setAttribute("userProfile", userProfile);
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
 		rd.forward(request, response);
 	}
@@ -65,13 +65,12 @@ public class EditProfile extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		UserManager um = UserManager.getInstance();
-		int user_nb = um.getActualUser().getUser_nb();
-		List<String> messagesErreur = new ArrayList<>();
+		List<String> listeErreurs = new ArrayList<>();
 
 		String pseudo = request.getParameter("pseudo").trim();
 		String name = request.getParameter("name").trim();
 		String surname = request.getParameter("surname").trim();
+		String confirmation = request.getParameter("confirmation");
 		String email = request.getParameter("email").trim();
 		String phone_nb = request.getParameter("phoneNb").trim();
 		String street = request.getParameter("street").trim();
@@ -83,31 +82,63 @@ public class EditProfile extends HttpServlet {
 		Pattern passwordPattern = Pattern
 				.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"); // Min 1maj 1min 1
 																									// chiffre 1 char
-																									// special
 		Matcher matchingPassword = passwordPattern.matcher(password);
-		// boolean isMatches = matchingPassword.matches();
-		boolean isMatches = false;
+		boolean isMatches = matchingPassword.matches();
 
 		if (isMatches == false) {
-			messagesErreur.add(
-					"Les mots de passe ne concordent pas. Il faut au moins une majuscule, 1 chiffre et 1 caractère spécial");
+			listeErreurs.add(
+					"Le mot de passe ne respecte pas les critères de sécurité : doit contenir 1 majuscule,1 minuscule, 1 chiffre ainsi qu'un charactère spécial (*$)");
+		}
+		if (!password.equals(confirmation)) {
+			listeErreurs.add("Les mots de passe ne correspondent pas"); // Password doit �tre �gal a Confirmation, et B=
+																		// // respecte les crit�res
+		}
+		if (pseudo.isBlank()) {
+			listeErreurs.add("Merci d'entrer un pseudo");
+		}
+		if (name.isBlank()) {
+			listeErreurs.add("Merci d'entrer un prénom");
+		}
+		if (surname.isBlank()) {
+			listeErreurs.add("Merci d'entrer un nom");
+		}
+		if (phone_nb.isBlank()) {
+			listeErreurs.add("Merci d'entrer un numéro de téléphone");
+		}
+		if (email.isBlank()) {
+			listeErreurs.add("Merci d'entrer une adresse mail");
+		}
+		if (street.isBlank()) {
+			listeErreurs.add("Merci d'entrer une rue");
+		}
+		if (city.isBlank()) {
+			listeErreurs.add("Merci d'entrer une ville");
+		}
+		if (postal_code.isBlank()) {
+			listeErreurs.add("Merci d'entrer un code postal");
+		}
+
+		request.setAttribute("listeErreurs", listeErreurs.toArray());
+
+		if (listeErreurs.size() > 0) {
+			doGet(request, response);
 
 		} else {
 
 			Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city,
 					password);
+			System.out.println(user_nb);
 
 			try {
 				um.editProfile(users);
-				response.sendRedirect("./profil");
+				response.sendRedirect("./profil?id=" + user_nb);
 
 			} catch (Exception e) {
 
 				e.printStackTrace();
-				messagesErreur.add("problème lors de la mise à jour du profil");
-				request.setAttribute("messagesErreur", messagesErreur);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editProfile.jsp");
-				rd.forward(request, response);
+				listeErreurs.add("problème lors de la mise à jour du profil");
+				request.setAttribute("listeErreurs", listeErreurs.toArray());
+				doGet(request, response);
 			}
 		}
 
