@@ -28,7 +28,8 @@ public class AuctionImpl implements AuctionDAO {
 	private static final String GET_ALL_AUCTION_BY_ARTICLE_ID = "select * from AUCTION where article_nb = ?  ORDER BY auction_amount DESC";
 	private static final String INSERT_AUCTION = "insert into AUCTION (user_nb, article_nb, auction_date, auction_amount) values(?,?,?,?) ";
 	private static final String GET_ALL_AUCTION_COUNT = "select COUNT(*) from SOLD_ARTICLES";
-	private static final String INSERT_WITHDRAWALS ="insert into WITHDRAWALS (article_nb, street, postal_code, city) values(?,?,?,?)";
+	private static final String INSERT_WITHDRAWALS = "insert into WITHDRAWALS (article_nb, street, postal_code, city) values(?,?,?,?)";
+
 	public List<SoldArticles> selectAll() {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
@@ -236,7 +237,7 @@ public class AuctionImpl implements AuctionDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return count ==1;
+		return count == 1;
 	}
 
 	public boolean isAuctionExist(Auction auction) {
@@ -244,7 +245,8 @@ public class AuctionImpl implements AuctionDAO {
 		int count = 0;
 		try {
 			cs = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cs.prepareStatement("SELECT COUNT(*) FROM AUCTION WHERE article_nb = ? AND user_nb = ?");
+			PreparedStatement pstmt = cs
+					.prepareStatement("SELECT COUNT(*) FROM AUCTION WHERE article_nb = ? AND user_nb = ?");
 			pstmt.setInt(1, auction.getArticle_nb());
 			pstmt.setInt(2, auction.getUser_nb());
 			ResultSet rs = pstmt.executeQuery();
@@ -258,14 +260,15 @@ public class AuctionImpl implements AuctionDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return count ==1;
+		return count == 1;
 	}
 
 	public void updateAuction(Auction auction) {
 		Connection cs;
 		try {
 			cs = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cs.prepareStatement("UPDATE USERS set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
+			PreparedStatement pstmt = cs.prepareStatement(
+					"UPDATE AUCTION set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
 			pstmt.setInt(1, auction.getAmount());
 			pstmt.setDate(2, convertDateToSqlData(auction.getAuction_date()));
 			pstmt.setInt(3, auction.getUser_nb());
@@ -279,6 +282,6 @@ public class AuctionImpl implements AuctionDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }
