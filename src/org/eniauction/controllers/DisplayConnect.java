@@ -48,12 +48,10 @@ public class DisplayConnect extends HttpServlet {
 		            if (cookies [i].getName().equals("userCookie")){
 		            	String remindUser = cookies [i].getValue();
 		            	request.setAttribute("remindUser", remindUser);
-		            	System.out.println(remindUser);
 		            }
 		            if (cookies [i].getName().equals("passwordCookie")){
 		            	String remindPassword = cookies [i].getValue();
 		            	request.setAttribute("remindPassword", remindPassword);
-		            	System.out.println(remindPassword);
 		            }
 		        }
 		    }
