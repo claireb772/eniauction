@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+import org.eniauction.dal.jdbc.DALException;
 import org.eniauction.models.bll.UserManager;
 import org.eniauction.models.bo.Users;
 
@@ -22,6 +24,8 @@ import org.eniauction.models.bo.Users;
 @WebServlet(urlPatterns = "/editProfile")
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	static Logger log = Logger.getLogger(EditProfile.class);
 
 	UserManager um = UserManager.getInstance();;
 	int user_nb;
@@ -42,14 +46,17 @@ public class EditProfile extends HttpServlet {
 			throws ServletException, IOException {
 
 		user_nb = um.getActualUser().getUser_nb();
+
 		List<String> listeErreurs = new ArrayList<>();
 		Users userProfile = null;
 
 		try {
 			userProfile = um.getUser(user_nb);
-		} catch (Exception e) {
+			log.info(userProfile + " a modifié son profil");
+		} catch (DALException e) {
 			e.printStackTrace();
 			listeErreurs.add("problème lors de la récupération du profil");
+			log.error(listeErreurs.toArray());
 			request.setAttribute("listeErreurs", listeErreurs.toArray());
 		}
 		request.setAttribute("userProfile", userProfile);
@@ -133,10 +140,10 @@ public class EditProfile extends HttpServlet {
 				um.editProfile(users);
 				response.sendRedirect("./profil?id=" + user_nb);
 
-			} catch (Exception e) {
-
+			} catch (DALException e) {
 				e.printStackTrace();
 				listeErreurs.add("problème lors de la mise à jour du profil");
+				log.error(listeErreurs.toArray());
 				request.setAttribute("listeErreurs", listeErreurs.toArray());
 				doGet(request, response);
 			}
