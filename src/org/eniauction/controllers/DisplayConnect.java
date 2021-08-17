@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
-import org.eniauction.dal.jdbc.DALException;
 import org.eniauction.models.bll.UserManager;
 
 /**
@@ -21,8 +19,6 @@ import org.eniauction.models.bll.UserManager;
 @WebServlet("/login")
 public class DisplayConnect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	static Logger log = Logger.getLogger(DisplayConnect.class);
 
 	/**
 	 * Default constructor.
@@ -45,22 +41,20 @@ public class DisplayConnect extends HttpServlet {
 			response.sendRedirect("./");
 
 		} else {
-
-			Cookie cookies[] = request.getCookies();
-			if (cookies != null) {
-				for (int i = 0; i < cookies.length; i++) {
-					if (cookies[i].getName().equals("userCookie")) {
-						String remindUser = cookies[i].getValue();
-						request.setAttribute("remindUser", remindUser);
-						System.out.println(remindUser);
-					}
-					if (cookies[i].getName().equals("passwordCookie")) {
-						String remindPassword = cookies[i].getValue();
-						request.setAttribute("remindPassword", remindPassword);
-						System.out.println(remindPassword);
-					}
-				}
-			}
+			
+			Cookie cookies [] = request.getCookies();
+		    if (cookies != null){
+		        for (int i = 0; i < cookies.length; i++) {
+		            if (cookies [i].getName().equals("userCookie")){
+		            	String remindUser = cookies [i].getValue();
+		            	request.setAttribute("remindUser", remindUser);
+		            }
+		            if (cookies [i].getName().equals("passwordCookie")){
+		            	String remindPassword = cookies [i].getValue();
+		            	request.setAttribute("remindPassword", remindPassword);
+		            }
+		        }
+		    }
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
 			if (rd != null) {
 				rd.forward(request, response);
@@ -83,30 +77,46 @@ public class DisplayConnect extends HttpServlet {
 		String passwordInput = request.getParameter("password");
 		String remind = request.getParameter("remind");
 
-		try {
-			if (manager.ConnectUser(userInput, passwordInput)) {
+		if (manager.ConnectUser(userInput, passwordInput)) {
 
-				// Création session permettant la connexion
-				HttpSession session = request.getSession();
+			// Création session permettant la connexion
+			HttpSession session = request.getSession();
 
-				session.setAttribute("authentification", "1");
-				session.setAttribute("id", manager.getActualUser().getUser_nb());
-				session.setMaxInactiveInterval(300);
+			session.setAttribute("authentification", "1");
+			session.setAttribute("id", manager.getActualUser().getUser_nb());
+			//utilisateur déconnecté au bout de 300 secondes d'inactivité (5 min)
+			session.setMaxInactiveInterval(300);
 
-				log.info("Connexion de l'utilisateur numero " + manager.getActualUser().getUser_nb());
-
-				// Feature "Se souvenir de moi" stocker dans des cookies
-				if (remind != null) {
-					Cookie userCookie = new Cookie("userCookie", userInput);
-					Cookie passwordCookie = new Cookie("passwordCookie", passwordInput);
-					response.addCookie(userCookie);
-					response.addCookie(passwordCookie);
-				}
-
+			// Feature "Se souvenir de moi" stocker dans des cookies
+			// Les cookies se réactualisent si vous recochez "se souvenir de moi"
+			if (remind != null) {
+				Cookie cookies [] = request.getCookies();
+			    for (int i = 0; i < cookies.length; i++) {
+			        if (cookies [i].getName().equals("userCookie")){
+			        	
+			        	cookies [i].setValue(userInput);
+			        	
+			        }else{
+			        	
+			            Cookie userCookie = new Cookie("userCookie", userInput);
+			            response.addCookie(userCookie);
+			            
+			        }
+			        if (cookies [i].getName().equals("passwordCookie")){
+			        	
+			            cookies [i].setValue(passwordInput);
+			            
+			        }else{
+			        	
+			        	Cookie passwordCookie = new Cookie("passwordCookie", passwordInput);
+			        	response.addCookie(passwordCookie);		
+			        	
+			        }
+			    }
+			    
+	
 			}
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 
 		doGet(request, response);

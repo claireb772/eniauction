@@ -68,4 +68,9 @@ public class UserManager {
 		return ui.selectAll();
 	}
 
+	public int getAllUserCount() {
+		UsersImpl ui = UsersImpl.getInstance();
+		return ui.getUserCount();
+	}
+
 }
