@@ -63,6 +63,7 @@ public class DisplayRegister extends HttpServlet {
 		String Street = request.getParameter("Street").trim();
 		String City = request.getParameter("City").trim();
 		String PostalCode = request.getParameter("PostalCode").trim();
+		String Answer = request.getParameter("Answer").trim();
 
 
 
@@ -110,7 +111,7 @@ public class DisplayRegister extends HttpServlet {
 			}
 		}
 		else {
-			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, false);
+			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, Answer, 0,  false);
 			UserManager um= UserManager.getInstance();
 			String message=null;
 			try {
