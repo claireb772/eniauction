@@ -9,6 +9,7 @@ import org.eniauction.models.bo.Auction;
 import org.eniauction.models.bo.AuctionComplete;
 import org.eniauction.models.bo.Categories;
 import org.eniauction.models.bo.SoldArticles;
+import org.eniauction.models.bo.Withdrawals;
 
 public class ManagerAuction {
 
@@ -77,5 +78,25 @@ public class ManagerAuction {
 		AuctionImpl ai = AuctionImpl.getInstance();
 		ai.insertAuction(auction);
 
+	}
+
+	public int GetAllSoldArticlesCount() {
+		AuctionImpl ai = AuctionImpl.getInstance();
+		return ai.getAllSoldArticlesCount();
+	}
+
+	public SoldArticles getOneSoldArticles(int randomArticle) {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		SoldArticles ac = auctionImpl.getOneArticle(randomArticle);
+		return ac;
+	}
+
+	public void setWithdrawals(Withdrawals wd) {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		auctionImpl.insertWithDrawals(wd);
+	}
+	public boolean isWithdrawalsExist(int id) {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		return auctionImpl.isWithdrawalsExist(id);
 	}
 }

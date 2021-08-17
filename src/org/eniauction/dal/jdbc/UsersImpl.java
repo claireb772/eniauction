@@ -34,6 +34,7 @@ public class UsersImpl implements UsersDAO {
 	private static final String DELETE_USER_BY_ID = "DELETE FROM USERS WHERE user_nb=?";
 
 	private static final String SELECT_ALL_USERS = "select * from USERS";
+	private static final String SELECT_COUNT_ALL_USERS = "select COUNT(*) from USERS";
 
 	/*
 	 * Fonction qui permet de récupérer un user avec son id
@@ -201,6 +202,25 @@ public Users ConnectUser(String emailInput, String passwordInput) {
 	}
 
 	return users;
+}
+
+
+public int getUserCount() {
+	int countUsers = 0;
+	try (Connection cnx = ConnectionProvider.getConnection()) {
+		PreparedStatement pstmt = cnx.prepareStatement(SELECT_COUNT_ALL_USERS);
+		ResultSet rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+
+			countUsers= rs.getInt(1);
+		}
+
+		cnx.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return countUsers;
 }
 
 }

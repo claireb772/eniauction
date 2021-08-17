@@ -30,4 +30,19 @@ public class ManagerCategories {
 		 CategoriesImpl ci = CategoriesImpl.getInstance();
 		 return ci.selectOne(id);
 	 }
+	 
+	 public void insertCategories(Categories cat) throws Exception {
+		 CategoriesImpl ci = CategoriesImpl.getInstance();
+		 ci.insert(cat);
+	 }
+
+	public int getAllCategoriesCount() {
+		CategoriesImpl ci = CategoriesImpl.getInstance();
+		return ci.getAllCategoriesCount();
+	}
+
+	public boolean isCategoryExist(String name) {
+		CategoriesImpl ci = CategoriesImpl.getInstance();
+		return ci.isCategoryExist(name);
+	}
 }

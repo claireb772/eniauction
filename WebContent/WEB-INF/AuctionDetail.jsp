@@ -38,24 +38,32 @@
 			    <button class="btn btn-primary" type="button">Enchérir</button>
 			  </div>
 			</div>
-			<p>Liste des enchérisseurs</p>
-			<hr>
+			
+			
 			<c:if test="${auction.getSize() ==  0}">
 				<p class="text-secondary">Aucun encherisseur pour cette offre</p>
 			</c:if>
-			<c:if test="${auction.getSize() >  0}">
-				<table class="table table-sm">
-					<tbody>
+			<c:if test="${auction.getSize()>0 && sessionStore.id == auction.user.getUser_nb()}">
+			<hr>
+				<p>Liste des enchérisseurs</p>
+				<table class="table table-sm  table-striped">
+					<tbody id="auction_scroller">
 					<c:forEach var="item" items="${auction.getListAuction()}" >
-				    <tr>
-				    	<td>
-				    		<a href="./profil?id=${item.getUserById().getUser_nb() }" class="text-decoration-none text-black flex-1 d-flex"><span class="flex-1 d-flex">${item.getUserById().getPseudo() }</span>${item.getAmount() } pts</a>
-				    	</td>
-				    	
-				    </tr>
+					    <tr>
+					    	<td>
+					    		<a href="./profil?id=${item.getUserById().getUser_nb() }" class="text-black flex-1 d-flex"><span class="flex-1 d-flex">${item.getUserById().getPseudo() }</span>${item.getAmount() } pts</a>
+					    	</td>
+					    	
+					    </tr>
 				    </c:forEach>
+				    <tr>
+				    	<td class="d-flex justify-content-center">
+				    	<a href="#" class="flex-1 text-center">Afficher plus</a>
+				    	</td>
+				    </tr>
 				  </tbody>
 				</table>
+				<hr>
 			</c:if>
 			<c:if test="${auction.checkAvailable() }">
 				<p class="text-danger">L'enchere est terminée</p>
@@ -63,7 +71,7 @@
 
 
 			
-			<hr>
+			
 			<c:if test="${auction.checkAvailable() }">
 				<p>A récupérer au : </br><c:out value="${auction.user.getStreet()}"/> <c:out value="${auction.user.getPostal_code()}"/> <c:out value="${auction.user.getCity()}"/></p>
 			</c:if>
