@@ -67,23 +67,23 @@ public class DisplayRegister extends HttpServlet {
 
 
 		if(b== false) {
-			ListeErreur.add("Le mot de passe ne respecte pas les critères de sécurité: doit contenir 1 majuscule,1 minuscule, 1 chiffre ainsi qu'un charactère spécial (*$)");
+			ListeErreur.add("Le mot de passe ne respecte pas les critï¿½res de sï¿½curitï¿½: doit contenir 1 majuscule,1 minuscule, 1 chiffre ainsi qu'un charactï¿½re spï¿½cial (*$)");
 		}
 		if (!Password.equals(Confirmation)) {
-			ListeErreur.add("Les mots de passe ne correspondent pas");	// Password doit être égal a Confirmation, et B= respecte les critères
+			ListeErreur.add("Les mots de passe ne correspondent pas");	// Password doit ï¿½tre ï¿½gal a Confirmation, et B= respecte les critï¿½res
 
 		}
 		if (Pseudo.isBlank()) {
 			ListeErreur.add ("Merci d'entrer un pseudo");
 		}
 		if (Name.isBlank()) {
-			ListeErreur.add ("Merci d'entrer un prénom");
+			ListeErreur.add ("Merci d'entrer un prï¿½nom");
 		}
 		if (Surname.isBlank()) {
 			ListeErreur.add ("Merci d'entrer un nom");
 		}
 		if (Phone.isBlank()) {
-			ListeErreur.add ("Merci d'entrer un numéro de téléphone");
+			ListeErreur.add ("Merci d'entrer un numï¿½ro de tï¿½lï¿½phone");
 		}
 		if (Email.isBlank()) {
 			ListeErreur.add ("Merci d'entrer une adresse mail");
@@ -110,7 +110,7 @@ public class DisplayRegister extends HttpServlet {
 			}
 		}
 		else {
-			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, false);
+			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, 0,false);
 			UserManager um= UserManager.getInstance();
 			String message=null;
 			try {

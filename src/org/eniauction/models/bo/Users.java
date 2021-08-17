@@ -13,10 +13,11 @@ public class Users {
     private String city;
     private String password;
     private int credit;
+    private int pendingChange;
     private boolean administrator;
     
 
-    public Users(int user_nb, String pseudo, String name, String surname, String email, String phone_nb, String street, String postal_code, String city, String password, int credit, boolean administrator) {
+    public Users(int user_nb, String pseudo, String name, String surname, String email, String phone_nb, String street, String postal_code, String city, String password, int credit,int pendingChange, boolean administrator) {
         this.user_nb = user_nb;
         this.pseudo = pseudo;
         this.name = name;
@@ -27,6 +28,7 @@ public class Users {
         this.postal_code = postal_code;
         this.city = city;
         this.password = password;
+        this.pendingChange = pendingChange;
         this.credit = credit;
         this.administrator = administrator;
     }
@@ -47,6 +49,19 @@ public class Users {
 		this.city = city;
 		this.password = password;
 	}
+
+    
+	public int getPendingChange() {
+		return pendingChange;
+	}
+
+
+
+	public void setPendingChange(int pendingChange) {
+		this.pendingChange = pendingChange;
+	}
+
+
 
 	public int getUser_nb() {
         return user_nb;

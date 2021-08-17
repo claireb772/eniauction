@@ -107,7 +107,8 @@ public class FakeData {
 						addressParser.get("zip_code").getAsString(), 
 						addressParser.get("city").getAsString(), 
 						parser.get("password").getAsString(), 
-						randCredit, 
+						randCredit,
+						0,
 						false
 				);
 		
@@ -175,6 +176,8 @@ public class FakeData {
 			um.newUser(user);
 		}
 		
+		System.out.println("USERS OK");
+		
 		
 		for(int i = 0; i<8; i++) {
 			Categories category = newFakeCategory();
@@ -184,6 +187,8 @@ public class FakeData {
 			}
 		}
 		
+		System.out.println("CATEGORIES OK");
+		
 		int userCount = um.getAllUserCount();
 		int categoryCount = mc.getAllCategoriesCount();
 		
@@ -192,13 +197,15 @@ public class FakeData {
 			ma.SetNewAuction(sa);
 		}
 		
+		System.out.println("ARTICLES OK");
 		
 		int soldArticleCount = ma.GetAllSoldArticlesCount();
 		for(int i = 0; i<150; i++) {
 			Auction auction = newFakeAuction(userCount,soldArticleCount);
 			ma.SetAuction(auction);
 		}
-
+		
+		System.out.println("AUCTION OK");
 		
 		for(int i = 0; i<60; i++) {
 			Withdrawals wd = newFakeWithDrawals(soldArticleCount);
@@ -206,6 +213,8 @@ public class FakeData {
 				ma.setWithdrawals(wd);
 			}
 		}
+		
+		System.out.println("LOCALISATIONS OK");
 
 		
 		

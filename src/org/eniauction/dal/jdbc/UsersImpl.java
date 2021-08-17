@@ -29,7 +29,7 @@ public class UsersImpl implements UsersDAO {
 	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT " + " * " + " from USERS "
 			+ " where email = ? and password = ? ";
 
-	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, administrator) values(?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, pending ,administrator) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	private static final String DELETE_USER_BY_ID = "DELETE FROM USERS WHERE user_nb=?";
 
@@ -56,14 +56,8 @@ public class UsersImpl implements UsersDAO {
 
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
-						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),rs.getInt("pending"),
 						rs.getInt("credit"), false);
-
-				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
-						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
-						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
-						rs.getInt("credit"), false);
-
 			}
 			rs.close();
 			cnx.close();
@@ -90,7 +84,8 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setString(8, user.getCity());
 			pstmt.setString(9, user.getPassword());
 			pstmt.setInt(10, user.getCredit());
-			pstmt.setBoolean(11, false);
+			pstmt.setInt(11, user.getPendingChange());
+			pstmt.setBoolean(12, false);
 
 			int row = pstmt.executeUpdate();
 
@@ -131,7 +126,7 @@ public List<Users> selectAll() {
 			Users users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"),
 					rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"),
 					rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),
-					rs.getString("password"), rs.getInt("credit"), false);
+					rs.getString("password"), rs.getInt("credit"), rs.getInt("pending"), false);
 			ListUsers.add(users);
 		}
 
@@ -192,7 +187,7 @@ public Users ConnectUser(String emailInput, String passwordInput) {
 			users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 					rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
 					rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
-					rs.getInt("credit"), false);
+					rs.getInt("credit"), rs.getInt("pending"), false);
 
 		}
 		pstmt.close();

@@ -73,10 +73,14 @@ public class ManagerAuction {
 		return listAuction;
 	}
 
-	// Ajoute une enchere
 	public void SetAuction(Auction auction) {
 		AuctionImpl ai = AuctionImpl.getInstance();
-		ai.insertAuction(auction);
+		if(ai.isAuctionExist(auction)) {
+			ai.updateAuction(auction);
+		}else {
+			ai.insertAuction(auction);
+		}
+		
 
 	}
 
