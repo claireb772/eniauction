@@ -80,19 +80,20 @@ public class DisplayRegister extends HttpServlet {
 		if (!Password.equals(Confirmation)) {
 			ListeErreur.add("Les mots de passe ne correspondent pas"); // Password doit �tre �gal a Confirmation, et B=
 																		// respecte les crit�res
-
 		}
 		if (Pseudo.isBlank()) {
 			ListeErreur.add("Merci d'entrer un pseudo");
 		}
 		if (Name.isBlank()) {
+
 			ListeErreur.add("Merci d'entrer un pr�nom");
 		}
 		if (Surname.isBlank()) {
 			ListeErreur.add("Merci d'entrer un nom");
 		}
 		if (Phone.isBlank()) {
-			ListeErreur.add("Merci d'entrer un num�ro de t�l�phone");
+
+			ListeErreur.add("Merci d'entrer un num�ro de téléphone");
 		}
 		if (Email.isBlank()) {
 			ListeErreur.add("Merci d'entrer une adresse mail");
@@ -116,10 +117,11 @@ public class DisplayRegister extends HttpServlet {
 
 			}
 		} else {
-			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0,
+			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, 0,
 					false);
 			UserManager um = UserManager.getInstance();
 			String message = null;
+
 			try {
 				var o = um.newUser(user);
 			} catch (DALException e) {

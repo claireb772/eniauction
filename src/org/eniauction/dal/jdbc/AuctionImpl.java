@@ -238,4 +238,47 @@ public class AuctionImpl implements AuctionDAO {
 		}
 		return count ==1;
 	}
+
+	public boolean isAuctionExist(Auction auction) {
+		Connection cs;
+		int count = 0;
+		try {
+			cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs.prepareStatement("SELECT COUNT(*) FROM AUCTION WHERE article_nb = ? AND user_nb = ?");
+			pstmt.setInt(1, auction.getArticle_nb());
+			pstmt.setInt(2, auction.getUser_nb());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+			pstmt.close();
+			cs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count ==1;
+	}
+
+	public void updateAuction(Auction auction) {
+		Connection cs;
+		try {
+			cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs.prepareStatement("UPDATE USERS set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
+			pstmt.setInt(1, auction.getAmount());
+			pstmt.setDate(2, convertDateToSqlData(auction.getAuction_date()));
+			pstmt.setInt(3, auction.getUser_nb());
+			pstmt.setInt(4, auction.getArticle_nb());
+			ResultSet rs = pstmt.executeQuery();
+
+			int res = pstmt.executeUpdate();
+			pstmt.close();
+			cs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }
