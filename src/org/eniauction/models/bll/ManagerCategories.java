@@ -26,6 +26,11 @@ public class ManagerCategories {
 		return ci.selectAll();
 	}
 
+	public void updateCategory(Categories cat) throws SQLException {
+		CategoriesImpl ci = CategoriesImpl.getInstance();
+		ci.update(cat);
+	}
+
 	public Categories GetCategoryById(int id) {
 
 		CategoriesImpl ci = CategoriesImpl.getInstance();

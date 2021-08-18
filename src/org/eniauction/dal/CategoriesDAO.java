@@ -13,4 +13,8 @@ public interface CategoriesDAO {
 
 	void delete(int categoryId) throws SQLException;
 
+	void update(Categories cat) throws SQLException;
+
+	void insert(Categories cat) throws Exception;
+
 }

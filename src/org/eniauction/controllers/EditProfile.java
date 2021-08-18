@@ -134,7 +134,6 @@ public class EditProfile extends HttpServlet {
 
 			Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city,
 					password);
-			System.out.println(user_nb);
 
 			try {
 				um.editProfile(users);
