@@ -1,6 +1,7 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eniauction.models.bll.ManagerAuction;
-import org.eniauction.models.bo.AuctionComplete;
+import org.eniauction.models.bll.UserManager;
+import org.eniauction.models.bo.*;
 
 /**
  * Servlet implementation class DisplayAuctionDetails
@@ -52,13 +54,29 @@ public class DisplayAuctionDetails extends HttpServlet {
 	}
 
 	/**
+	 * @throws IOException 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		UserManager um = UserManager.getInstance();
+		Users user = um.getActualUser();
+		int amount = Integer.parseInt(request.getParameter("input_new_amount"));
+		int articleId = Integer.parseInt(request.getParameter("article"));
+		if(user == null) {
+			response.sendRedirect("./login");
+		}else {
+			Auction auction = new Auction(user.getUser_nb(), articleId, new Date(), amount);
+			ManagerAuction ma = ManagerAuction.getInstance();
+			ma.SetAuction(auction);
+			response.sendRedirect("./AuctionDetails?id="+articleId);
+		}
+		
+		
+		
 	}
+			
+	
 
 }

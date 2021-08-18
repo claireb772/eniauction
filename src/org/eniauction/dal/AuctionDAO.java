@@ -9,7 +9,7 @@ public interface AuctionDAO {
 
 	List<SoldArticles> selectAll();
 
-	void insertArticle(SoldArticles sold);
+	SoldArticles insertArticle(SoldArticles sold);
 
 	List<Categories> getCategories();
 

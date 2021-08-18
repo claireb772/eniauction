@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+
+body, .bg-light, .bg-white{
+	background-color:#4d4d4d !important;
+}
+.btn-primary{
+	border: 1px solid #25e894 !important;
+}
+.text-primary
+{
+	color:#25e894 !important;
+}
+.bg-primary, .btn-primary
+{
+	background-color:#333333 !important;
+}
+.text-danger{
+	color:#e3a727 !important;
+}
+.enchere_container{
+	border-right:1px solid #424242;
+	border-left:1px solid #424242;
+	margin-bottom:20px;
+}
+.btn-outline-primary{
+	color:#25e894 !important;
+	border-color:#25e894 !important;
+}
+.btn-outline-secondary{
+	color:#56bf92 !important;
+	border-color:#56bf92 !important;
+}
+.text-black{
+	color:white !important;
+}
+label{
+	color:white;
+}
