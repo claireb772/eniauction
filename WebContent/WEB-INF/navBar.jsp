@@ -8,6 +8,7 @@
 					<a href="<%=request.getContextPath() %>/categories" class="text-white text-decoration-none mx-2">Catégories</a>
 				</c:if>
 			<a href="<%=request.getContextPath() %>/NewAuction" class="text-white text-decoration-none mx-2">Nouvelle Vente</a>
+			<a href="<%=request.getContextPath() %>/myauction" class="text-white text-decoration-none mx-2">Mes enchères</a>
 			<a href="<%=request.getContextPath() %>/profil?id=${sessionScope.id}" class="text-white text-decoration-none mx-2">Profil</a>
 			<a href="<%=request.getContextPath() %>/logout" class="text-white text-decoration-none mx-2">Deconnecter</a>
 				
