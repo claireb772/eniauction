@@ -14,7 +14,6 @@
 		</c:if>
 
 		<a href="./Admin" class="text-white text-decoration-none mx-2">Admin</a>
-		<a href="./">
-			<button class="text-white" onclick="<c:set var="darkMode" scope="session" value="${darkMode == '1'? '0':'1'}" />">A</button>
-		</a>
+		<a href="?darkMode=<c:out value="${sessionScope.darkMode == 1 ? 0 : 1 }"/>"><button class="text-white">A</button></a>
+
 	</div>

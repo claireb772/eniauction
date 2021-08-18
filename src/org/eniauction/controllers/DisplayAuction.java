@@ -11,7 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import org.eniauction.models.bll.ManagerAuction;
 import org.eniauction.models.bo.*;
@@ -36,17 +36,13 @@ public class DisplayAuction extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		System.out.println(session.getAttribute("darkMode"));
-		if(session.getAttribute("darkMode")== null) {
-			session.setAttribute("darkMode", "0");
-			
-		}
+
+		ManagerAuction manager = ManagerAuction.getInstance();
 		if(request.getParameter("validSearch") == null) 
 		{
 			try 
 			{
-				ManagerAuction manager = ManagerAuction.getInstance();
+				
 				int page = 0;
 				if(request.getParameter("page") != null) {
 					page = Integer.parseInt(request.getParameter("page"));
@@ -58,7 +54,6 @@ public class DisplayAuction extends HttpServlet {
 					e.getStackTrace();
 				}
 			}
-		ManagerAuction manager = ManagerAuction.getInstance();
 		int nbPage = (int) Math.ceil(manager.GetAllSoldArticlesCount()/9)+1;
 		List<Button>listPage = new ArrayList<Button>();
 		for(int i = 0; i<nbPage;i++) {
