@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.eniauction.dal.jdbc.DALException;
+import org.eniauction.models.bll.ManagerAuction;
+import org.eniauction.models.bll.ManagerQuestion;
 import org.eniauction.models.bll.UserManager;
+import org.eniauction.models.bo.AuctionComplete;
+import org.eniauction.models.bo.Question;
 import org.eniauction.models.bo.Users;
 
 /**
@@ -40,6 +44,15 @@ public class DisplayRegister extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		try {
+			ManagerQuestion manager = ManagerQuestion.getInstance();
+			List<Question> listQuestion = manager.getAllQuestion();
+			request.setAttribute("listAuction", listQuestion.toArray());
+			}catch(Exception e){
+				e.getStackTrace();
+		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/sign.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
