@@ -23,7 +23,7 @@ public class AuctionImpl implements AuctionDAO {
 		return instance;
 	}
 
-	private static final String INSERT_USER = "insert into SOLD_ARTICLES(article_name, description, auction_start_date, auction_end_date, initial_price, sell_price, user_nb, category_nb) values(?,?,?,?,?,?,?,?)";
+	private static final String INSERT_ARTICLE = "insert into SOLD_ARTICLES(article_name, description, auction_start_date, auction_end_date, initial_price, sell_price, user_nb, category_nb) values(?,?,?,?,?,?,?,?)";
 	private static final String GET_ONE_ARTICLE = "select * from SOLD_ARTICLES where article_nb = ?";
 	private static final String GET_ALL_AUCTION_BY_ARTICLE_ID = "select * from AUCTION where article_nb = ?  ORDER BY auction_amount DESC";
 	private static final String INSERT_AUCTION = "insert into AUCTION (user_nb, article_nb, auction_date, auction_amount) values(?,?,?,?) ";
@@ -50,6 +50,7 @@ public class AuctionImpl implements AuctionDAO {
 		return listArticles;
 	}
 
+	
 	public List<SoldArticles> selectMyAuction(int idUser) {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
@@ -98,12 +99,14 @@ public class AuctionImpl implements AuctionDAO {
 		return listArticles;
 	}
 
-	public List<SoldArticles> selectSearch(String searchInput) {
+	public List<SoldArticles> selectSearch(String searchInput, int page) {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
 			Connection cs = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cs
-					.prepareStatement("Select * From SOLD_ARTICLES where article_name like '%" + searchInput + "%' ");
+			PreparedStatement pstmt = cs.prepareStatement("Select * From SOLD_ARTICLES where article_name like ? ORDER BY article_nb OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY ");
+			pstmt.setString(1, "%"+searchInput+"%");
+			int realPage = page*9;
+			pstmt.setInt(2,realPage );
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
@@ -117,11 +120,11 @@ public class AuctionImpl implements AuctionDAO {
 		return listArticles;
 	}
 
-	public void insertArticle(SoldArticles sold) {
+	public SoldArticles insertArticle(SoldArticles sold) {
 
 		try {
 			Connection conn = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(INSERT_USER);
+			PreparedStatement pstmt = conn.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, sold.getArticle_name());
 			pstmt.setString(2, sold.getDescription());
 			pstmt.setDate(3, convertDateToSqlData(sold.getAuction_start_date()));
@@ -130,13 +133,18 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.setInt(6, sold.getSell_price());
 			pstmt.setInt(7, sold.getUsers_nb());
 			pstmt.setInt(8, sold.getCategory_nb());
-
-			int row = pstmt.executeUpdate();
+			int affectedRows = pstmt.executeUpdate();
+			ResultSet keys = pstmt.getGeneratedKeys();
+			
+			while(keys.next()) {
+				sold.setArticle_nb(keys.getInt(1));
+			}
 			pstmt.close();
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return sold;
 	}
 
 	private java.sql.Date convertDateToSqlData(java.util.Date date) {
@@ -216,18 +224,58 @@ public class AuctionImpl implements AuctionDAO {
 		try {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(INSERT_AUCTION);
-			pstmt.setInt(1, auction.getUser_nb());
-			pstmt.setInt(2, auction.getArticle_nb());
-			pstmt.setDate(3, convertDateToSqlData(auction.getAuction_date()));
-			pstmt.setInt(4, auction.getAmount());
+			if(TransfertPointToPending(auction)) {
+				pstmt.setInt(1, auction.getUser_nb());
+				pstmt.setInt(2, auction.getArticle_nb());
+				pstmt.setDate(3, convertDateToSqlData(auction.getAuction_date()));
+				pstmt.setInt(4, auction.getAmount());
 
-			int row = pstmt.executeUpdate();
+				int row = pstmt.executeUpdate();
+			}
+			
 			pstmt.close();
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+	public boolean TransfertPointToPending(Auction auction) 
+	{
+		int credit = 0;
+		int pending = 0;
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("SELECT credit,pending FROM USERS WHERE user_nb = ?");
+			pstmt.setInt(1,auction.getUser_nb());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				credit = rs.getInt("credit");
+				pending = rs.getInt("pending");
+			}
+			if(credit > auction.getAmount()) {
+				
+				pstmt = conn.prepareStatement("UPDATE USERS SET credit = ?, pending = ? where user_nb = ? ");
+				pstmt.setInt(1,credit - auction.getAmount());
+				pstmt.setInt(2, pending + auction.getAmount());
+				pstmt.setInt(3,auction.getUser_nb());
+				pstmt.executeUpdate();
+				pstmt.close();
+				conn.close();
+				return true;
+			}else {
+				
+				pstmt.close();
+				conn.close();
+				return false;
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public int getAllSoldArticlesCount() {
@@ -315,17 +363,23 @@ public class AuctionImpl implements AuctionDAO {
 		Connection cs;
 		try {
 			cs = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cs.prepareStatement(
-					"UPDATE AUCTION set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
-			pstmt.setInt(1, auction.getAmount());
-			pstmt.setDate(2, convertDateToSqlData(auction.getAuction_date()));
-			pstmt.setInt(3, auction.getUser_nb());
-			pstmt.setInt(4, auction.getArticle_nb());
-			ResultSet rs = pstmt.executeQuery();
 
-			int res = pstmt.executeUpdate();
-			pstmt.close();
-			cs.close();
+			if(TransfertPointToPending(auction)) {
+				PreparedStatement pstmt = cs.prepareStatement("UPDATE AUCTION set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
+				pstmt.setInt(1, auction.getAmount());
+				pstmt.setDate(2, convertDateToSqlData(auction.getAuction_date()));
+				pstmt.setInt(3, auction.getUser_nb());
+				pstmt.setInt(4, auction.getArticle_nb());
+
+				pstmt.executeUpdate();
+				pstmt.close();
+				cs.close();
+			}else {
+				cs.close();
+			}
+			
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

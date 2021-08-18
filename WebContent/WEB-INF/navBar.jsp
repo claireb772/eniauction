@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <a href="./" class="text-white text-decoration-none">Enchere</a>
 	<div class="links justify-self-end">
@@ -19,6 +19,7 @@
 			<a href="<%=request.getContextPath() %>/sign" class="text-white text-decoration-none mx-2">S'inscrire</a>
 		</c:if>
 
+		<a href="?darkMode=<c:out value="${sessionScope.darkMode == 1 ? 0 : 1 }"/>"><button class="text-white">A</button></a>
 		<a href="<%=request.getContextPath() %>/Admin" class="text-white text-decoration-none mx-2">Admin</a>
 		
 	</div>
