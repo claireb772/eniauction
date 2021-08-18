@@ -4,16 +4,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Encheres Project</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
-	<style><%@include file="/WEB-INF/style.css"%></style>
+	<%@ include file="/WEB-INF/Header.jsp" %> 
 </head>
 <body>
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
 	<%@ include file="/WEB-INF/navBar.jsp" %> 
 </nav>
 <main class="p-3 col-12 row ">
-	<form  method="post">
+	<form  method="post" class="mb-5 mt-2">
 		<div class="input-group">
 			<input name="search" value="${searchInput}" placeholder="Recherche" class="form-control col-3"/>
 			<button name="validSearch" type="submit" class="btn btn-primary">Rechercher</button>
@@ -32,7 +30,18 @@
 		</div>
 	</a>
 	</c:forEach>
-	
+	<div id="pagination_container" class="w-100 d-flex justify-content-center my-5">
+	<c:if test="${actualPage > 0 }">
+		<button type="button" class="border-0 bg-white text-primary" onclick="window.location.href='./eniauction?page=${actualPage-1}'">Precedent</button>
+	</c:if>
+		<c:forEach var="button" items="${listPage}">
+		
+			<button type="button" class="border-0 <c:if test="${ actualPage == button.getId().toString() }">bg-primary text-white</c:if><c:if test="${ actualPage != button.getId().toString() }">bg-white text-primary</c:if> " onclick="window.location.href='./eniauction?page=${button.getId()}'">${button.getName() }</button>
+		</c:forEach>
+	<c:if test="${actualPage < maxPage-1 }">
+		<button type="button" class="border-0 bg-white text-primary" onclick="window.location.href='./eniauction?page=${actualPage+1}'">Suivant</button>
+	</c:if>
+	</div>
 </main>
 </body>
 </html>

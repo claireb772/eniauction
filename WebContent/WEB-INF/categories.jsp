@@ -15,20 +15,26 @@
 </nav>
 <main>
 
-<div>
-<p>Catégories <a href="<%=request.getContextPath()%>/addCategory"><button type="button" class="btn btn-primary m-3 w-50">Ajouter</button></a></p>
-</div>
-<table>
-<c:forEach var="item" items="${categoryList}" >
-<tr>
-<td>${item.wording}</td>
-<td><a href="<%=request.getContextPath()%>/deleteCategory?id=${item.category}" onclick= "return confirm('Vous êtes sûr.e de vouloir supprimer la catégorie ?')" ><button type="button" class="btn btn-danger m-3 w-50">Supprimer</button></a></td>
-<td><a href="<%=request.getContextPath()%>/editCategory?id=${item.category}"><button type="button" class="btn btn-warning m-3 w-50">Modifier</button></a></td>
-</tr>
-</c:forEach>
 
-</table>
-
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col"></th>
+				<th scope="col">Categories</th>
+				<th scope="col"><a href="<%=request.getContextPath()%>/addCategory"><button type="button" class="btn btn-primary m-3 w-50">Ajouter</button></a></th>
+				<th scope="col"></th>
+			</tr>
+	</thead>
+	<c:forEach var="item" items="${categoryList}" >
+		<tr>
+			<th scope="row"></th>
+				<td>${item.wording}</td>
+				<td><a href="<%=request.getContextPath()%>/deleteCategory?id=${item.category}" onclick= "return confirm('Vous êtes sûr.e de vouloir supprimer la catégorie ?')" ><button type="button" class="btn btn-danger m-3 w-50">Supprimer</button></a></td>
+				<td><a href="<%=request.getContextPath()%>/editCategory?id=${item.category}"><button type="button" class="btn btn-warning m-3 w-50">Modifier</button></a></td>
+		</tr>
+	</c:forEach>
+	
+	</table>
 </main>
 </body>
 </html>
