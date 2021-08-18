@@ -16,19 +16,21 @@
 
 <main>
 
-<table>
+<table class="table">
 <thead>
 <tr>
-	<th>Nom</th>
-	<th>Pseudo</th>
-	<th>Crédit</th>
-	<th>Enchères en cours</th>
-	<th>Admin</th>
-	<th></th>
+	<th scope="col"></th>
+	<th scope="col">Nom</th>
+	<th scope="col">Pseudo</th>
+	<th scope="col">Crédit</th>
+	<th scope="col">Enchères en cours</th>
+	<th scope="col">Admin</th>
+	<th scope="col"></th>
 
 </tr>
 <c:forEach var="item" items="${usersList}" >
 <tr>
+	<th scope="row"></th>
 	<td>${item.name}</td>
 	<td>${item.pseudo}</td>
 	<td>${item.credit}</td>

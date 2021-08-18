@@ -18,7 +18,6 @@
 	<p class="text-primary">Ajouter une catégorie</p>
 	<div class="d-md-flex flex-row">
 	  <div class="form-group mx-2 flex-1">
-	    <label for="formGroupExampleInput">Nom de la catégorie</label>
 	    <input type="text" name="wording" class="form-control" id="formGroupExampleInput" placeholder="Nom de la catégorie">
 	  </div>
 	</div>
