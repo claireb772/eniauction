@@ -60,7 +60,7 @@ public class UsersImpl implements UsersDAO {
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
 						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
-						rs.getInt("pending"), rs.getInt("credit"), false);
+						rs.getInt("pending"), rs.getInt("credit"), rs.getBoolean("administrator"));
 			}
 			rs.close();
 			cnx.close();
@@ -134,7 +134,8 @@ public class UsersImpl implements UsersDAO {
 				Users users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"),
 						rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"),
 						rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),
-						rs.getString("password"), rs.getInt("credit"), rs.getInt("pending"), false);
+						rs.getString("password"), rs.getInt("credit"), rs.getInt("pending"),
+						rs.getBoolean("administrator"));
 				ListUsers.add(users);
 			}
 
@@ -198,7 +199,7 @@ public class UsersImpl implements UsersDAO {
 				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
 						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
-						rs.getInt("credit"), rs.getInt("pending"), false);
+						rs.getInt("credit"), rs.getInt("pending"), rs.getBoolean("administrator"));
 
 			}
 			pstmt.close();
