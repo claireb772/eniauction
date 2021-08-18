@@ -28,3 +28,9 @@
 	padding: 10px;
 	border-top-right-radius: 10px;
 }
+
+#auction_scroller{
+	height:300px;
+	max-height:300px;
+	overflow:scroll;
+}

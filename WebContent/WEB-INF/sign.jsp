@@ -66,19 +66,18 @@
 	    <input required="required"  name="PostalCode" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Code Postal"  pattern="[0-9]{5}">
 	  </div>
 	</div>
-	<br> <br>
-	<select class="custom-select custom-select-lg mb-3">
-  <option selected>Question de sécurité</option>
-  <option value="1">Dans quelle ville êtes-vous né(e) ?</option>
-  <option value="2">Quel est le premier concert auquel vous avez assisté ?</option>
-  <option value="3">Quel est le prénom de votre arrière-grand-mère maternelle ?</option>
-  <option value="4">Quel est le nom de votre équipe de sport préférée ?</option>
-  <option value="5">Comment s'appelait votre premier animal de compagnie ?</option>
-</select>
-<div class="form-group mx-2 flex-1">
+	<br>
+	<br>
+		<select name="question" class="custom-select custom-select-lg mb-3">
+		      <c:forEach var="item" items="${listAuction}" >
+		         <option value="${item.question_id}" >${item.question}</option>
+		    </c:forEach>
+		</select>
+		<div class="form-group mx-2 flex-1">
 	    <label for="formGroupExampleInput2"></label>
-	    <input required="required"  name="Answer" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Réponse"  pattern="[a-z,A-Z ][0-9]">
+	    <input required="required"  name="Answer" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Réponse"  pattern="[a-z,A-Z ]{0,20}[0-9]{0,20}">
 	  </div>
+		
 	<div class="d-flex flex-row">
 		<a href="./"  class="btn btn-outline-secondary m-3 w-50">Annuler</a>
 		<button type="submit" class="btn btn-primary m-3 w-50">S'inscrire</button>

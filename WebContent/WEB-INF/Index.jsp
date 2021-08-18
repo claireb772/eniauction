@@ -17,7 +17,7 @@
 		<div class="input-group">
 			<input name="search" value="${searchInput}" placeholder="Recherche" class="form-control col-3"/>
 			<button name="validSearch" type="submit" class="btn btn-primary">Rechercher</button>
-			<a href="./" type="button" class="btn btn-outline-primary">Annuler</a>
+			<a href="./" type="button" class="btn btn-outline-transparent text-primary">Annuler</a>
 		</div>
 	</form>
 	<c:forEach var="item" items="${listAuction}" >

@@ -11,6 +11,7 @@ import org.eniauction.dal.AuctionDAO;
 import org.eniauction.models.bo.Auction;
 import org.eniauction.models.bo.Categories;
 import org.eniauction.models.bo.SoldArticles;
+import org.eniauction.models.bo.Withdrawals;
 
 public class AuctionImpl implements AuctionDAO {
 	private static AuctionImpl instance;
@@ -26,6 +27,8 @@ public class AuctionImpl implements AuctionDAO {
 	private static final String GET_ONE_ARTICLE = "select * from SOLD_ARTICLES where article_nb = ?";
 	private static final String GET_ALL_AUCTION_BY_ARTICLE_ID = "select * from AUCTION where article_nb = ?  ORDER BY auction_amount DESC";
 	private static final String INSERT_AUCTION = "insert into AUCTION (user_nb, article_nb, auction_date, auction_amount) values(?,?,?,?) ";
+	private static final String GET_ALL_AUCTION_COUNT = "select COUNT(*) from SOLD_ARTICLES";
+	private static final String INSERT_WITHDRAWALS = "insert into WITHDRAWALS (article_nb, street, postal_code, city) values(?,?,?,?)";
 
 	public List<SoldArticles> selectAll() {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
@@ -174,6 +177,109 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.close();
 			conn.close();
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public int getAllSoldArticlesCount() {
+		Connection cs;
+		int count = 0;
+		try {
+			cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs.prepareStatement(GET_ALL_AUCTION_COUNT);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+			pstmt.close();
+			cs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	public void insertWithDrawals(Withdrawals wd) {
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(INSERT_WITHDRAWALS);
+			pstmt.setInt(1, wd.getArticle_nb());
+			pstmt.setString(2, wd.getStreet());
+			pstmt.setString(3, wd.getPostal_code());
+			pstmt.setString(4, wd.getCity());
+
+			int row = pstmt.executeUpdate();
+			pstmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean isWithdrawalsExist(int id) {
+		Connection cs;
+		int count = 0;
+		try {
+			cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs.prepareStatement("SELECT COUNT(*) FROM WITHDRAWALS WHERE article_nb = ? ");
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+			pstmt.close();
+			cs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count == 1;
+	}
+
+	public boolean isAuctionExist(Auction auction) {
+		Connection cs;
+		int count = 0;
+		try {
+			cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs
+					.prepareStatement("SELECT COUNT(*) FROM AUCTION WHERE article_nb = ? AND user_nb = ?");
+			pstmt.setInt(1, auction.getArticle_nb());
+			pstmt.setInt(2, auction.getUser_nb());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+			pstmt.close();
+			cs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count == 1;
+	}
+
+	public void updateAuction(Auction auction) {
+		Connection cs;
+		try {
+			cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs.prepareStatement(
+					"UPDATE AUCTION set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
+			pstmt.setInt(1, auction.getAmount());
+			pstmt.setDate(2, convertDateToSqlData(auction.getAuction_date()));
+			pstmt.setInt(3, auction.getUser_nb());
+			pstmt.setInt(4, auction.getArticle_nb());
+			ResultSet rs = pstmt.executeQuery();
+
+			int res = pstmt.executeUpdate();
+			pstmt.close();
+			cs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

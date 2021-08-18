@@ -30,7 +30,12 @@ public class DisplayFakeData extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		FakeData fd = FakeData.getInstance();
-		fd.FakeAuction(2);
+		try {
+			fd.FakeAuction();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		response.sendRedirect("./Admin");
 	}
