@@ -49,7 +49,6 @@ public class DisplayNewAuction extends HttpServlet {
 			ManagerAuction manager = ManagerAuction.getInstance();
 			List<Categories> listCategories = manager.GetCategories();
 			request.setAttribute("listCategories", listCategories.toArray());
-			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/NewAuction.jsp");
 			if (rd != null) {
 				rd.forward(request, response);
@@ -66,11 +65,10 @@ public class DisplayNewAuction extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println(request.getParameter("product_image"));
 		String product_name = request.getParameter("product_name");
 		String product_desc = request.getParameter("product_desc");
 		int product_category = Integer.parseInt(request.getParameter("product_category"));
-		String product_image = request.getParameter("product_image");
+		//String product_image = request.getParameter("product_image");
 		String product_start = request.getParameter("product_start").toString();
 		String product_end = request.getParameter("product_end").toString();
 		int product_price = Integer.parseInt(request.getParameter("product_price"));
@@ -79,15 +77,19 @@ public class DisplayNewAuction extends HttpServlet {
 		String takeaway_postal_code = request.getParameter("takeaway_postal_code");
 		UserManager um = UserManager.getInstance();
 		Users user = um.getActualUser();
+		
 		try {
 			SoldArticles sa = new SoldArticles(0, product_name, product_desc, dateFormatter(product_start), dateFormatter(product_end), product_price, product_price, 1/*user.getUser_nb()*/, product_category);
 			ManagerAuction ma = ManagerAuction.getInstance();
-			ma.SetNewAuction(sa);
+			SoldArticles saReturn = ma.SetNewAuction(sa);
+			Withdrawals wd = new Withdrawals(saReturn.getArticle_nb(), takeaway_street, takeaway_postal_code, takeaway_city);
+			ma.setWithdrawals(wd);
+			
 		} catch (ParseException e) {
-			System.out.println("creation sa servlet");
 			e.printStackTrace();
 		}
-
+		
+		response.sendRedirect("./");
 	}
 	
 	public Date dateFormatter(String dateString) throws ParseException {

@@ -3,8 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Encheres Project</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+	<%@ include file="/WEB-INF/Header.jsp" %> 
 </head>
 	<body>
 		<nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
@@ -27,7 +26,7 @@
 					<input name="remind" type="checkbox" id="formGroupCHeckbox" aria-label="Checkbox for following text input">
 					<label for="formGroupCHeckbox">Se souvenir de moi</label>
 				</div>
-				<a href="#" class="mx-2">Mot de pass oublié</a>
+				<a href="#" class="mx-2 text-primary">Mot de pass oublié</a>
 				<button type="submit" class="btn btn-primary mt-3">Se connecter</button>
 				<a href="./sign" class="btn btn-outline-primary mt-3">Creer un compte</a>
 			</form>

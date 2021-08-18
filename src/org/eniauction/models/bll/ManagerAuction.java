@@ -22,26 +22,26 @@ public class ManagerAuction {
 		return instance;
 	}
 
-	public List<AuctionComplete> GetAuction() throws Exception {
+	public List<AuctionComplete> GetAuction(String searchInput, int page) throws Exception {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
-		for (SoldArticles item : auctionImpl.selectAll()) {
+		for (SoldArticles item : auctionImpl.selectSearch(searchInput, page)) {
 			AuctionComplete ac = new AuctionComplete(item);
 			listArticles.add(ac);
 		}
 		return listArticles;
 	}
 
-	public List<SoldArticles> GetSoldArticles() {
+	public List<SoldArticles> GetSoldArticles(String searchInput, int page) {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
-		List<SoldArticles> listArticles = auctionImpl.selectAll();
+		List<SoldArticles> listArticles = auctionImpl.selectSearch(searchInput, page);
 		return listArticles;
 	}
 
-	public List<AuctionComplete> GetSearch(String searchInput) throws Exception {
+	public List<AuctionComplete> GetSearch(String searchInput, int page) throws Exception {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
-		for (SoldArticles item : auctionImpl.selectSearch(searchInput)) {
+		for (SoldArticles item : auctionImpl.selectSearch(searchInput, page)) {
 			AuctionComplete ac = new AuctionComplete(item);
 			listArticles.add(ac);
 		}
@@ -49,9 +49,10 @@ public class ManagerAuction {
 	}
 
 	// Ajoute un soldArticle
-	public void SetNewAuction(SoldArticles sa) {
+	public SoldArticles SetNewAuction(SoldArticles sa) {
 		AuctionImpl ai = AuctionImpl.getInstance();
-		ai.insertArticle(sa);
+		return ai.insertArticle(sa);
+		
 	}
 
 	public List<Categories> GetCategories() {
@@ -80,8 +81,6 @@ public class ManagerAuction {
 		}else {
 			ai.insertAuction(auction);
 		}
-		
-
 	}
 
 	public int GetAllSoldArticlesCount() {
