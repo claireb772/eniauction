@@ -80,6 +80,7 @@ public class DisplayConnect extends HttpServlet {
 		String userInput = request.getParameter("user");
 		String passwordInput = request.getParameter("password");
 		String remind = request.getParameter("remind");
+		boolean isAdmin = false;
 
 		try {
 			if (manager.ConnectUser(userInput, passwordInput)) {
@@ -91,6 +92,13 @@ public class DisplayConnect extends HttpServlet {
 				session.setAttribute("id", manager.getActualUser().getUser_nb());
 				// utilisateur déconnecté au bout de 300 secondes d'inactivité (5 min)
 				session.setMaxInactiveInterval(300);
+
+				System.out.println(manager.getActualUser().isAdministrator());
+
+				if (manager.getActualUser().isAdministrator()) {
+					isAdmin = true;
+				}
+				session.setAttribute("isAdmin", isAdmin);
 
 				log.info("Connexion de l'utilisateur numéro : " + manager.getActualUser().getUser_nb());
 

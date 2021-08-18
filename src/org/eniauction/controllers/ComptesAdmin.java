@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,20 +14,21 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.eniauction.dal.jdbc.DALException;
 import org.eniauction.models.bll.UserManager;
+import org.eniauction.models.bo.Users;
 
 /**
- * Servlet implementation class DeleteProfil
+ * Servlet implementation class ComptesAdmin
  */
-@WebServlet("/deleteProfil")
-public class DeleteProfil extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@WebServlet("/comptes")
+public class ComptesAdmin extends HttpServlet {
 
-	static Logger log = Logger.getLogger(DeleteProfil.class);
+	static Logger log = Logger.getLogger(ComptesAdmin.class);
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DeleteProfil() {
+	public ComptesAdmin() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -38,28 +40,21 @@ public class DeleteProfil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		List<String> messagesErreur = new ArrayList<>();
-
 		UserManager um = UserManager.getInstance();
-
-		int user_nb = Integer.parseInt(request.getParameter("id"));
+		List<String> listeErreurs = new ArrayList<>();
+		List<Users> usersList = new ArrayList<>();
 
 		try {
-			um.deleteProfile(user_nb);
-			log.info("L'utilisateur " + user_nb + "a supprimé son profil");
-
-			if (!um.getActualUser().isAdministrator()) {
-				response.sendRedirect("./logout");
-			} else {
-				response.sendRedirect("./comptes");
-			}
+			usersList = um.getAllUsers();
 
 		} catch (DALException e) {
-			e.printStackTrace();
-			messagesErreur.add("problème lors de la suppression du profil");
-			log.error("L'utilisateur" + user_nb + " a eu un problème pendant la suppression de son compte");
-			request.setAttribute("message", messagesErreur);
+			listeErreurs.add("problème lors de la récupération du profil");
+			log.error(listeErreurs.toArray());
+			request.setAttribute("listeErreurs", listeErreurs.toArray());
 		}
+		request.setAttribute("usersList", usersList.toArray());
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/comptes.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -68,7 +63,6 @@ public class DeleteProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

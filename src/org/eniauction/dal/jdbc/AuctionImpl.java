@@ -50,6 +50,30 @@ public class AuctionImpl implements AuctionDAO {
 		return listArticles;
 	}
 
+	public List<SoldArticles> selectMyAuction(int idUser) {
+		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
+		try {
+			Connection cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs.prepareStatement(
+					"SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb "
+							+ " FROM AUCTION A " + " INNER JOIN SOLD_ARTICLES SA ON SA.article_nb = A.article_nb "
+							+ " WHERE A.user_nb = ? ");
+			pstmt.setInt(1, idUser);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
+						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
+				listArticles.add(sa);
+			}
+			pstmt.close();
+			cs.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listArticles;
+	}
+
 	public List<SoldArticles> selectSearch(String searchInput) {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
