@@ -4,6 +4,7 @@
 	<div class="links justify-self-end">
 		<c:if test="${sessionScope.authentification == 1}"  >
 			<a href="./NewAuction" class="text-white text-decoration-none mx-2">Nouvelle Vente</a>
+			<a href="./myauction" class="text-white text-decoration-none mx-2">Mes enchères</a>
 			<a href="<%=request.getContextPath() %>/profil?id=${sessionScope.id}" class="text-white text-decoration-none mx-2">Profil</a>
 
 			<a href="./logout" class="text-white text-decoration-none mx-2">Deconnecter</a>
