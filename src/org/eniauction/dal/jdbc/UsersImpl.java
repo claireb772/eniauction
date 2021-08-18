@@ -32,7 +32,7 @@ public class UsersImpl implements UsersDAO {
 	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT " + " * " + " from USERS "
 			+ " where email = ? and password = ? ";
 
-	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, credit, pending ,administrator) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, answer, credit, pending , question_id,administrator) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	private static final String DELETE_USER_BY_ID = "DELETE FROM USERS WHERE user_nb=?";
 
@@ -59,8 +59,8 @@ public class UsersImpl implements UsersDAO {
 
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
-						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
-						rs.getInt("pending"), rs.getInt("credit"), rs.getBoolean("administrator"));
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getString("answer"),
+						rs.getInt("pending"), rs.getInt("credit"), rs.getInt("question_id"), false);
 			}
 			rs.close();
 			cnx.close();
@@ -86,9 +86,11 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setString(7, user.getPostal_code());
 			pstmt.setString(8, user.getCity());
 			pstmt.setString(9, user.getPassword());
-			pstmt.setInt(10, user.getCredit());
-			pstmt.setInt(11, user.getPendingChange());
-			pstmt.setBoolean(12, false);
+			pstmt.setString(10, user.getAnswer());
+			pstmt.setInt(11, user.getCredit());
+			pstmt.setInt(12, user.getPendingChange());
+			pstmt.setInt(13, user.getQuestionId());
+			pstmt.setBoolean(14, false);
 
 			int row = pstmt.executeUpdate();
 
@@ -134,8 +136,7 @@ public class UsersImpl implements UsersDAO {
 				Users users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"),
 						rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"),
 						rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),
-						rs.getString("password"), rs.getInt("credit"), rs.getInt("pending"),
-						rs.getBoolean("administrator"));
+						rs.getString("password"), rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),  false);
 				ListUsers.add(users);
 			}
 
@@ -198,8 +199,8 @@ public class UsersImpl implements UsersDAO {
 
 				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
-						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
-						rs.getInt("credit"), rs.getInt("pending"), rs.getBoolean("administrator"));
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getString("answer"),
+						rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),  false);
 
 			}
 			pstmt.close();
