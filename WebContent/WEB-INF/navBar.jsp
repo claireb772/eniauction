@@ -6,6 +6,7 @@
 				<c:if test="${sessionScope.isAdmin eq true}">
 					<a href="<%=request.getContextPath() %>/comptes" class="text-white text-decoration-none mx-2">Comptes</a>
 					<a href="<%=request.getContextPath() %>/categories" class="text-white text-decoration-none mx-2">Catégories</a>
+					<a href="<%=request.getContextPath() %>/DisplayFakeData" class="text-white text-decoration-none mx-2">Fake Auction</a>
 				</c:if>
 			<a href="<%=request.getContextPath() %>/NewAuction" class="text-white text-decoration-none mx-2">Nouvelle Vente</a>
 			<a href="<%=request.getContextPath() %>/myauction" class="text-white text-decoration-none mx-2">Mes enchères</a>
@@ -17,7 +18,5 @@
 			<a href="<%=request.getContextPath() %>/login" class="text-white text-decoration-none mx-2">Se Connecter</a>/
 			<a href="<%=request.getContextPath() %>/sign" class="text-white text-decoration-none mx-2">S'inscrire</a>
 		</c:if>
-
-		<a href="<%=request.getContextPath() %>/Admin" class="text-white text-decoration-none mx-2">Admin</a>
 		
 	</div>
