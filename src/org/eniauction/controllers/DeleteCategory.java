@@ -1,30 +1,29 @@
 package org.eniauction.controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.eniauction.models.bll.UserManager;
+import org.eniauction.models.bll.ManagerCategories;
 
 /**
- * Servlet implementation class DisplayUser
+ * Servlet implementation class DeleteCategory
  */
-@WebServlet("/logout")
-public class DisplayLogout extends HttpServlet {
+@WebServlet("/deleteCategory")
+public class DeleteCategory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	static Logger log = Logger.getLogger(DisplayLogout.class);
+	static Logger log = Logger.getLogger(DeleteCategory.class);
 
 	/**
-	 * Default constructor.
+	 * @see HttpServlet#HttpServlet()
 	 */
-	public DisplayLogout() {
+	public DeleteCategory() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,29 +32,24 @@ public class DisplayLogout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated constructor stub
-		HttpSession session = request.getSession();
+		ManagerCategories mc = ManagerCategories.getInstance();
 
-		// Quand l'utilisateur clique sur "se deconnecter" la variable de session
-		// authentification passe de 0 à 1
+		int categoryId = Integer.parseInt(request.getParameter("id"));
 
-		session.setAttribute("authentification", "0");
-		UserManager um = UserManager.getInstance();
-		log.info("Déconnexion de l'utilisateur " + um.getActualUser().getName() + ", identifiant numéro : "
-				+ um.getActualUser().getUser_nb());
-		um.setActualUser(null);
-		response.sendRedirect("./");
-
+		try {
+			mc.deleteCategoryById(categoryId);
+		} catch (SQLException e) {
+			log.error("Problème à la suppression dans la base de données", e);
+		}
+		response.sendRedirect("./categories");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub

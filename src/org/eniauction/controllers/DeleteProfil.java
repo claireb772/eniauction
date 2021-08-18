@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+import org.eniauction.dal.jdbc.DALException;
 import org.eniauction.models.bll.UserManager;
 
 /**
@@ -18,6 +20,8 @@ import org.eniauction.models.bll.UserManager;
 @WebServlet("/deleteProfil")
 public class DeleteProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	static Logger log = Logger.getLogger(DeleteProfil.class);
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -38,15 +42,22 @@ public class DeleteProfil extends HttpServlet {
 
 		UserManager um = UserManager.getInstance();
 
-		int user_nb = um.getActualUser().getUser_nb();
+		int user_nb = Integer.parseInt(request.getParameter("id"));
 
 		try {
 			um.deleteProfile(user_nb);
-			response.sendRedirect("./logout");
+			log.info("L'utilisateur " + user_nb + "a supprimé son profil");
 
-		} catch (Exception e) {
+			if (!um.getActualUser().isAdministrator()) {
+				response.sendRedirect("./logout");
+			} else {
+				response.sendRedirect("./comptes");
+			}
+
+		} catch (DALException e) {
 			e.printStackTrace();
 			messagesErreur.add("problème lors de la suppression du profil");
+			log.error("L'utilisateur" + user_nb + " a eu un problème pendant la suppression de son compte");
 			request.setAttribute("message", messagesErreur);
 		}
 	}

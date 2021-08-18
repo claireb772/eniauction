@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+import org.eniauction.dal.jdbc.DALException;
 import org.eniauction.models.bll.UserManager;
 import org.eniauction.models.bo.Users;
 
@@ -18,6 +20,8 @@ import org.eniauction.models.bo.Users;
 @WebServlet("/profil")
 public class DisplayUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	static Logger log = Logger.getLogger(DisplayUser.class);
 
 	/**
 	 * Default constructor.
@@ -42,6 +46,7 @@ public class DisplayUser extends HttpServlet {
 
 		if (um.getActualUser() != null) {
 			actualUser = um.getActualUser().getUser_nb();
+
 		}
 
 		boolean isActualUser = false;
@@ -54,9 +59,10 @@ public class DisplayUser extends HttpServlet {
 
 		try {
 			userProfile = um.getUser(user_nb);
-		} catch (Exception e) {
+		} catch (DALException e) {
 			e.printStackTrace();
 			String message = "problème lors de la récupération du profil";
+			log.error(message);
 			request.setAttribute("message", message);
 		}
 

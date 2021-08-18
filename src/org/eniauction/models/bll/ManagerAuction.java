@@ -31,6 +31,19 @@ public class ManagerAuction {
 		}
 		return listArticles;
 	}
+	
+	public List<AuctionComplete> GetMyAuction() throws Exception {
+		UserManager um = UserManager.getInstance();
+		int userId = um.getActualUser().getUser_nb();
+		
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
+		for (SoldArticles item : auctionImpl.selectMyAuction(userId)) {
+			AuctionComplete ac = new AuctionComplete(item);
+			listArticles.add(ac);
+		}
+		return listArticles;
+	}
 
 	public List<SoldArticles> GetSoldArticles(String searchInput, int page) {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();

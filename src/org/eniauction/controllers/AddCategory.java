@@ -2,29 +2,30 @@ package org.eniauction.controllers;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.eniauction.models.bll.UserManager;
+import org.eniauction.models.bll.ManagerCategories;
+import org.eniauction.models.bo.Categories;
 
 /**
- * Servlet implementation class DisplayUser
+ * Servlet implementation class AddCategory
  */
-@WebServlet("/logout")
-public class DisplayLogout extends HttpServlet {
+@WebServlet("/addCategory")
+public class AddCategory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	static Logger log = Logger.getLogger(DisplayLogout.class);
+	static Logger log = Logger.getLogger(AddCategory.class);
 
 	/**
-	 * Default constructor.
+	 * @see HttpServlet#HttpServlet()
 	 */
-	public DisplayLogout() {
+	public AddCategory() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,33 +34,32 @@ public class DisplayLogout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated constructor stub
-		HttpSession session = request.getSession();
 
-		// Quand l'utilisateur clique sur "se deconnecter" la variable de session
-		// authentification passe de 0 à 1
-
-		session.setAttribute("authentification", "0");
-		UserManager um = UserManager.getInstance();
-		log.info("Déconnexion de l'utilisateur " + um.getActualUser().getName() + ", identifiant numéro : "
-				+ um.getActualUser().getUser_nb());
-		um.setActualUser(null);
-		response.sendRedirect("./");
-
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/addCategory.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		ManagerCategories mc = ManagerCategories.getInstance();
+		String wording = request.getParameter("wording");
+
+		Categories cat = new Categories(0, wording);
+
+		try {
+			mc.insertCategories(cat);
+			response.sendRedirect("./categories");
+		} catch (Exception e) {
+			log.error(e);
+			doGet(request, response);
+		}
+
 	}
 
 }

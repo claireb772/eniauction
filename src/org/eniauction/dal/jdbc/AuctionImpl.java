@@ -28,12 +28,38 @@ public class AuctionImpl implements AuctionDAO {
 	private static final String GET_ALL_AUCTION_BY_ARTICLE_ID = "select * from AUCTION where article_nb = ?  ORDER BY auction_amount DESC";
 	private static final String INSERT_AUCTION = "insert into AUCTION (user_nb, article_nb, auction_date, auction_amount) values(?,?,?,?) ";
 	private static final String GET_ALL_AUCTION_COUNT = "select COUNT(*) from SOLD_ARTICLES";
-	private static final String INSERT_WITHDRAWALS ="insert into WITHDRAWALS (article_nb, street, postal_code, city) values(?,?,?,?)";
+	private static final String INSERT_WITHDRAWALS = "insert into WITHDRAWALS (article_nb, street, postal_code, city) values(?,?,?,?)";
+
 	public List<SoldArticles> selectAll() {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
 			Connection cs = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cs.prepareStatement("Select * From SOLD_ARTICLES");
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
+						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
+				listArticles.add(sa);
+			}
+			pstmt.close();
+			cs.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listArticles;
+	}
+
+	
+	public List<SoldArticles> selectMyAuction(int idUser) {
+		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
+		try {
+			Connection cs = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cs.prepareStatement(
+					"SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb "
+							+ " FROM AUCTION A " + " INNER JOIN SOLD_ARTICLES SA ON SA.article_nb = A.article_nb "
+							+ " WHERE A.user_nb = ? ");
+			pstmt.setInt(1, idUser);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
@@ -283,7 +309,7 @@ public class AuctionImpl implements AuctionDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return count ==1;
+		return count == 1;
 	}
 
 	public boolean isAuctionExist(Auction auction) {
@@ -291,7 +317,8 @@ public class AuctionImpl implements AuctionDAO {
 		int count = 0;
 		try {
 			cs = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cs.prepareStatement("SELECT COUNT(*) FROM AUCTION WHERE article_nb = ? AND user_nb = ?");
+			PreparedStatement pstmt = cs
+					.prepareStatement("SELECT COUNT(*) FROM AUCTION WHERE article_nb = ? AND user_nb = ?");
 			pstmt.setInt(1, auction.getArticle_nb());
 			pstmt.setInt(2, auction.getUser_nb());
 			ResultSet rs = pstmt.executeQuery();
@@ -305,13 +332,14 @@ public class AuctionImpl implements AuctionDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return count ==1;
+		return count == 1;
 	}
 
 	public void updateAuction(Auction auction) {
 		Connection cs;
 		try {
 			cs = ConnectionProvider.getConnection();
+
 			if(TransfertPointToPending(auction)) {
 				PreparedStatement pstmt = cs.prepareStatement("UPDATE AUCTION set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
 				pstmt.setInt(1, auction.getAmount());
@@ -326,10 +354,12 @@ public class AuctionImpl implements AuctionDAO {
 				cs.close();
 			}
 			
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }
