@@ -12,12 +12,14 @@ import org.eniauction.models.bo.Categories;
 
 public class CategoriesImpl implements CategoriesDAO {
 	private static CategoriesImpl instance;
+	private static final String DELETE_CATEGORY_BYID = "DELETE FROM CATEGORIES WHERE category_nb=?";
 
 	public static CategoriesImpl getInstance() {
 		if (instance == null) {
 			instance = new CategoriesImpl();
 		}
 		return instance;
+
 	}
 
 	public List<Categories> selectAll() {
@@ -94,21 +96,37 @@ public class CategoriesImpl implements CategoriesDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return count == 1;
 	}
 
 	public void insert(Categories cat) throws Exception {
 		try (Connection conn = ConnectionProvider.getConnection();
-		PreparedStatement pstmt = conn.prepareStatement("insert into CATEGORIES(wording) values(?)")) {
+				PreparedStatement pstmt = conn.prepareStatement("insert into CATEGORIES(wording) values(?)")) {
 			pstmt.setString(1, cat.getWording());
 
-		int row = pstmt.executeUpdate();
-	
+			int row = pstmt.executeUpdate();
+			conn.close();
+
 		} catch (Exception e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 			throw e;
-		
+
+		}
+	}
+
+	@Override
+	public void delete(int category_id) throws SQLException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE_CATEGORY_BYID);
+			pstmt.setInt(1, category_id);
+			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
 		}
 	}
 }
