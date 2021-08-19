@@ -39,7 +39,7 @@
 						<div class="input-group-prepend">
 							<div class="input-group-text mentionInput">Fin</div>
 						</div>
-						<input type="date" class="form-control" name="product_end" required>
+						<input type="date" class="form-control" name="product_end" min="<c:out value="${today}"/>" required>
 					</div>
 					<div class="input-group  mt-2">
 						<div class="input-group-prepend">

@@ -9,6 +9,7 @@ import org.eniauction.models.bo.Auction;
 import org.eniauction.models.bo.AuctionComplete;
 import org.eniauction.models.bo.Categories;
 import org.eniauction.models.bo.SoldArticles;
+import org.eniauction.models.bo.Users;
 import org.eniauction.models.bo.Withdrawals;
 
 public class ManagerAuction {
@@ -127,5 +128,14 @@ public class ManagerAuction {
 	public boolean isWithdrawalsExist(int id) {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		return auctionImpl.isWithdrawalsExist(id);
+	}
+	
+	public void transferCoins (Users acheteur, int amount, int article) throws Exception {
+		ManagerAuction ma = ManagerAuction.getInstance();
+		AuctionComplete auction = ma.getOneAuctionComplete(article);
+		int avantAchat = acheteur.getPendingChange();
+		acheteur.setPendingChange(avantAchat-amount);
+		int avantVente = auction.getUser().getCredit();
+		auction.getUser().setCredit(amount + avantVente);
 	}
 }
