@@ -10,6 +10,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.eniauction.models.bll.ManagerAuction;
+import org.eniauction.models.bll.UserManager;
+import org.eniauction.models.bo.Users;
 /**
  * Servlet Filter implementation class DarkModeFilter
  */
@@ -37,6 +41,12 @@ public class DarkModeFilter implements Filter {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
 		HttpSession session =  httpRequest.getSession();
+		
+		UserManager um = UserManager.getInstance();
+		if(um.getActualUser() != null) {
+			Users user = um.getActualUser();
+			session.setAttribute("user", user);
+		}
 		
 
 		if (session.getAttribute("darkMode") == null) {
