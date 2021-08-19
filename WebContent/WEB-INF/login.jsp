@@ -31,5 +31,10 @@
 				<a href="./sign" class="btn btn-outline-primary mt-3">Creer un compte</a>
 			</form>
 		</main>
+		<c:if test="${!empty Erreur}">
+			<div class="container alert alert-danger" role="alert">
+				<p>${Erreur}</p>
+			</div>
+		</c:if>
 	</body>
 </html>
