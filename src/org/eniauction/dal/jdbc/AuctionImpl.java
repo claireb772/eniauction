@@ -82,7 +82,7 @@ public class AuctionImpl implements AuctionDAO {
 			PreparedStatement pstmt = cs.prepareStatement(
 					" SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb "
 					+ " FROM SOLD_ARTICLES SA "
-					+ " WHERE A.user_nb = ?  ");
+					+ " WHERE SA.user_nb = ?  ");
 			pstmt.setInt(1, idUser);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
