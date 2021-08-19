@@ -66,11 +66,16 @@
 	</div>
 	<br>
 	<br>
-		<select name="question" class="custom-select custom-select-lg mb-3">
+		<select name="question" class="form-control custom-select custom-select-lg mb-3">
 		      <c:forEach var="item" items="${listAuction}" >
 		         <option value="${item.question_id}" >${item.question}</option>
 		    </c:forEach>
 		</select>
+		<div class="form-group mx-2 flex-1">
+	    <label for="formGroupExampleInput2"></label>
+	    <input required="required"  name="Answer" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Réponse"  pattern="[a-z,A-Z ]{0,20}[0-9]{0,20}">
+	  </div>
+		
 	<div class="d-flex flex-row">
 		<a href="./"  class="btn btn-outline-secondary m-3 w-50">Annuler</a>
 		<button type="submit" class="btn btn-primary m-3 w-50">S'inscrire</button>

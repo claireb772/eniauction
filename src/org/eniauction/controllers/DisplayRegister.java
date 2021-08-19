@@ -69,13 +69,7 @@ public class DisplayRegister extends HttpServlet {
 		String Pseudo = request.getParameter("Pseudo").trim();
 		String Name = request.getParameter("Name").trim();
 		String Password = request.getParameter("Password").trim();
-		Pattern p = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"); // Min 1maj
-																												// 1min
-																												// 1
-																												// chiffre
-																												// 1
-																												// char
-																												// special
+		Pattern p = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"); 
 		Matcher m = p.matcher(Password);
 		boolean b = m.matches();
 		String Confirmation = request.getParameter("Confirmation").trim();
@@ -85,6 +79,8 @@ public class DisplayRegister extends HttpServlet {
 		String Street = request.getParameter("Street").trim();
 		String City = request.getParameter("City").trim();
 		String PostalCode = request.getParameter("PostalCode").trim();
+		String Answer = request.getParameter("Answer").trim();
+		int Question_id = Integer.parseInt(request.getParameter("question"));
 
 		if (b == false) {
 			ListeErreur.add(
@@ -129,11 +125,12 @@ public class DisplayRegister extends HttpServlet {
 				rd.forward(request, response);
 
 			}
-		} else {
-			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, 0, 0,
-					false);
-			UserManager um = UserManager.getInstance();
-			String message = null;
+
+		}
+		else {
+			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, Answer, 0, 0, Question_id,  false);
+			UserManager um= UserManager.getInstance();
+			String message=null;
 
 			try {
 				var o = um.newUser(user);

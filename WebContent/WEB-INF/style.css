@@ -1,5 +1,10 @@
 *{
 	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+}
+
+.border-none{
+	border:none !important;
 }
 main{
 	margin:0 auto !important;
@@ -36,5 +41,9 @@ main{
 	height:300px;
 	max-height:300px;
 	overflow:scroll;
+}
+
+.text-primary{
+	
 }
 
