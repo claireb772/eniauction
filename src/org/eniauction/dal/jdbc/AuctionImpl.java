@@ -50,7 +50,6 @@ public class AuctionImpl implements AuctionDAO {
 		return listArticles;
 	}
 
-	
 	public List<SoldArticles> selectMyAuction(int idUser) {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
@@ -74,15 +73,14 @@ public class AuctionImpl implements AuctionDAO {
 		}
 		return listArticles;
 	}
-	
+
 	public List<SoldArticles> selectMySells(int idUser) {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
 			Connection cs = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cs.prepareStatement(
 					" SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb "
-					+ " FROM SOLD_ARTICLES SA "
-					+ " WHERE A.user_nb = ?  ");
+							+ " FROM SOLD_ARTICLES SA " + " WHERE SA.user_nb = ?  ");
 			pstmt.setInt(1, idUser);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -103,10 +101,11 @@ public class AuctionImpl implements AuctionDAO {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
 			Connection cs = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cs.prepareStatement("Select * From SOLD_ARTICLES where article_name like ? ORDER BY article_nb OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY ");
-			pstmt.setString(1, "%"+searchInput+"%");
-			int realPage = page*9;
-			pstmt.setInt(2,realPage );
+			PreparedStatement pstmt = cs.prepareStatement(
+					"Select * From SOLD_ARTICLES where article_name like ? ORDER BY article_nb OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY ");
+			pstmt.setString(1, "%" + searchInput + "%");
+			int realPage = page * 9;
+			pstmt.setInt(2, realPage);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
@@ -135,8 +134,8 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.setInt(8, sold.getCategory_nb());
 			int affectedRows = pstmt.executeUpdate();
 			ResultSet keys = pstmt.getGeneratedKeys();
-			
-			while(keys.next()) {
+
+			while (keys.next()) {
 				sold.setArticle_nb(keys.getInt(1));
 			}
 			pstmt.close();
@@ -224,7 +223,7 @@ public class AuctionImpl implements AuctionDAO {
 		try {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(INSERT_AUCTION);
-			if(TransfertPointToPending(auction)) {
+			if (TransfertPointToPending(auction)) {
 				pstmt.setInt(1, auction.getUser_nb());
 				pstmt.setInt(2, auction.getArticle_nb());
 				pstmt.setDate(3, convertDateToSqlData(auction.getAuction_date()));
@@ -232,7 +231,7 @@ public class AuctionImpl implements AuctionDAO {
 
 				int row = pstmt.executeUpdate();
 			}
-			
+
 			pstmt.close();
 			conn.close();
 		} catch (Exception e) {
@@ -240,38 +239,37 @@ public class AuctionImpl implements AuctionDAO {
 		}
 
 	}
-	public boolean TransfertPointToPending(Auction auction) 
-	{
+
+	public boolean TransfertPointToPending(Auction auction) {
 		int credit = 0;
 		int pending = 0;
 		try {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("SELECT credit,pending FROM USERS WHERE user_nb = ?");
-			pstmt.setInt(1,auction.getUser_nb());
+			pstmt.setInt(1, auction.getUser_nb());
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				credit = rs.getInt("credit");
 				pending = rs.getInt("pending");
 			}
-			if(credit > auction.getAmount()) {
-				
+			if (credit > auction.getAmount()) {
+
 				pstmt = conn.prepareStatement("UPDATE USERS SET credit = ?, pending = ? where user_nb = ? ");
-				pstmt.setInt(1,credit - auction.getAmount());
+				pstmt.setInt(1, credit - auction.getAmount());
 				pstmt.setInt(2, pending + auction.getAmount());
-				pstmt.setInt(3,auction.getUser_nb());
+				pstmt.setInt(3, auction.getUser_nb());
 				pstmt.executeUpdate();
 				pstmt.close();
 				conn.close();
 				return true;
-			}else {
-				
+			} else {
+
 				pstmt.close();
 				conn.close();
 				return false;
 			}
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -364,8 +362,9 @@ public class AuctionImpl implements AuctionDAO {
 		try {
 			cs = ConnectionProvider.getConnection();
 
-			if(TransfertPointToPending(auction)) {
-				PreparedStatement pstmt = cs.prepareStatement("UPDATE AUCTION set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
+			if (TransfertPointToPending(auction)) {
+				PreparedStatement pstmt = cs.prepareStatement(
+						"UPDATE AUCTION set auction_amount=?, auction_date=? where user_nb = ? AND article_nb = ? ");
 				pstmt.setInt(1, auction.getAmount());
 				pstmt.setDate(2, convertDateToSqlData(auction.getAuction_date()));
 				pstmt.setInt(3, auction.getUser_nb());
@@ -374,11 +373,9 @@ public class AuctionImpl implements AuctionDAO {
 				pstmt.executeUpdate();
 				pstmt.close();
 				cs.close();
-			}else {
+			} else {
 				cs.close();
 			}
-			
-
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
