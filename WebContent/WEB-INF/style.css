@@ -1,5 +1,13 @@
 *{
 	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+}
+
+.border-none{
+	border:none !important;
+}
+main{
+	margin:0 auto !important;
 }
 .enchere_container
 {
@@ -34,3 +42,9 @@
 	max-height:300px;
 	overflow:scroll;
 }
+
+.buyCredit{
+	position:absolute;
+	bottom:0;
+}
+

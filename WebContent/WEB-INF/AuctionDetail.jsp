@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
-	<style><%@include file="/WEB-INF/style.css"%></style>
-<title>Insert title here</title>
+<%@ include file="/WEB-INF/Header.jsp" %> 
 </head>
 <body>
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
@@ -21,23 +19,29 @@
 		  <div class="mx-2 flex-1">
 		    <p class="text-primary"><c:out value="${auction.article.getArticle_name()}"/></p>
 		    <img src="https://fakeimg.pl/300x150/" class="w-100"/>
-		    <p class="mt-3">Description</p>
-		    <p><c:out value="${auction.article.getDescription()}"/></p>
+		    <p class="mt-3 text-black">Description</p>
+		    <p class="text-black"><c:out value="${auction.article.getDescription()}"/></p>
 		    <p class="text-danger"><c:out value="${auction.article.getSell_price()}"/> pts</p>
-		    <p><c:out value="${auction.article.getAuction_end_date()}"/></p>
+		    <p class="text-black"><c:out value="${auction.article.getAuction_end_date()}"/></p>
 		    
 		    
 		  </div>
 		</div>
 		<div class="col-12 col-md-6 px-3">
-			<p>Vendeur <a href="./profil?id=${auction.user.getUser_nb() }">${auction.user.getPseudo() }</a></p>
+			<p class="text-black">Vendeur <a href="./profil?id=${auction.user.getUser_nb() }">${auction.user.getPseudo() }</a></p>
 		    <hr>
-			<div class="input-group mb-3">
-	  			<input type="text" class="form-control" placeholder="<c:out value="${Math.round(auction.article.getSell_price() + (auction.article.getSell_price()/20))}"/>" value="<c:out value="${Math.round(auction.article.getSell_price() + (auction.article.getSell_price()/20))}"/>" aria-label="Recipient's username" aria-describedby="basic-addon2">
-			  <div class="input-group-append">
-			    <button class="btn btn-primary" type="button">Enchérir</button>
-			  </div>
-			</div>
+		    <c:if test="${auction.getListAuction().toArray()[0].getUser_nb() != sessionStore.id}">
+				<form method="post" class="input-group mb-3">
+					<input name="article" value="${auction.article.getArticle_nb() }" class="d-none"/>
+		  			<input name="input_new_amount" type="text" class="form-control" placeholder="<c:out value="${Math.round(auction.article.getSell_price() + (auction.article.getSell_price()/20))}"/>" value="<c:out value="${Math.round(auction.article.getSell_price() + (auction.article.getSell_price()/20))}"/>" aria-label="Recipient's username" aria-describedby="basic-addon2">
+				  <div class="input-group-append">
+				    <button class="btn btn-primary" type="submit">Enchérir</button>
+				  </div>
+				</form>
+			</c:if>
+			<c:if test="${auction.getListAuction().toArray()[0].getUser_nb() == sessionStore.id}">
+				<p>Vous êtes déjà le meilleur enchérisseur</p>
+			</c:if>
 			
 			
 			<c:if test="${auction.getSize() ==  0}">
@@ -78,5 +82,8 @@
 	</div>
 </div>
 	</main>
+	<script>
+<%@ include file="/WEB-INF/fixIdDarkMode.js" %>
+</script>
 </body>
 </html>

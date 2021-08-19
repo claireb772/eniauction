@@ -4,9 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Encheres Project</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<%@ include file="/WEB-INF/Header.jsp" %> 
 </head>
 <body>
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
@@ -68,7 +66,7 @@
 	</div>
 	<br>
 	<br>
-		<select name="question" class="custom-select custom-select-lg mb-3">
+		<select name="question" class="form-control custom-select custom-select-lg mb-3">
 		      <c:forEach var="item" items="${listAuction}" >
 		         <option value="${item.question_id}" >${item.question}</option>
 		    </c:forEach>

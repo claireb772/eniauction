@@ -9,6 +9,7 @@ import org.eniauction.models.bo.Auction;
 import org.eniauction.models.bo.AuctionComplete;
 import org.eniauction.models.bo.Categories;
 import org.eniauction.models.bo.SoldArticles;
+import org.eniauction.models.bo.Users;
 import org.eniauction.models.bo.Withdrawals;
 
 public class ManagerAuction {
@@ -22,10 +23,10 @@ public class ManagerAuction {
 		return instance;
 	}
 
-	public List<AuctionComplete> GetAuction() throws Exception {
+	public List<AuctionComplete> GetAuction(String searchInput, int page) throws Exception {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
-		for (SoldArticles item : auctionImpl.selectAll()) {
+		for (SoldArticles item : auctionImpl.selectSearch(searchInput, page)) {
 			AuctionComplete ac = new AuctionComplete(item);
 			listArticles.add(ac);
 		}
@@ -44,17 +45,30 @@ public class ManagerAuction {
 		}
 		return listArticles;
 	}
-
-	public List<SoldArticles> GetSoldArticles() {
+	
+	public List<AuctionComplete> GetMySells() throws Exception {
+		UserManager um = UserManager.getInstance();
+		int userId = um.getActualUser().getUser_nb();
+		
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
-		List<SoldArticles> listArticles = auctionImpl.selectAll();
+		List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
+		for (SoldArticles item : auctionImpl.selectMySells(userId)) {
+			AuctionComplete ac = new AuctionComplete(item);
+			listArticles.add(ac);
+		}
 		return listArticles;
 	}
 
-	public List<AuctionComplete> GetSearch(String searchInput) throws Exception {
+	public List<SoldArticles> GetSoldArticles(String searchInput, int page) {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		List<SoldArticles> listArticles = auctionImpl.selectSearch(searchInput, page);
+		return listArticles;
+	}
+
+	public List<AuctionComplete> GetSearch(String searchInput, int page) throws Exception {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		List<AuctionComplete> listArticles = new ArrayList<AuctionComplete>();
-		for (SoldArticles item : auctionImpl.selectSearch(searchInput)) {
+		for (SoldArticles item : auctionImpl.selectSearch(searchInput, page)) {
 			AuctionComplete ac = new AuctionComplete(item);
 			listArticles.add(ac);
 		}
@@ -62,9 +76,10 @@ public class ManagerAuction {
 	}
 
 	// Ajoute un soldArticle
-	public void SetNewAuction(SoldArticles sa) {
+	public SoldArticles SetNewAuction(SoldArticles sa) {
 		AuctionImpl ai = AuctionImpl.getInstance();
-		ai.insertArticle(sa);
+		return ai.insertArticle(sa);
+		
 	}
 
 	public List<Categories> GetCategories() {
@@ -93,8 +108,6 @@ public class ManagerAuction {
 		}else {
 			ai.insertAuction(auction);
 		}
-		
-
 	}
 
 	public int GetAllSoldArticlesCount() {
@@ -115,5 +128,15 @@ public class ManagerAuction {
 	public boolean isWithdrawalsExist(int id) {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		return auctionImpl.isWithdrawalsExist(id);
+	}
+	
+	
+	public void transferCoins (Users acheteur, int amount, int article) throws Exception {
+		ManagerAuction ma = ManagerAuction.getInstance();
+		AuctionComplete auction = ma.getOneAuctionComplete(article);
+		int avantAchat = acheteur.getPendingChange();
+		acheteur.setPendingChange(avantAchat-amount);
+		int avantVente = auction.getUser().getCredit();
+		auction.getUser().setCredit(amount + avantVente);
 	}
 }

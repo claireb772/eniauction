@@ -77,5 +77,12 @@ public class UserManager {
 		UsersImpl ui = UsersImpl.getInstance();
 		return ui.getUserCount();
 	}
+	
+	public void addPoints(Users user,int amount) {
+		UsersImpl ui = UsersImpl.getInstance();
+		ui.AddPoint(user,amount);
+		user.setCredit(user.getCredit() + amount);
+		
+	}
 
 }

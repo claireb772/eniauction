@@ -25,19 +25,19 @@ public class UsersImpl implements UsersDAO {
 		return instance;
 	}
 
-	private static final String UPDATE_BY_ID = "UPDATE USERS set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=? where user_nb=?";
+	private static final String UPDATE_BY_ID = "UPDATE USERS set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=?, credit=?, pending=?, question_id=? answer=? administrator=? isActive=?  where user_nb=?";
 
 	private static final String SELECT_BY_ID = "SELECT " + " * " + " from USERS where user_nb=?";
 
 	private static final String SELECT_BY_EMAIL_PASSWORD = "SELECT " + " * " + " from USERS "
 			+ " where email = ? and password = ? ";
 
-	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, answer, credit, pending , question_id,administrator) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_USER = "insert into USERS(pseudo, name, surname, email, phone_nb, street, postal_code, city, password, answer, credit, pending , question_id,administrator, isActive) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-	private static final String DELETE_USER_BY_ID = "DELETE FROM USERS WHERE user_nb=?";
+	private static final String DELETE_USER_BY_ID = "UPDATE USERS SET isActive = 0 WHERE user_nb=?";
 
-	private static final String SELECT_ALL_USERS = "select * from USERS";
-	private static final String SELECT_COUNT_ALL_USERS = "select COUNT(*) from USERS";
+	private static final String SELECT_ALL_USERS = "select * from USERS WHERE isActive = 1";
+	private static final String SELECT_COUNT_ALL_USERS = "select COUNT(*) from USERS where  isActive = 1";
 
 	/*
 	 * Fonction qui permet de récupérer un user avec son id
@@ -59,8 +59,9 @@ public class UsersImpl implements UsersDAO {
 
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
-						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getString("answer"),
-						rs.getInt("pending"), rs.getInt("credit"), rs.getInt("question_id"), false);
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getString("answer"), rs.getInt("pending"), rs.getInt("credit"), rs.getInt("question_id"),
+						rs.getBoolean("administrator"),rs.getBoolean("isActive"));
 			}
 			rs.close();
 			cnx.close();
@@ -91,6 +92,7 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setInt(12, user.getPendingChange());
 			pstmt.setInt(13, user.getQuestionId());
 			pstmt.setBoolean(14, false);
+			pstmt.setBoolean(15, true);
 
 			int row = pstmt.executeUpdate();
 
@@ -136,7 +138,8 @@ public class UsersImpl implements UsersDAO {
 				Users users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"),
 						rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"),
 						rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),
-						rs.getString("password"), rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),  false);
+						rs.getString("password"), rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"),
+						rs.getInt("question_id"), rs.getBoolean("administrator"),rs.getBoolean("isActive"));
 				ListUsers.add(users);
 			}
 
@@ -217,8 +220,9 @@ public class UsersImpl implements UsersDAO {
 
 				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
-						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getString("answer"),
-						rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),  false);
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),
+						rs.getBoolean("administrator"),rs.getBoolean("isActive"));
 
 			}
 			pstmt.close();
@@ -248,6 +252,21 @@ public class UsersImpl implements UsersDAO {
 			e.printStackTrace();
 		}
 		return countUsers;
+	}
+
+	public void AddPoint(Users user, int amount) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement("UPDATE USERS SET credit = ? WHERE user_nb = ?");
+			pstmt.setInt(1,user.getCredit()+ amount);
+			pstmt.setInt(2, user.getUser_nb());
+			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

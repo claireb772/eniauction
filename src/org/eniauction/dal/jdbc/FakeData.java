@@ -84,7 +84,8 @@ public class FakeData {
 							price,
 							price,
 							user,
-							category
+							category,
+							true
 						);
 		return sa;
 	}
@@ -107,8 +108,12 @@ public class FakeData {
 						addressParser.get("zip_code").getAsString(), 
 						addressParser.get("city").getAsString(), 
 						parser.get("password").getAsString(), 
+						parser.get("last_name").getAsString(), 
 						randCredit,
 						0,
+						1,
+						true,
+						
 						false
 				);
 		

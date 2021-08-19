@@ -100,7 +100,8 @@ public class DisplayConnect extends HttpServlet {
 				}
 				session.setAttribute("isAdmin", isAdmin);
 
-				log.info("Connexion de l'utilisateur numéro : " + manager.getActualUser().getUser_nb());
+				log.info("Connexion de l'utilisateur " + manager.getActualUser().getName() + ", identifiant numéro : "
+						+ manager.getActualUser().getUser_nb());
 
 				// Feature "Se souvenir de moi" stocker dans des cookies
 				// Les cookies se réactualisent si vous recochez "se souvenir de moi"
@@ -131,6 +132,9 @@ public class DisplayConnect extends HttpServlet {
 
 				}
 
+			}else{
+				String Erreur = "Adresse où mot de passe incorrect";
+				request.setAttribute("Erreur", Erreur);
 			}
 		} catch (DALException e) {
 			// TODO Auto-generated catch block

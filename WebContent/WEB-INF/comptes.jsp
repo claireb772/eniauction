@@ -4,10 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>comptes utilisateurs</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style.css">
+<%@ include file="/WEB-INF/Header.jsp" %> 
 </head>
 <body>
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">
@@ -16,19 +13,21 @@
 
 <main>
 
-<table>
+<table class="table">
 <thead>
 <tr>
-	<th>Nom</th>
-	<th>Pseudo</th>
-	<th>Crédit</th>
-	<th>Enchères en cours</th>
-	<th>Admin</th>
-	<th></th>
+	<th scope="col"></th>
+	<th scope="col">Nom</th>
+	<th scope="col">Pseudo</th>
+	<th scope="col">Crédit</th>
+	<th scope="col">Enchères en cours</th>
+	<th scope="col">Admin</th>
+	<th scope="col"></th>
 
 </tr>
 <c:forEach var="item" items="${usersList}" >
 <tr>
+	<th scope="row"></th>
 	<td>${item.name}</td>
 	<td>${item.pseudo}</td>
 	<td>${item.credit}</td>
