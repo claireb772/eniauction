@@ -59,8 +59,9 @@ public class UsersImpl implements UsersDAO {
 
 				users = new Users(user_nb, rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
-						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getString("answer"),
-						rs.getInt("pending"), rs.getInt("credit"), rs.getInt("question_id"), false);
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getString("answer"), rs.getInt("pending"), rs.getInt("credit"), rs.getInt("question_id"),
+						rs.getBoolean("administrator"));
 			}
 			rs.close();
 			cnx.close();
@@ -136,7 +137,8 @@ public class UsersImpl implements UsersDAO {
 				Users users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"),
 						rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"),
 						rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),
-						rs.getString("password"), rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),  false);
+						rs.getString("password"), rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"),
+						rs.getInt("question_id"), rs.getBoolean("administrator"));
 				ListUsers.add(users);
 			}
 
@@ -199,8 +201,9 @@ public class UsersImpl implements UsersDAO {
 
 				users = new Users(rs.getInt(1), rs.getString("pseudo"), rs.getString("name"), rs.getString("surname"),
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
-						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"), rs.getString("answer"),
-						rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),  false);
+						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
+						rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),
+						rs.getBoolean("administrator"));
 
 			}
 			pstmt.close();
