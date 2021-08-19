@@ -24,7 +24,7 @@ public class AuctionImpl implements AuctionDAO {
 		return instance;
 	}
 
-	private static final String INSERT_ARTICLE = "insert into SOLD_ARTICLES(article_name, description, auction_start_date, auction_end_date, initial_price, sell_price, user_nb, category_nb) values(?,?,?,?,?,?,?,?)";
+	private static final String INSERT_ARTICLE = "insert into SOLD_ARTICLES(article_name, description, auction_start_date, auction_end_date, initial_price, sell_price, user_nb, category_nb, isActive) values(?,?,?,?,?,?,?,?,?)";
 	private static final String GET_ONE_ARTICLE = "select * from SOLD_ARTICLES where article_nb = ?";
 	private static final String GET_ALL_AUCTION_BY_ARTICLE_ID = "select * from AUCTION where article_nb = ?  ORDER BY auction_amount DESC";
 	private static final String INSERT_AUCTION = "insert into AUCTION (user_nb, article_nb, auction_date, auction_amount) values(?,?,?,?) ";
@@ -63,7 +63,7 @@ public class AuctionImpl implements AuctionDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
-						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
+						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9),rs.getBoolean(10));
 				listArticles.add(sa);
 			}
 			pstmt.close();
@@ -87,7 +87,7 @@ public class AuctionImpl implements AuctionDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
-						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
+						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9),rs.getBoolean(10));
 				listArticles.add(sa);
 			}
 			pstmt.close();
@@ -110,7 +110,7 @@ public class AuctionImpl implements AuctionDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
-						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
+						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9),rs.getBoolean(10));
 				listArticles.add(sa);
 			}
 			pstmt.close();
@@ -134,7 +134,7 @@ public class AuctionImpl implements AuctionDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
-						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9));
+						rs.getDate(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9),rs.getBoolean(10));
 				listArticles.add(sa);
 			}
 			cs.close();
@@ -157,6 +157,7 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.setInt(6, sold.getSell_price());
 			pstmt.setInt(7, sold.getUsers_nb());
 			pstmt.setInt(8, sold.getCategory_nb());
+			pstmt.setBoolean(9, true);
 			pstmt.executeUpdate();
 			ResultSet keys = pstmt.getGeneratedKeys();
 
@@ -188,7 +189,7 @@ public class AuctionImpl implements AuctionDAO {
 
 			while (rs.next()) {
 				sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getDate(5),
-						rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9)
+						rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9), rs.getBoolean(10)
 
 				);
 			}

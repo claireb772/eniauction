@@ -16,8 +16,9 @@ public class SoldArticles {
     private int sell_price;
     private int users_nb;
     private int category_nb;
+    private boolean isActive;
 
-    public SoldArticles(int article_nb, String article_name, String description, Date auction_start_date, Date auction_end_date, int initial_price, int sell_price, int users_nb, int category_nb) {      
+    public SoldArticles(int article_nb, String article_name, String description, Date auction_start_date, Date auction_end_date, int initial_price, int sell_price, int users_nb, int category_nb, boolean isArticleActive) {      
     	this.article_nb = article_nb;
         this.article_name = article_name;
         this.description = description;
@@ -26,6 +27,7 @@ public class SoldArticles {
         this.initial_price = initial_price;
         this.users_nb = users_nb;
         this.category_nb = category_nb;
+        this.isActive = isArticleActive;
         
         ManagerAuction ma = ManagerAuction.getInstance();
         List<Auction> listAuction = ma.getAllAuctionById(article_nb);
@@ -108,4 +110,14 @@ public class SoldArticles {
     public void setCategory_nb(int category_nb) {
         this.category_nb = category_nb;
     }
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+    
+    
 }
