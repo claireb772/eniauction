@@ -133,7 +133,7 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.setInt(6, sold.getSell_price());
 			pstmt.setInt(7, sold.getUsers_nb());
 			pstmt.setInt(8, sold.getCategory_nb());
-			int affectedRows = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 			ResultSet keys = pstmt.getGeneratedKeys();
 			
 			while(keys.next()) {

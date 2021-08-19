@@ -33,7 +33,7 @@
 						<div class="input-group-prepend">
 							<div class="input-group-text mentionInput">Debut</div>
 						</div>
-						<input type="date" class="form-control" name="product_start" required>
+						<input type="date" class="form-control" name="product_start" min="<c:out value="${today}"/>" value="<c:out value="${today}"/>" required>
 					</div>
 					<div class="input-group  mt-2">
 						<div class="input-group-prepend">

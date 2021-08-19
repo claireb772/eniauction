@@ -50,7 +50,9 @@ public class DisplayNewAuction extends HttpServlet {
 			ManagerAuction manager = ManagerAuction.getInstance();
 			List<Categories> listCategories = manager.GetCategories();
 			request.setAttribute("listCategories", listCategories.toArray());
-
+			SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println(dt1.format(new Date()));
+			request.setAttribute("today", dt1.format(new Date()));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/NewAuction.jsp");
 			if (rd != null) {
 				rd.forward(request, response);

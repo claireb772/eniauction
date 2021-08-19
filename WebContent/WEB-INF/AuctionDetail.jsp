@@ -82,5 +82,8 @@
 	</div>
 </div>
 	</main>
+	<script>
+<%@ include file="/WEB-INF/fixIdDarkMode.js" %>
+</script>
 </body>
 </html>
