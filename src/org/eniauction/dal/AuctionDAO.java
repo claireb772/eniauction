@@ -14,6 +14,6 @@ public interface AuctionDAO {
 
 	List<Categories> getCategories();
 
-	Auction selectTopAuction();
+	Auction selectTopAuction(int id);
 
 }

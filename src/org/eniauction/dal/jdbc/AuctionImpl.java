@@ -32,13 +32,14 @@ public class AuctionImpl implements AuctionDAO {
 	private static final String INSERT_WITHDRAWALS = "insert into WITHDRAWALS (article_nb, street, postal_code, city) values(?,?,?,?)";
 	private static final String SELECT_ALL = "Select * From SOLD_ARTICLES";
 
-	private static final String SELECT_TOP_AUCTION_BY_ART_NB = "SELECT TOP 1 * FROM AUCTION WHERE article_nb = ? ORDER BY auction_amount DESC";
+	private static final String SELECT_TOP_AUCTION_BY_ART_NB = "SELECT TOP 1 * FROM AUCTION WHERE article_nb=? ORDER BY auction_amount DESC";
 
-	public Auction selectTopAuction() {
+	public Auction selectTopAuction(int id) {
 		Auction topAuction = null;
 		try {
 			Connection cs = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cs.prepareStatement(SELECT_TOP_AUCTION_BY_ART_NB);
+			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				topAuction = new Auction(rs.getInt("user_nb"), rs.getInt("article_nb"), new Date(),

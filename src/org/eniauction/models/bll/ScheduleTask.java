@@ -1,8 +1,13 @@
 package org.eniauction.models.bll;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import org.eniauction.dal.jdbc.DALException;
+import org.eniauction.models.bo.Auction;
+import org.eniauction.models.bo.SoldArticles;
 
 public class ScheduleTask {
 
@@ -29,6 +34,31 @@ public class ScheduleTask {
 		Timer timer = new Timer();
 		timer.schedule(closeAuction, getMidnight());
 
+	}
+
+	public boolean isWin() throws DALException, Exception {
+		ManagerAuction ma = ManagerAuction.getInstance();
+
+		List<SoldArticles> listArticle = ma.getAllSoldArticles();
+
+		Date date;
+
+		for (SoldArticles soldArticles : listArticle) {
+
+			date = soldArticles.getAuction_end_date();
+
+			if (date == getMidnight()) {
+				Auction auction = ma.selectTopDonator(soldArticles.getUsers_nb());
+				UserManager um = UserManager.getInstance();
+
+				ma.transferCoins(um.getUser(auction.getUser_nb()), auction.getAmount(), soldArticles.getArticle_nb());
+
+				//
+
+			}
+		}
+
+		return false;
 	}
 
 }
