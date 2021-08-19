@@ -26,6 +26,11 @@ public class UserManager {
 	public void setActualUser(Users actualUser) {
 		this.actualUser = actualUser;
 	}
+	
+	public void setNewPasswordByEmail(String email,String password) throws DALException {
+		UsersImpl ui = UsersImpl.getInstance();
+		ui.UpdatePasswordByEmail(email, password);
+	}
 
 	public Users getUser(int user_nb) throws DALException {
 		UsersImpl ui = UsersImpl.getInstance();

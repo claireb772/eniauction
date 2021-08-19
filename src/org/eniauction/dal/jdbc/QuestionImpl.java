@@ -3,11 +3,13 @@ package org.eniauction.dal.jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eniauction.dal.QuestionDAO;
+import org.eniauction.models.bo.Categories;
 import org.eniauction.models.bo.Question;
 
 public class QuestionImpl implements QuestionDAO {
@@ -51,11 +53,36 @@ public class QuestionImpl implements QuestionDAO {
 
 	}
 
-
-
 	@Override
 	public List<Question> selectAll() throws DALException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Question VerifAnswer(int idquestion, String answer, String email) {
+		List<Question> ListQuestion = new ArrayList<Question>();
+		Question question = null;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(" SELECT U.question_id, U.answer, U.email FROM QUESTION Q "
+					+ " INNER JOIN USERS U ON Q.question_id = U.question_id "
+					+ " WHERE U.email = ? AND U.answer = ? AND U.question_id = ? ");
+			pstmt.setString(1, email);
+			pstmt.setString(2, answer);
+			pstmt.setInt(3, idquestion);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				question = new Question (rs.getInt(1), rs.getString(2), rs.getString(3));
+			}
+			cnx.close();
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return question;
+
+	}
+
 }

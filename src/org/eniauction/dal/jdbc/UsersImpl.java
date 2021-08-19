@@ -180,6 +180,24 @@ public class UsersImpl implements UsersDAO {
 		}
 
 	}
+	
+	public void UpdatePasswordByEmail(String email, String password) throws DALException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement("UPDATE USERS SET password = ?  WHERE email = ?");
+			pstmt.setString(1, password);
+			pstmt.setString(2, email);
+			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Erreur dans l'update", e);
+			throw new DALException("Erreur dans l'update ", e);
+		}
+
+	}
 
 // Fonction permetant de rechercher dans la base de données, si un utilisateur
 // existe grace à la saisie de ce dernier
