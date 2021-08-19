@@ -19,29 +19,31 @@ import org.eniauction.models.bo.AuctionComplete;
 @WebServlet("/mysells")
 public class DisplayMySells extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DisplayMySells() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public DisplayMySells() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		try {
 			ManagerAuction manager = ManagerAuction.getInstance();
 			List<AuctionComplete> listAuction = manager.GetMySells();
 			request.setAttribute("listAuction", listAuction.toArray());
-			}catch(Exception e){
-				e.getStackTrace();
+
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
-		
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/mysells.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
@@ -49,9 +51,11 @@ public class DisplayMySells extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

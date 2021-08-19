@@ -1,42 +1,23 @@
 package org.eniauction.models.bll;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.eniauction.dal.jdbc.DALException;
 import org.eniauction.models.bo.Auction;
 import org.eniauction.models.bo.SoldArticles;
 
-public class ScheduleTask {
+public class WinAuction {
+	public static Date getMidnight() {
 
-	public Date getMidnight() {
+		Calendar calendar = Calendar.getInstance();
+		Date time = calendar.getTime();
 
-		Long time = new Date().getTime();
-		Date midnight = new Date(time - time % (24 * 60 * 60 * 1000));
-
-		return midnight;
+		return time;
 	}
 
-	public void scheduleDailyTask() {
-		TimerTask closeAuction = new TimerTask() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub de comparaison des dates de début et fin des
-				// enchères
-
-			}
-
-		};
-
-		Timer timer = new Timer();
-		timer.schedule(closeAuction, getMidnight());
-
-	}
-
-	public boolean isWin() throws DALException, Exception {
+	public void winAuction() throws DALException, Exception {
 		ManagerAuction ma = ManagerAuction.getInstance();
 
 		List<SoldArticles> listArticle = ma.getAllSoldArticles();
@@ -47,18 +28,18 @@ public class ScheduleTask {
 
 			date = soldArticles.getAuction_end_date();
 
-			if (date == getMidnight()) {
+			if (date == getMidnight() || date.before(getMidnight())) {
 				Auction auction = ma.selectTopDonator(soldArticles.getUsers_nb());
 				UserManager um = UserManager.getInstance();
 
 				ma.transferCoins(um.getUser(auction.getUser_nb()), auction.getAmount(), soldArticles.getArticle_nb());
 
-				//
+				soldArticles.setActive(false);
+
+				ma.changeActive(soldArticles);
 
 			}
 		}
 
-		return false;
 	}
-
 }

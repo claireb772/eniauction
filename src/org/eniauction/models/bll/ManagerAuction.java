@@ -1,6 +1,7 @@
 
 package org.eniauction.models.bll;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,7 +141,7 @@ public class ManagerAuction {
 		auction.getUser().setCredit(amount + avantVente);
 	}
 
-	public List<SoldArticles> getAllSoldArticles() {
+	public List<SoldArticles> getAllSoldArticles() throws SQLException {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		return auctionImpl.selectAll();
 	}
@@ -148,6 +149,11 @@ public class ManagerAuction {
 	public Auction selectTopDonator(int articleID) {
 		AuctionImpl auctionImpl = AuctionImpl.getInstance();
 		return auctionImpl.selectTopAuction(articleID);
+	}
+
+	public void changeActive(SoldArticles sa) {
+		AuctionImpl auctionImpl = AuctionImpl.getInstance();
+		auctionImpl.updateIsActive(sa);
 	}
 
 }
