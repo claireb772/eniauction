@@ -66,7 +66,7 @@
 	</div>
 	<br>
 	<br>
-		<select name="question" class="custom-select custom-select-lg mb-3">
+		<select name="question" class="form-control custom-select custom-select-lg mb-3">
 		      <c:forEach var="item" items="${listAuction}" >
 		         <option value="${item.question_id}" >${item.question}</option>
 		    </c:forEach>

@@ -1,5 +1,6 @@
 *{
 	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
 }
 
 .border-none{
@@ -40,5 +41,9 @@ main{
 	height:300px;
 	max-height:300px;
 	overflow:scroll;
+}
+
+.text-primary{
+	
 }
 

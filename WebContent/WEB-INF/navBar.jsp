@@ -30,9 +30,5 @@
 			<c:if test="${ sessionScope.darkMode == 1}"><i class="bi bi-brightness-high-fill"></i></c:if>
 			<c:if test="${ sessionScope.darkMode == 0}"><i class="bi bi-moon-fill"></i></c:if>
 		</button></a>
-
-		<a href="?darkMode=<c:out value="${sessionScope.darkMode == 1 ? 0 : 1 }"/>"><button class="text-white">A</button></a>
-
->>>>>>> 8110f47f889df514a020a73267e154657b409f27
 		
 	</div>
