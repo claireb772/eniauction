@@ -84,7 +84,8 @@ public class FakeData {
 							price,
 							price,
 							user,
-							category
+							category,
+							true
 						);
 		return sa;
 	}
