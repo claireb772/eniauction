@@ -107,8 +107,11 @@ public class FakeData {
 						addressParser.get("zip_code").getAsString(), 
 						addressParser.get("city").getAsString(), 
 						parser.get("password").getAsString(), 
+						parser.get("last_name").getAsString(), 
 						randCredit,
-						0,
+						randCredit,
+						1,
+						
 						false
 				);
 		
