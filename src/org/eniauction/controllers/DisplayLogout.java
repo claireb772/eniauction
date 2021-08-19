@@ -44,10 +44,16 @@ public class DisplayLogout extends HttpServlet {
 
 		session.setAttribute("authentification", "0");
 		UserManager um = UserManager.getInstance();
-		log.info("Déconnexion de l'utilisateur " + um.getActualUser().getName() + ", identifiant numéro : "
-				+ um.getActualUser().getUser_nb());
-		um.setActualUser(null);
-		response.sendRedirect("./");
+		if(um.getActualUser() != null) {
+			log.info("Déconnexion de l'utilisateur " + um.getActualUser().getName() + ", identifiant numéro : "
+					+ um.getActualUser().getUser_nb());
+			
+			um.setActualUser(null);
+			response.sendRedirect("./");
+		}else {
+			response.sendRedirect("./");
+		}
+		
 
 	}
 

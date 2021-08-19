@@ -43,7 +43,8 @@ main{
 	overflow:scroll;
 }
 
-.text-primary{
-	
+.buyCredit{
+	position:absolute;
+	bottom:0;
 }
 

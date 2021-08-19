@@ -66,7 +66,7 @@ public class DisplayAuction extends HttpServlet {
 		request.setAttribute("maxPage", nbPage);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Index.jsp");
 		if (rd != null) {
-				rd.forward(request, response);
+			rd.forward(request, response);
 		}
 	}
 

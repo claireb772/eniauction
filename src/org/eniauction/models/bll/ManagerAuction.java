@@ -130,6 +130,7 @@ public class ManagerAuction {
 		return auctionImpl.isWithdrawalsExist(id);
 	}
 	
+	
 	public void transferCoins (Users acheteur, int amount, int article) throws Exception {
 		ManagerAuction ma = ManagerAuction.getInstance();
 		AuctionComplete auction = ma.getOneAuctionComplete(article);

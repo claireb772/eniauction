@@ -4,10 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<head>
-	<title>Editt Category</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<%@ include file="/WEB-INF/Header.jsp" %> 
 </head>
 <body>
 <nav class="bg-primary p-3 text-white d-flex col d-flex justify-content-between">

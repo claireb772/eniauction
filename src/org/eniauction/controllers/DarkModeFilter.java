@@ -45,7 +45,8 @@ public class DarkModeFilter implements Filter {
 		UserManager um = UserManager.getInstance();
 		if(um.getActualUser() != null) {
 			Users user = um.getActualUser();
-			session.setAttribute("user", user);
+			session.setAttribute("money", String.valueOf(user.getCredit()));
+			System.out.println(session.getAttribute("money"));
 		}
 		
 

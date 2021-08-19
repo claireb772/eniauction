@@ -133,7 +133,7 @@ public class EditProfile extends HttpServlet {
 		} else {
 
 			Users users = new Users(user_nb, pseudo, name, surname, email, phone_nb, street, postal_code, city,
-					password);
+					password, true);
 
 			try {
 				um.editProfile(users);

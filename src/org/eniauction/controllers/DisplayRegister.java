@@ -126,7 +126,7 @@ public class DisplayRegister extends HttpServlet {
 
 		}
 		else {
-			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, Answer, 0, 0, Question_id,  false);
+			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, Answer, 0, 0, Question_id,  false, true);
 			UserManager um= UserManager.getInstance();
 			String message=null;
 

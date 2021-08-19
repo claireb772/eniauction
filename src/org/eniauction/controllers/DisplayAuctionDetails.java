@@ -70,7 +70,12 @@ public class DisplayAuctionDetails extends HttpServlet {
 			Auction auction = new Auction(user.getUser_nb(), articleId, new Date(), amount);
 			ManagerAuction ma = ManagerAuction.getInstance();
 			ma.SetAuction(auction);
+			if(um.getActualUser().getCredit() > auction.getAmount()) {
+				um.getActualUser().setCredit(um.getActualUser().getCredit()-auction.getAmount());
+			}
+			
 			response.sendRedirect("./AuctionDetails?id="+articleId);
+			
 		}
 		
 		

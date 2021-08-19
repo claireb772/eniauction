@@ -110,8 +110,9 @@ public class FakeData {
 						parser.get("password").getAsString(), 
 						parser.get("last_name").getAsString(), 
 						randCredit,
-						randCredit,
+						0,
 						1,
+						true,
 						
 						false
 				);

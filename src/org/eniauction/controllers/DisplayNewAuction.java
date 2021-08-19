@@ -51,7 +51,6 @@ public class DisplayNewAuction extends HttpServlet {
 			List<Categories> listCategories = manager.GetCategories();
 			request.setAttribute("listCategories", listCategories.toArray());
 			SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
-			System.out.println(dt1.format(new Date()));
 			request.setAttribute("today", dt1.format(new Date()));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/NewAuction.jsp");
 			if (rd != null) {
@@ -85,14 +84,14 @@ public class DisplayNewAuction extends HttpServlet {
 		
 		try {
 			SoldArticles sa = new SoldArticles(0, product_name, product_desc, dateFormatter(product_start),
-					dateFormatter(product_end), product_price, product_price, 1/* user.getUser_nb() */,
-					product_category);
+					dateFormatter(product_end), product_price, product_price, user.getUser_nb(),
+					product_category, true);
 			ManagerAuction ma = ManagerAuction.getInstance();
 
 			SoldArticles saReturn = ma.SetNewAuction(sa);
 			Withdrawals wd = new Withdrawals(saReturn.getArticle_nb(), takeaway_street, takeaway_postal_code, takeaway_city);
 			ma.setWithdrawals(wd);
-
+			
 			log.info("Nouvelle enchère de l'utilisateur " + um.getActualUser().getUser_nb());
 		} catch (ParseException e) {
 			e.printStackTrace();

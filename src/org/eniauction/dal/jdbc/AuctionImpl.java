@@ -27,14 +27,14 @@ public class AuctionImpl implements AuctionDAO {
 	private static final String GET_ONE_ARTICLE = "select * from SOLD_ARTICLES where article_nb = ?";
 	private static final String GET_ALL_AUCTION_BY_ARTICLE_ID = "select * from AUCTION where article_nb = ?  ORDER BY auction_amount DESC";
 	private static final String INSERT_AUCTION = "insert into AUCTION (user_nb, article_nb, auction_date, auction_amount) values(?,?,?,?) ";
-	private static final String GET_ALL_AUCTION_COUNT = "select COUNT(*) from SOLD_ARTICLES";
+	private static final String GET_ALL_AUCTION_COUNT = "select COUNT(*) from SOLD_ARTICLES WHERE isActive=1";
 	private static final String INSERT_WITHDRAWALS = "insert into WITHDRAWALS (article_nb, street, postal_code, city) values(?,?,?,?)";
 
 	public List<SoldArticles> selectAll() {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
 			Connection cs = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cs.prepareStatement("Select * From SOLD_ARTICLES");
+			PreparedStatement pstmt = cs.prepareStatement("Select * From SOLD_ARTICLES Where isActive = 1");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				SoldArticles sa = new SoldArticles(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4),
@@ -103,7 +103,7 @@ public class AuctionImpl implements AuctionDAO {
 		List<SoldArticles> listArticles = new ArrayList<SoldArticles>();
 		try {
 			Connection cs = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = cs.prepareStatement("Select * From SOLD_ARTICLES where article_name like ? ORDER BY article_nb OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY ");
+			PreparedStatement pstmt = cs.prepareStatement("Select * From SOLD_ARTICLES where article_name like ? AND isActive=1 ORDER BY article_nb OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY ");
 			pstmt.setString(1, "%"+searchInput+"%");
 			int realPage = page*9;
 			pstmt.setInt(2,realPage );
@@ -387,4 +387,5 @@ public class AuctionImpl implements AuctionDAO {
 		}
 
 	}
+	
 }

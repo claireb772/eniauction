@@ -21,11 +21,12 @@ public class Users {
     private int pendingChange;
     private int question_id;
     private boolean administrator;
+    private boolean isActive;
     
 
  
 
-    public Users(int user_nb, String pseudo, String name, String surname, String email, String phone_nb, String street, String postal_code, String city, String password, String answer, int credit,int pendingChange, int question_id, boolean administrator) {
+    public Users(int user_nb, String pseudo, String name, String surname, String email, String phone_nb, String street, String postal_code, String city, String password, String answer, int credit,int pendingChange, int question_id, boolean administrator, boolean isActive) {
         this.user_nb = user_nb;
         this.pseudo = pseudo;
         this.name = name;
@@ -41,6 +42,7 @@ public class Users {
         this.credit = credit;
         this.question_id = question_id;
         this.administrator = administrator;
+        this.isActive = isActive;
     }
     
     
@@ -48,7 +50,7 @@ public class Users {
  
 
     public Users(int user_nb, String pseudo, String name, String surname, String email, String phone_nb, String street,
-            String postal_code, String city, String password, String answer) {
+            String postal_code, String city, String password, String answer, boolean isActive) {
         super();
         this.user_nb = user_nb;
         this.pseudo = pseudo;
@@ -61,10 +63,11 @@ public class Users {
         this.city = city;
         this.password = password;
         this.answer = answer;
+        this.isActive = isActive;
     }
     
     public Users(int user_nb, String pseudo, String name, String surname, String email, String phone_nb, String street,
-            String postal_code, String city, String password) {
+            String postal_code, String city, String password, boolean isActive) {
         super();
         this.user_nb = user_nb;
         this.pseudo = pseudo;
@@ -76,12 +79,34 @@ public class Users {
         this.postal_code = postal_code;
         this.city = city;
         this.password = password;
+        this.isActive = isActive;
     }
 
  
     
-    
-    public int getQuestionId() {
+
+
+
+
+
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+
+
+
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+
+
+
+
+	public int getQuestionId() {
     	return question_id;
     }
     
