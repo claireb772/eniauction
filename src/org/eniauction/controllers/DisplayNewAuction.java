@@ -84,13 +84,8 @@ public class DisplayNewAuction extends HttpServlet {
 
 		try {
 			SoldArticles sa = new SoldArticles(0, product_name, product_desc, dateFormatter(product_start),
-<<<<<<< HEAD
-					dateFormatter(product_end), product_price, product_price, user.getUser_nb(),
-					product_category, true);
-=======
-					dateFormatter(product_end), product_price, product_price, user.getUser_nb(), product_category,
-					true);
->>>>>>> topAuction
+			dateFormatter(product_end), product_price, product_price, user.getUser_nb(),product_category, true);
+
 			ManagerAuction ma = ManagerAuction.getInstance();
 
 			SoldArticles saReturn = ma.SetNewAuction(sa);
