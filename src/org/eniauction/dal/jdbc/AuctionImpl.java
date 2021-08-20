@@ -56,7 +56,7 @@ public class AuctionImpl implements AuctionDAO {
 		try {
 			Connection cs = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cs.prepareStatement(
-					"SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb "
+					"SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb, SA.isActive"
 							+ " FROM AUCTION A " + " INNER JOIN SOLD_ARTICLES SA ON SA.article_nb = A.article_nb "
 							+ " WHERE A.user_nb = ? ");
 			pstmt.setInt(1, idUser);
@@ -80,7 +80,7 @@ public class AuctionImpl implements AuctionDAO {
 		try {
 			Connection cs = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = cs.prepareStatement(
-					" SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb "
+					" SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb, SA.isActive "
 					+ " FROM SOLD_ARTICLES SA "
 					+ " WHERE SA.user_nb = ?  ");
 			pstmt.setInt(1, idUser);
