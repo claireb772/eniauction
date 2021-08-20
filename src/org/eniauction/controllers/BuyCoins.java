@@ -18,42 +18,42 @@ import org.eniauction.models.bo.Users;
 @WebServlet("/BuyCoins")
 public class BuyCoins extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BuyCoins() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public BuyCoins() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/BuyCoins.jsp");
 		if (rd != null) {
-				rd.forward(request, response);
+			rd.forward(request, response);
 		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("manager");
-		int amount =Integer.parseInt(request.getParameter("amount"));
-		if(amount >0 ) {
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		if (amount > 0) {
 			UserManager um = UserManager.getInstance();
 			Users user = um.getActualUser();
-			if(user != null) {
+			if (user != null) {
 				um.addPoints(user, amount);
 			}
 		}
-		
-		
+
 		response.sendRedirect("./");
 	}
 

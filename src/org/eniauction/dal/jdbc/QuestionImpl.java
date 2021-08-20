@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eniauction.dal.QuestionDAO;
-import org.eniauction.models.bo.Categories;
 import org.eniauction.models.bo.Question;
 
 public class QuestionImpl implements QuestionDAO {
@@ -28,8 +27,6 @@ public class QuestionImpl implements QuestionDAO {
 	}
 
 	private static final String SELECT_ALL_QUESTION = "select * from QUESTION";
-
-
 
 	public List<Question> selectAllQuestion() throws DALException {
 
@@ -55,7 +52,6 @@ public class QuestionImpl implements QuestionDAO {
 
 	@Override
 	public List<Question> selectAll() throws DALException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -71,13 +67,11 @@ public class QuestionImpl implements QuestionDAO {
 			pstmt.setInt(3, idquestion);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				question = new Question (rs.getInt(1), rs.getString(2), rs.getString(3));
+				question = new Question(rs.getInt(1), rs.getString(2), rs.getString(3));
 			}
 			cnx.close();
 
-
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

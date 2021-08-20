@@ -74,7 +74,6 @@ public class DisplayConnect extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		UserManager manager = UserManager.getInstance();
 
 		String userInput = request.getParameter("user");
@@ -132,12 +131,11 @@ public class DisplayConnect extends HttpServlet {
 
 				}
 
-			}else{
+			} else {
 				String Erreur = "Adresse ou mot de passe incorrect";
 				request.setAttribute("Erreur", Erreur);
 			}
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

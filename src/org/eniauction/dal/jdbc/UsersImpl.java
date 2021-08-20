@@ -61,7 +61,7 @@ public class UsersImpl implements UsersDAO {
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
 						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
 						rs.getString("answer"), rs.getInt("pending"), rs.getInt("credit"), rs.getInt("question_id"),
-						rs.getBoolean("administrator"),rs.getBoolean("isActive"));
+						rs.getBoolean("administrator"), rs.getBoolean("isActive"));
 			}
 			rs.close();
 			cnx.close();
@@ -96,9 +96,6 @@ public class UsersImpl implements UsersDAO {
 
 			int row = pstmt.executeUpdate();
 
-			// rows affected System.out.println(row);
-			// 1 } catch (SQLException e) { System.err.format("SQL State: %s\n%s",
-			// e.getSQLState(), e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("Erreur dans l'insert ", e);
@@ -139,7 +136,7 @@ public class UsersImpl implements UsersDAO {
 						rs.getString("surname"), rs.getString("email"), rs.getString("phone_nb"),
 						rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),
 						rs.getString("password"), rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"),
-						rs.getInt("question_id"), rs.getBoolean("administrator"),rs.getBoolean("isActive"));
+						rs.getInt("question_id"), rs.getBoolean("administrator"), rs.getBoolean("isActive"));
 				ListUsers.add(users);
 			}
 
@@ -172,7 +169,7 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setString(8, user.getCity());
 			pstmt.setString(9, user.getPassword());
 			pstmt.setInt(10, user.getUser_nb());
-			
+
 			pstmt.executeUpdate();
 			pstmt.close();
 			cnx.close();
@@ -184,7 +181,7 @@ public class UsersImpl implements UsersDAO {
 		}
 
 	}
-	
+
 	public void UpdatePasswordByEmail(String email, String password) throws DALException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
@@ -223,7 +220,7 @@ public class UsersImpl implements UsersDAO {
 						rs.getString("email"), rs.getString("phone_nb"), rs.getString("street"),
 						rs.getString("postal_code"), rs.getString("city"), rs.getString("password"),
 						rs.getString("answer"), rs.getInt("credit"), rs.getInt("pending"), rs.getInt("question_id"),
-						rs.getBoolean("administrator"),rs.getBoolean("isActive"));
+						rs.getBoolean("administrator"), rs.getBoolean("isActive"));
 
 			}
 			pstmt.close();
@@ -259,7 +256,7 @@ public class UsersImpl implements UsersDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement("UPDATE USERS SET credit = ? WHERE user_nb = ?");
-			pstmt.setInt(1,user.getCredit()+ amount);
+			pstmt.setInt(1, user.getCredit() + amount);
 			pstmt.setInt(2, user.getUser_nb());
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -267,7 +264,7 @@ public class UsersImpl implements UsersDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

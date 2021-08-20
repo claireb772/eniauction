@@ -27,7 +27,6 @@ public class EditCategory extends HttpServlet {
 	 */
 	public EditCategory() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -65,7 +64,6 @@ public class EditCategory extends HttpServlet {
 			response.sendRedirect("./categories");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			doGet(request, response);
 		}

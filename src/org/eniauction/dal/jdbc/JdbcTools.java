@@ -17,9 +17,6 @@ public class JdbcTools {
 		userdb = Settings.getProperty("userdb");
 		passworddb = Settings.getProperty("passworddb");
 
-		System.out.println("urldb=" + urldb);
-		System.out.println("userdb=" + userdb);
-		System.out.println("passworddb=" + passworddb);
 	}
 
 	public static Connection getConnection() throws SQLException {

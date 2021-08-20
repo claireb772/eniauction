@@ -28,7 +28,6 @@ public class DeleteProfil extends HttpServlet {
 	 */
 	public DeleteProfil() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class DeleteProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		doGet(request, response);
 	}
 

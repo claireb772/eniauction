@@ -108,8 +108,7 @@ public class AuctionImpl implements AuctionDAO {
 			PreparedStatement pstmt = cs.prepareStatement(
 
 					" SELECT SA.article_nb, SA.article_name, SA.description, SA.auction_start_date, SA.auction_end_date, SA.initial_price, SA.sell_price, SA.user_nb, SA.category_nb, SA.isActive "
-					+ " FROM SOLD_ARTICLES SA "
-					+ " WHERE SA.user_nb = ?  ");
+							+ " FROM SOLD_ARTICLES SA " + " WHERE SA.user_nb = ?  ");
 
 			pstmt.setInt(1, idUser);
 			ResultSet rs = pstmt.executeQuery();
@@ -203,7 +202,7 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.close();
 			cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return sa;
@@ -246,7 +245,7 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.close();
 			cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return listAuction;
@@ -323,7 +322,6 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.close();
 			cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return count;
@@ -361,7 +359,6 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.close();
 			cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return count == 1;
@@ -384,7 +381,6 @@ public class AuctionImpl implements AuctionDAO {
 			pstmt.close();
 			cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return count == 1;
@@ -411,14 +407,12 @@ public class AuctionImpl implements AuctionDAO {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
 	public void updateIsActive(SoldArticles sa) {
-		// TODO Auto-generated method stub
 	}
 
 }

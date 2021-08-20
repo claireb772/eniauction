@@ -28,7 +28,6 @@ public class DisplayUser extends HttpServlet {
 	 */
 	public DisplayUser() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -82,7 +81,6 @@ public class DisplayUser extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

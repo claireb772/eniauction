@@ -30,7 +30,6 @@ public class ComptesAdmin extends HttpServlet {
 	 */
 	public ComptesAdmin() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

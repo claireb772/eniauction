@@ -32,7 +32,6 @@ public class DisplayRegister extends HttpServlet {
 	 */
 	public DisplayRegister() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -41,16 +40,15 @@ public class DisplayRegister extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+
 		try {
 			ManagerQuestion manager = ManagerQuestion.getInstance();
 			List<Question> listQuestion = manager.getAllQuestion();
 			request.setAttribute("listAuction", listQuestion.toArray());
-			}catch(Exception e){
-				e.getStackTrace();
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/sign.jsp");
 		if (rd != null) {
 			rd.forward(request, response);
@@ -67,7 +65,7 @@ public class DisplayRegister extends HttpServlet {
 		String Pseudo = request.getParameter("Pseudo").trim();
 		String Name = request.getParameter("Name").trim();
 		String Password = request.getParameter("Password").trim();
-		Pattern p = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"); 
+		Pattern p = Pattern.compile("(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
 		Matcher m = p.matcher(Password);
 		boolean b = m.matches();
 		String Confirmation = request.getParameter("Confirmation").trim();
@@ -124,16 +122,15 @@ public class DisplayRegister extends HttpServlet {
 
 			}
 
-		}
-		else {
-			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, Answer, 0, 0, Question_id,  false, true);
-			UserManager um= UserManager.getInstance();
-			String message=null;
+		} else {
+			Users user = new Users(0, Pseudo, Name, Surname, Email, Phone, Street, PostalCode, City, Password, Answer,
+					0, 0, Question_id, false, true);
+			UserManager um = UserManager.getInstance();
+			String message = null;
 
 			try {
 				var o = um.newUser(user);
 			} catch (DALException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 
 			}
@@ -152,10 +149,10 @@ public class DisplayRegister extends HttpServlet {
 
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (DALException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 

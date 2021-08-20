@@ -30,13 +30,11 @@ public class CategoriesImpl implements CategoriesDAO {
 			PreparedStatement pstmt = cs.prepareStatement("Select * From CATEGORIES");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				// System.out.println(rs.getString(2));
 				Categories category = new Categories(rs.getInt(1), rs.getString(2));
 				listCategories.add(category);
 			}
 			cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return listCategories;
@@ -57,7 +55,6 @@ public class CategoriesImpl implements CategoriesDAO {
 			cs.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return category;
@@ -70,12 +67,10 @@ public class CategoriesImpl implements CategoriesDAO {
 			PreparedStatement pstmt = cs.prepareStatement("Select COUNT(*) From CATEGORIES");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				// System.out.println(rs.getString(2));
 				count = rs.getInt(1);
 			}
 			cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return count;
@@ -89,12 +84,10 @@ public class CategoriesImpl implements CategoriesDAO {
 			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				// System.out.println(rs.getString(2));
 				count = rs.getInt(1);
 			}
 			cs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -26,7 +26,6 @@ public class DisplayCategories extends HttpServlet {
 	 */
 	public DisplayCategories() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -54,7 +53,6 @@ public class DisplayCategories extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

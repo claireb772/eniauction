@@ -14,10 +14,8 @@ public class MaTask extends TimerTask {
 	@Override
 	public void run() {
 		try {
-			System.out.println("ça se lance");
 			winAuction();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

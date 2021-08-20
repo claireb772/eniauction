@@ -47,7 +47,7 @@ public class AuctionComplete {
 		return listAuction.size();
 	}
 
-	public void setListAuction(List<Auction> listAcution) {
+	public void setListAuction(List<Auction> listAuction) {
 		this.listAuction = listAuction;
 	}
 

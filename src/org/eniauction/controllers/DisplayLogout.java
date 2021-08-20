@@ -26,7 +26,6 @@ public class DisplayLogout extends HttpServlet {
 	 */
 	public DisplayLogout() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -36,7 +35,6 @@ public class DisplayLogout extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated constructor stub
 		HttpSession session = request.getSession();
 
 		// Quand l'utilisateur clique sur "se deconnecter" la variable de session
@@ -44,16 +42,15 @@ public class DisplayLogout extends HttpServlet {
 
 		session.setAttribute("authentification", "0");
 		UserManager um = UserManager.getInstance();
-		if(um.getActualUser() != null) {
+		if (um.getActualUser() != null) {
 			log.info("Déconnexion de l'utilisateur " + um.getActualUser().getName() + ", identifiant numéro : "
 					+ um.getActualUser().getUser_nb());
-			
+
 			um.setActualUser(null);
 			response.sendRedirect("./");
-		}else {
+		} else {
 			response.sendRedirect("./");
 		}
-		
 
 	}
 

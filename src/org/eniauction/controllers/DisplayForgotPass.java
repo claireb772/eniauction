@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.eniauction.dal.jdbc.DALException;
 import org.eniauction.models.bll.ManagerQuestion;
-import org.eniauction.models.bll.UserManager;
 import org.eniauction.models.bo.Question;
-import org.eniauction.models.bo.Users;
 
 /**
  * Servlet implementation class DisplayUser
@@ -33,8 +30,8 @@ public class DisplayForgotPass extends HttpServlet {
 	 */
 	public DisplayForgotPass() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -47,7 +44,7 @@ public class DisplayForgotPass extends HttpServlet {
 			ManagerQuestion manager = ManagerQuestion.getInstance();
 			List<Question> listQuestion = manager.getAllQuestion();
 			request.setAttribute("listAuction", listQuestion.toArray());
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.getStackTrace();
 		}
 
@@ -68,7 +65,6 @@ public class DisplayForgotPass extends HttpServlet {
 		String Réponse = request.getParameter("answer").trim();
 		String Email = request.getParameter("Email").trim();
 
-
 		ManagerQuestion manager = ManagerQuestion.getInstance();
 		try {
 			if (manager.VerifUser(Question_id, Réponse, Email)) {
@@ -80,11 +76,10 @@ public class DisplayForgotPass extends HttpServlet {
 			} else {
 				response.sendRedirect("./forgotpass");
 			}
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-
-		//	doGet(request, response);
+		} catch (DALException e) {
+			e.printStackTrace();
 		}
 
 	}
+
+}

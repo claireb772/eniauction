@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eniauction.models.bll.ManagerAuction;
 import org.eniauction.models.bll.UserManager;
-import org.eniauction.models.bo.*;
+import org.eniauction.models.bo.Auction;
+import org.eniauction.models.bo.AuctionComplete;
+import org.eniauction.models.bo.Users;
 
 /**
  * Servlet implementation class DisplayAuctionDetails
@@ -26,7 +28,6 @@ public class DisplayAuctionDetails extends HttpServlet {
 	 */
 	public DisplayAuctionDetails() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -54,34 +55,29 @@ public class DisplayAuctionDetails extends HttpServlet {
 	}
 
 	/**
-	 * @throws IOException 
+	 * @throws IOException
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
-	{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		UserManager um = UserManager.getInstance();
 		Users user = um.getActualUser();
 		int amount = Integer.parseInt(request.getParameter("input_new_amount"));
 		int articleId = Integer.parseInt(request.getParameter("article"));
-		if(user == null) {
+		if (user == null) {
 			response.sendRedirect("./login");
-		}else {
+		} else {
 			Auction auction = new Auction(user.getUser_nb(), articleId, new Date(), amount);
 			ManagerAuction ma = ManagerAuction.getInstance();
 			ma.SetAuction(auction);
-			if(um.getActualUser().getCredit() > auction.getAmount()) {
-				um.getActualUser().setCredit(um.getActualUser().getCredit()-auction.getAmount());
+			if (um.getActualUser().getCredit() > auction.getAmount()) {
+				um.getActualUser().setCredit(um.getActualUser().getCredit() - auction.getAmount());
 			}
-			
-			response.sendRedirect("./AuctionDetails?id="+articleId);
-			
+
+			response.sendRedirect("./AuctionDetails?id=" + articleId);
+
 		}
-		
-		
-		
+
 	}
-			
-	
 
 }
