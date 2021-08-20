@@ -25,7 +25,7 @@ public class UsersImpl implements UsersDAO {
 		return instance;
 	}
 
-	private static final String UPDATE_BY_ID = "UPDATE USERS set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=?, credit=?, pending=?, question_id=? answer=? administrator=? isActive=?  where user_nb=?";
+	private static final String UPDATE_BY_ID = "UPDATE USERS set pseudo=?, name=?, surname=?, email=?, phone_nb=?, street=?, postal_code=?, city=?, password=? where user_nb=?";
 
 	private static final String SELECT_BY_ID = "SELECT " + " * " + " from USERS where user_nb=?";
 
@@ -172,6 +172,7 @@ public class UsersImpl implements UsersDAO {
 			pstmt.setString(8, user.getCity());
 			pstmt.setString(9, user.getPassword());
 			pstmt.setInt(10, user.getUser_nb());
+			
 			pstmt.executeUpdate();
 			pstmt.close();
 			cnx.close();

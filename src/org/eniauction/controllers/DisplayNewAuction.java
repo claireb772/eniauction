@@ -68,7 +68,7 @@ public class DisplayNewAuction extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
 		String product_name = request.getParameter("product_name");
 		String product_desc = request.getParameter("product_desc");
 		int product_category = Integer.parseInt(request.getParameter("product_category"));
@@ -84,9 +84,7 @@ public class DisplayNewAuction extends HttpServlet {
 
 		try {
 			SoldArticles sa = new SoldArticles(0, product_name, product_desc, dateFormatter(product_start),
-
-					dateFormatter(product_end), product_price, product_price, user.getUser_nb(), product_category,
-					true);
+			dateFormatter(product_end), product_price, product_price, user.getUser_nb(),product_category, true);
 
 			ManagerAuction ma = ManagerAuction.getInstance();
 
@@ -94,7 +92,7 @@ public class DisplayNewAuction extends HttpServlet {
 			Withdrawals wd = new Withdrawals(saReturn.getArticle_nb(), takeaway_street, takeaway_postal_code,
 					takeaway_city);
 			ma.setWithdrawals(wd);
-
+			
 			log.info("Nouvelle enchère de l'utilisateur " + um.getActualUser().getUser_nb());
 		} catch (ParseException e) {
 			e.printStackTrace();
