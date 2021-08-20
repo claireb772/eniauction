@@ -68,7 +68,7 @@ public class DisplayNewAuction extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		String product_name = request.getParameter("product_name");
 		String product_desc = request.getParameter("product_desc");
 		int product_category = Integer.parseInt(request.getParameter("product_category"));
