@@ -26,7 +26,7 @@
 					<input name="remind" type="checkbox" id="formGroupCHeckbox" aria-label="Checkbox for following text input">
 					<label for="formGroupCHeckbox">Se souvenir de moi</label>
 				</div>
-				<a href="#" class="mx-2 text-primary">Mot de pass oublié</a>
+				<a href="./forgotpass" class="mx-2">Mot de passe oublié</a>
 				<button type="submit" class="btn btn-primary mt-3">Se connecter</button>
 				<a href="./sign" class="btn btn-outline-primary mt-3">Creer un compte</a>
 			</form>

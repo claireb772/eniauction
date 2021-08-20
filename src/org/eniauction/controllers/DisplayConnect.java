@@ -133,7 +133,7 @@ public class DisplayConnect extends HttpServlet {
 				}
 
 			}else{
-				String Erreur = "Adresse où mot de passe incorrect";
+				String Erreur = "Adresse ou mot de passe incorrect";
 				request.setAttribute("Erreur", Erreur);
 			}
 		} catch (DALException e) {
